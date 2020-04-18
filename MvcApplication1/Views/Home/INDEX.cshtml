@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "INDEX";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title> .::Login::.  </title>
+    <link href="~/Content/LOGIN.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="active"> Sign In </h2>
+            <input type="button" id ="signUp_button" class="inactive underlineHover" value="Sign Up" onclick="location.href='../../Home/Index2'"/>
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="data:image/jpg;base64,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" id="icon" alt="User Icon" />
+            </div>
+
+            <!-- Login Form -->
+            <form>
+                <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+                <input type="submit" class="fadeIn fourth" value="Log In">
+            </form>
+
+            <!-- Remind Passowrd -->
+            <div id="formFooter">
+                <a class="underlineHover" href="#">Forgot Password?</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+
+</html>
