@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Loading";
+}
+
+<!DOCTYPE html>
+<h2>Loading</h2>
+<html>
+<head>
+    <link href="~/Content/Startup.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+    </div>
+
+    <script>
+        setTimeout(function () {
+            window.location.href = '../../home/index';
+        }, 5000);
+    </script>
+</body>
+</html>
