@@ -20,6 +20,13 @@ namespace MvcApplication1.Controllers
         {
             return View();
         }
-
+        public ActionResult StartUp()
+        {
+            return View();
+        }
+        public ActionResult Loading()
+        {
+            return View();
+        }
     }
 }
