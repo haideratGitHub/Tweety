@@ -11,7 +11,7 @@ namespace MvcApplication1.Models
 {
     public class CRUD
     {
-        public static string connectionString = "data source=localhost; Initial Catalog=tweety2;Integrated Security=true";
+        public static string connectionString = "data source=localhost; Initial Catalog=tweety;Integrated Security=true";
 
         public static int Login(string username, string password)
         {
