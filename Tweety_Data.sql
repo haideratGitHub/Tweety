@@ -1,4 +1,4 @@
-use tweety
+use tweety2
 GO
 use master
 drop database tweety2
