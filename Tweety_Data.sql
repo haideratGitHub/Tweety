@@ -1,5 +1,8 @@
-use tweety
+use tweety2
 GO
+use master
+drop database tweety2
+
 
 select * from [user]
 select * from [profile]
@@ -10,8 +13,6 @@ select * from likes
 select * from dislikes
 select * from comments
 select * from privateChat
-GO
-
 
 ----
 
@@ -21,8 +22,6 @@ insert into [user] values
 (3,'sara_89','p1230',null),
 (4,'alice_21','p1232',null),
 (5,'mike_99','p1236',null)
-GO
-
 
 insert into [profile] values
 --(null,'Ali','Khan','M','2001-12-12',null,'Pakistan','active'),  --issue:either userID should be not null or a PK
@@ -31,8 +30,6 @@ insert into [profile] values
 (3,'Sara','Ahmad','F','2000-1-14',null,'Pakistan','active'),
 (5,'Mike','Davis','M','1995-7-1',null,'UK','inactive'),
 (4,'Alice','Jonnas','F','2001-12-29',null,'USA','active')
-GO
-
 
 
 insert into tweets values
@@ -45,8 +42,6 @@ insert into tweets values
 (7,4,'enjoying race #Formula1',GETDATE(),CONVERT(time, GETDATE())),
 (8,4,'Alex in his Ferrari turned tables #Formula1',GETDATE(),CONVERT(time, GETDATE())),
 (9,4,'So happy',GETDATE(),CONVERT(time, GETDATE()))
-GO
-
 
 insert into hashtag values
 (1,2,'#cars'),
@@ -57,8 +52,6 @@ insert into hashtag values
 (6,5,'#upset'),
 (7,3,'#daily'),
 (8,4,'#workout')
-GO
-
 
 insert into follower values
 --(1,1),   -- scemantic constraint: userid!=followerid
@@ -72,8 +65,6 @@ insert into follower values
 (4,3),
 (4,5),
 (3,2)
-GO
-
 
 insert into likes values
 --(1,1),  -- issue:can a person like his own tweet?
@@ -86,8 +77,6 @@ insert into likes values
 (5,4),
 (2,5),
 (1,8)
-GO
-
 
 insert into dislikes values
 --(1,1),  -- issue:can a person dislike his own tweet?
@@ -99,8 +88,6 @@ insert into dislikes values
 (2,5),
 (3,1),
 (4,1)
-GO
-
 
 insert into comments values
 --(1,1,1,null,default),  --issue: comment should be not null also can a person comment on his own tweet?
@@ -114,7 +101,6 @@ insert into comments values
 (8,8,1,'through the roof',GETDATE(),CONVERT(time, GETDATE())),
 (9,9,3,'same here',GETDATE(),CONVERT(time, GETDATE())),
 (10,9,2,'me too',GETDATE(),CONVERT(time, GETDATE()))
-go
 
 insert into privateChat values
 (1,1,2,1,'Hi',GETDATE(),CONVERT(time, GETDATE())),
@@ -125,8 +111,6 @@ insert into privateChat values
 (2,4,3,2,'thanks',GETDATE(),CONVERT(time, GETDATE())),
 (3,3,2,1,'See you tomorrow',GETDATE(),CONVERT(time, GETDATE())),
 (3,2,3,2,'ok :)',GETDATE(),CONVERT(time, GETDATE()))
-GO
-
 
 ---- checking actions
 
