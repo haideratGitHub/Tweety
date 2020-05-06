@@ -15,9 +15,9 @@ namespace MvcApplication1.Controllers
         public ActionResult Login()
         {
             if(Session["username"]==null)
-                return View();
+                return View("Login");  
             else
-                return RedirectToAction("HomePage");
+               return RedirectToAction("HomePage");
         }
         public ActionResult SignUp()
         {
@@ -30,6 +30,11 @@ namespace MvcApplication1.Controllers
         public ActionResult Loading()
         {
             return View();
+        }
+        public ActionResult LogOut()
+        {
+            Session["username"] = null;
+            return View("Login");
         }
 
         public ActionResult authenticate(String username, String password)
