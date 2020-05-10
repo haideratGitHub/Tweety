@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Century Gothic';
+}
+
+ul {
+    float: right;
+    margin-right: 400px;
+    list-style-type: none;
+    padding: 25px;
+}
+
+    ul li {
+        display: inline-block;
+    }
+
+        ul li a {
+            text-decoration: none;
+            color: #0094ff;
+            padding: 5px 20px;
+            border: 1px solid #0094ff;
+            border-radius: 25px;
+            transition: 0.7s ease;
+        }
+
+            ul li a:hover {
+                background-color: #0094ff;
+                color: #fff;
+            }
+
+        ul li.active a{
+            background-color: #0094ff;
+            color: #fff;
+        }
