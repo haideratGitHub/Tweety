@@ -1,4 +1,4 @@
-use tweety2
+use tweety
 go
 
 -- --TO VIEW COMMENTS ON A TWEET-- --

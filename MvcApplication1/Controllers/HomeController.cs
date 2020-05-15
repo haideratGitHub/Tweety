@@ -11,13 +11,13 @@ namespace MvcApplication1.Controllers
     {
         //
         // GET: /Home/
-        
+
         public ActionResult Login()
         {
-            if(Session["username"]==null)
-                return View("Login");  
+            if (Session["username"] == null)
+                return View("Login");
             else
-               return RedirectToAction("HomePage");
+                return RedirectToAction("HomePage");
         }
         public ActionResult SignUp()
         {
@@ -53,7 +53,7 @@ namespace MvcApplication1.Controllers
                 return View("Login", (object)data);
             }
             Session["username"] = username;
-            
+
             return RedirectToAction("HomePage");
             //return RedirectToAction("HomePage", new { username = username });
         }
@@ -70,6 +70,22 @@ namespace MvcApplication1.Controllers
                 //{
                 //    RedirectToAction("Login");
                 //}
+                Console.Write(users);
+                return View(users);
+            }
+        }
+
+        public ActionResult ProfilePage(String username)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                User users = CRUD.view_user(Session["username"].ToString());
+                if (users == null)
+                {
+                    RedirectToAction("Login");
+                }
                 Console.Write(users);
                 return View(users);
             }
