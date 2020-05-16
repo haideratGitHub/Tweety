@@ -36,6 +36,19 @@ namespace MvcApplication1.Controllers
             Session["username"] = null;
             return View("Login");
         }
+        public ActionResult Messages()
+        {
+            return View("Messages");
+        }
+        public ActionResult Settings()
+        {
+            return View("Settings");
+        }
+        public ActionResult Notifications()
+        {
+            return View("Notifications");
+        }
+
 
         public ActionResult authenticate(String username, String password)
         {
