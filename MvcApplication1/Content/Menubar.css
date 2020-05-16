@@ -5,31 +5,32 @@
 }
 
 ul {
-    float: right;
-    margin-right: 400px;
+    float: left;
     list-style-type: none;
     padding: 25px;
+    margin-top:10%;
 }
 
     ul li {
-        display: inline-block;
     }
 
         ul li a {
             text-decoration: none;
-            color: #0094ff;
+            font-size:x-large;
+            font-weight:bold;
+            color:black;
             padding: 5px 20px;
             border: 1px solid #0094ff;
             border-radius: 25px;
+            border: none;
             transition: 0.7s ease;
         }
 
             ul li a:hover {
-                background-color: #0094ff;
-                color: #fff;
+                background-color: lightblue;
+                color: #0094ff;
             }
 
         ul li.active a{
-            background-color: #0094ff;
-            color: #fff;
+            color: #0094ff;
         }

@@ -1,7 +1,7 @@
 use tweety
 GO
 use master
-drop database tweety2
+drop database tweety
 
 
 select * from [user]

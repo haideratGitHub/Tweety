@@ -8,11 +8,10 @@
 
 <!DOCTYPE html>
 
-<h2>Profile</h2>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>HomePage</title>
+    <title>Profile</title>
     <link href="~/Content/Menubar.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -20,9 +19,17 @@
         <div class="menu">
             <ul>
                 <li><a href="~/Home/HomePage">Home</a></li>
+                <br>
                 <li class="active"><a href="~/Home/ProfilePage">Profile</a></li>
-                <li><a href="#">Notifications</a></li>
-                <li><a href="#">Messages</a></li>
+                <br>
+                <li><a href="~/Home/Notifications">Notifications</a></li>
+                <br>
+                <li><a href="~/Home/Messages">Messages</a></li>
+                <br>
+                <li><a href="~/Home/Settings">Settings</a></li>
+                <br>
+                <li><a href="~/Home/LogOut">Logout</a></li>
+                <br>
             </ul>
         </div>
     </header>
@@ -50,7 +57,7 @@
 
         </table>
         <br>
-        <input type="button" id="logOut_button" onclick="location.href='../../Home/LogOut'" value="Logout">
+        <input type="button" id="logOut_button" onclick="location.href='~/Home/LogOut'" value="Logout">
 
 
     </div>
