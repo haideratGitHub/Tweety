@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Century Gothic';
+}
+
+ul {
+    float: left;
+    list-style-type: none;
+    padding: 25px;
+    margin-top:10%;
+}
+
+    ul li {
+    }
+
+        ul li a {
+            text-decoration: none;
+            font-size:x-large;
+            font-weight:bold;
+            color:black;
+            padding: 5px 20px;
+            border: 1px solid #0094ff;
+            border-radius: 25px;
+            border: none;
+            transition: 0.7s ease;
+        }
+
+            ul li a:hover {
+                background-color: lightblue;
+                color: #0094ff;
+            }
+
+        ul li.active a{
+            color: #0094ff;
+        }

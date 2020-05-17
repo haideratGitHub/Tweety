@@ -813,12 +813,13 @@ begin
 		set @output=0
 	end
 end
+go
 -- --executing code-- --
 declare @result int
 execute user_login
-	@username='ali_33',@password='p1234',@output=@result output
+	@username='ali_33',@password='p123',@output=@result output
 select @result
-
+go
 -- --TO VIEW A USER-- --
 go
 create procedure view_user
