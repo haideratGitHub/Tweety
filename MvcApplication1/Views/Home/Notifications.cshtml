@@ -1,10 +1,6 @@
 ﻿@{
-    ViewBag.Title = "HomePage";
+    ViewBag.Title = "Notifications";
 }
-@using MvcApplication1.Models;
-@*@model List<User>*@
-
-@model User
 
 <!DOCTYPE html>
 
@@ -13,17 +9,17 @@
     <meta name="viewport" content="width=device-width" />
     <title>Home</title>
     <link href="~/Content/Menubar.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/HomePage.css" rel="stylesheet" />
+    <link href="~/Content/Notifications.css" rel="stylesheet" />
 </head>
 <body>
     <header>
         <div class="menu">
             <ul>
-                <li class="active"><a href="~/Home/HomePage">Home</a></li>
+                <li><a href="~/Home/HomePage">Home</a></li>
                 <br>
                 <li><a href="~/Home/ProfilePage">Profile</a></li>
                 <br>
-                <li><a href="~/Home/Notifications">Notifications</a></li>
+                <li class="active"><a href="~/Home/Notifications">Notifications</a></li>
                 <br>
                 <li><a href="~/Home/Messages">Messages</a></li>
                 <br>
