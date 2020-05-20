@@ -129,11 +129,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\CRUD.cs" />
+    <Compile Include="Models\Tweet.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\HomePage.css" />
+    <Content Include="Content\Menubar.css" />
     <Content Include="Content\index.css" />
     <Content Include="Content\LOGIN.css" />
+    <Content Include="Content\Messages.css" />
+    <Content Include="Content\Notifications.css" />
+    <Content Include="Content\ProfilePage.css" />
+    <Content Include="Content\Settings.css" />
     <Content Include="Content\StartUp.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -167,16 +177,22 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\INDEX.cshtml" />
+    <Content Include="Views\Home\index.cshtml" />
     <Content Include="Views\view1\index.cshtml" />
     <Content Include="Views\Home\Index2.cshtml" />
     <Content Include="Views\Home\StartUp.cshtml" />
     <Content Include="Views\Home\Loading.cshtml" />
+    <Content Include="Views\Home\HomePage.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\SignUp.cshtml" />
+    <Content Include="Views\Home\ProfilePage.cshtml" />
+    <Content Include="Views\Home\Messages.cshtml" />
+    <Content Include="Views\Home\Settings.cshtml" />
+    <Content Include="Views\Home\Notifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\themes\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
