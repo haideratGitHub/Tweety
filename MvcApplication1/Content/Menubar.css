@@ -7,8 +7,11 @@
 ul {
     float: left;
     list-style-type: none;
-    padding: 25px;
+    padding: 10px;
     margin-top:10%;
+
+    margin-right:90%;
+    border:thin solid #56baed;
 }
 
     ul li {
