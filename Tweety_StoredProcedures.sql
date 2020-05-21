@@ -858,3 +858,40 @@ begin
 		set @output=1
 	end
 end
+
+
+--TRENDING HASHTAGS---
+
+go
+create procedure trending_hashtag
+
+	
+as
+begin
+		select top 5 hashtag.hashtag,count(hashtag.hashtag) as Count_#
+		from  hashtag join tweets on hashtag.tweetID=tweets.tweetID
+		where tweets.[date] <= GETDATE() and (DATEPART(m, tweets.[date]) >= DATEPART(m, DATEADD(m, -2, getdate())) )
+		group by hashtag.hashtag
+		order by count(hashtag.hashtag) desc
+end
+
+-------executing code-- --
+execute trending_hashtag
+
+
+
+-----People u should follow----
+go
+create procedure People_U_Should_Follow
+	@username varchar(30)
+as
+begin
+		select distinct u2.name,u2.displayPic, p1.fname,p1.lname
+		from ((([user] as u join follower as f1 on u.userID=f1.userID)join follower as f2  on f1.followerID=f2.userID)join [user] as u2 on f2.followerID=u2.userID)join [profile] as p1 on f2.followerID=p1.userID
+		where u.name=@username and u.userID!=f2.followerID  and f2.followerID not in (select  f11.followerID
+		from ([user] as u1 join follower as f11 on u1.userID=f11.userID)
+		where  u1.name=@username)   
+end
+-- --executing code-- --
+execute People_U_Should_Follow
+	@username='sara_89'

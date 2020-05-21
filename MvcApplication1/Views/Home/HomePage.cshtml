@@ -2,9 +2,8 @@
     ViewBag.Title = "HomePage";
 }
 @using MvcApplication1.Models;
-@*@model List<User>*@
+@model dynamic
 
-@model User
 
 <!DOCTYPE html>
 
@@ -14,6 +13,7 @@
     <title>Home</title>
     <link href="~/Content/Menubar.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/HomePage.css" rel="stylesheet" />
+    <link href="~/Content/RightColumn.css" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -34,5 +34,50 @@
             </ul>
         </div>
     </header>
+
+    <div class="Right_Column">
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>Username</td>
+                    <td>Display Pic</td>
+                    <td>First Name</td>
+                    <td>Last Name</td>
+                </tr>
+            </thead>
+
+            @foreach (User People_U_Should_Follow_list in Model.Suggested_people)
+            {
+                <tr>
+
+                    <td>@People_U_Should_Follow_list.username</td>
+                    <td>@People_U_Should_Follow_list.display_pic</td>
+                    <td>@People_U_Should_Follow_list.first_name</td>
+                    <td>@People_U_Should_Follow_list.last_name</td>
+                </tr>
+            }
+
+        </table>
+
+        <br>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>HashTag</td>
+                    <td>Count</td>
+                </tr>
+            </thead>
+
+            @foreach (hashtag_trending Trends in Model.trending_hashtags)
+            {
+                <tr>
+
+                    <td>@Trends.hashtag</td>
+                    <td>@Trends.count</td>
+                </tr>
+            }
+
+        </table>
+    </div>
 </body>
 </html>

@@ -130,6 +130,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CRUD.cs" />
+    <Compile Include="Models\hashtag_trending.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -141,6 +142,7 @@
     <Content Include="Content\Messages.css" />
     <Content Include="Content\Notifications.css" />
     <Content Include="Content\ProfilePage.css" />
+    <Content Include="Content\RightColumn.css" />
     <Content Include="Content\Settings.css" />
     <Content Include="Content\StartUp.css" />
     <Content Include="Global.asax" />

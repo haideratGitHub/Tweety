@@ -129,5 +129,467 @@ namespace MvcApplication1.Models
             }
             return result;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //////////////////////////////////////////////////////////
+
+
+        public static List<User> People_U_Should_Follow(string username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+
+            try
+            {
+                cmd = new SqlCommand("People_U_Should_Follow", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                List<User> list = new List<User>();
+                while (rdr.Read())
+                {
+                    User user = new User();
+
+                    user.username = rdr["name"].ToString();
+                    user.display_pic = rdr["displayPic"].ToString();
+                    user.first_name = rdr["fname"].ToString();
+                    user.last_name = rdr["lname"].ToString();
+                    list.Add(user);
+                }
+                rdr.Close();
+                con.Close();
+
+                return list;
+
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+
+            }
+
+        }
+
+
+
+
+        public static List<hashtag_trending> trending_hashtag()
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+
+            try
+            {
+                cmd = new SqlCommand("trending_hashtag", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                List<hashtag_trending> list = new List<hashtag_trending>();
+                while (rdr.Read())
+                {
+                    hashtag_trending hashTag = new hashtag_trending();
+
+                    hashTag.hashtag = rdr["hashtag"].ToString();
+                    hashTag.count = rdr["count_#"].ToString();
+                    list.Add(hashTag);
+                }
+                rdr.Close();
+                con.Close();
+
+                return list;
+
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }
