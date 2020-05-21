@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -77,14 +78,16 @@ namespace MvcApplication1.Controllers
                 return View("login");
             else
             {
-                //List<User> users = CRUD.view_user(username);
                 User users = CRUD.view_user(Session["username"].ToString());
-                //if (users == null)
-                //{
-                //    RedirectToAction("Login");
-                //}
-                Console.Write(users);
-                return View(users);
+                List<User> People_U_Should_Follow_list = CRUD.People_U_Should_Follow(Session["username"].ToString());
+                List<hashtag_trending> trendingHashtags = CRUD.trending_hashtag();
+
+                dynamic model = new ExpandoObject();
+                model.User = users;
+                model.Suggested_people = People_U_Should_Follow_list;
+                model.trending_hashtags = trendingHashtags;
+
+                return View(model);
             }
         }
 
