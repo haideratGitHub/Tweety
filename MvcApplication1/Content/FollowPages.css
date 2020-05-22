@@ -1,0 +1,134 @@
+﻿body {
+    border:3px solid red;
+}
+
+div.main{
+    padding:4%;
+    margin-left:16%;
+    margin-right:16%;
+    margin-top:2%;
+    margin-bottom:2%;
+
+    border:thick solid yellow;
+}
+#back{
+    color:#0094ff;
+}
+a#back{
+    border-radius:50%
+}
+i{
+    color:#0094ff;
+}
+
+ul.f{
+  list-style-type: none;
+  /*margin: 0;*/
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+  border:3px solid #0094ff;
+
+  margin-left:0%;
+  margin-right:0%;
+  margin-top:-7%;
+  margin-bottom:2%;
+}
+
+li#l {
+  float: left;
+}
+li#r{
+  float: right;
+}
+li#l a
+{
+padding-left: 125px;
+padding-right: 125px;
+}
+li#r a
+{
+padding-right: 125px;
+padding-left: 125px;
+}
+
+li.f a {
+  display: block;
+  color: dimgray;
+  text-align: center;
+  padding: 4px;
+  text-decoration: none;
+  font-size:x-large;
+  font-weight:bold;
+  border: 1px solid #0094ff;
+  border-radius: 0px;
+  border: none;
+  transition: 0.7s ease;
+}
+
+li.f a:hover {
+  background-color: lightblue;
+}
+
+li.active.f a {
+  color: #0094ff;
+  border-bottom:3px solid #0094ff;
+}
+
+div.centre-f{
+    border:2px solid #0094ff;
+    margin-left:20.2%;
+    margin-right:24.2%;
+    margin-bottom:1%;
+    margin-top:-2%;
+    padding:4%;
+}
+
+#name{
+    margin-left:10%;
+}
+
+.user-box{
+    border:thin solid yellow;
+    border-left-color:white;
+    border-right-color:white;
+    border-style:solid;
+    border-width:thin;
+    border-top-color:#E9E9E9;
+    border-bottom-color:#E9E9E9;
+    padding:1%;
+    margin-left:-8%;
+    margin-right:-8%;
+}
+
+#ftag{
+    color:dimgray;
+    background-color:#E9E9E9;
+    border-radius:4px;
+    margin-right:30%;
+   padding:2px;
+}
+
+.btn{
+    float:right;
+    margin-top:-22px;
+    font-size:15px;
+    font-weight:bold;
+    color:#0094ff;
+    border:1px solid #0094ff;
+    border-radius:30px;
+    padding: 5px 5px;
+    background-color:white;
+}
+
+.btn:active{
+    background-color: #0094ff;
+    color:white;
+}
+.btn:hover{
+    background-color: lightblue;
+}
+
+#follow{
+    margin-right:1%;
+}
