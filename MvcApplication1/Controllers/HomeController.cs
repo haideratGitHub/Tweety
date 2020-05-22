@@ -10,8 +10,6 @@ namespace MvcApplication1.Controllers
 {
     public class HomeController : Controller
     {
-        //
-        // GET: /Home/
 
         public ActionResult Login()
         {

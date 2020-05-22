@@ -375,8 +375,7 @@ namespace MvcApplication1.Models
             }
             return result;
         }
-    }
-}
+
 
         public static List<User> People_U_Should_Follow(string username)
         {
@@ -459,7 +458,5 @@ namespace MvcApplication1.Models
             }
 
         }
-
-
-
     }
+}
