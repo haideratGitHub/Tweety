@@ -584,12 +584,5 @@ namespace MvcApplication1.Models
 
 
 
-
-
-
-
-
-
-
     }
 }
