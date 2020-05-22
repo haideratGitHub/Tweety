@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Followers";
+}
+
+@using MvcApplication1.Models;
+@model dynamic
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Followers</title>
+    <link href="~/Content/Menubar.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/FollowPages.css" rel="stylesheet" />
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+</head>
+<body>
+    <header>
+        <div class="main">
+            @{User user = (User)Model.user;
+                <h2 id="name">@user.first_name &nbsp; @user.last_name</h2>
+                    <p id="name"> &#64;@user.username</p>
+            }
+            <ul class="f">
+                <br>
+                <li id="back"><a href="~/Home/ProfilePage"><i class="fas fa-arrow-left"></i></a></li>
+                <br>
+                <li class="f" id="l"><a href="~/Home/Following">Following</a></li><li class="active f" id="r"><a href="~/Home/Followers">Followers</a></li>
+            </ul>
+        </div>
+        <div class="centre-f">
+            @foreach (User follower in Model.followers)
+            {
+                <div class="user-box">
+                    <p>
+                        <h2>@follower.first_name &nbsp; @follower.last_name</h2><button class="btn" id="remove" onclick="location.href = '../../Home/RemoveFollower?username=@follower.username'">Remove <i class='fas fa-user-minus'></i></button><button class="btn" id="follow" onclick="location.href = '../../Home/Follow?username=@follower.username'">Follow <i class='fas fa-user-plus'></i></button>
+                        &#64;@follower.username &nbsp;&nbsp;&nbsp;<span id="ftag">Follows you</span>
+                        <br />
+                        @follower.status
+                    </p>
+                </div>
+            }
+    </header>
+</body>
+</html>

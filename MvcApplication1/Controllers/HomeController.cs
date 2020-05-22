@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using System.Dynamic;
 using MvcApplication1.Models;
 namespace MvcApplication1.Controllers
 {
@@ -94,13 +94,17 @@ namespace MvcApplication1.Controllers
                 return View("login");
             else
             {
-                User users = CRUD.view_user(Session["username"].ToString());
-                if (users == null)
-                {
-                    RedirectToAction("Login");
-                }
-                Console.Write(users);
-                return View(users);
+                //User users = CRUD.view_user(Session["username"].ToString());
+                dynamic mymodel = new ExpandoObject();
+                mymodel.user = CRUD.view_user(Session["username"].ToString());
+                mymodel.no_of_followers = CRUD.no_of_followers(Session["username"].ToString());
+                mymodel.no_of_followings = CRUD.no_of_followings(Session["username"].ToString());
+                //if (users == null)
+                //{
+                //    RedirectToAction("Login");
+                //}
+                Console.Write(mymodel);
+                return View(mymodel);
             }
         }
 
@@ -120,6 +124,69 @@ namespace MvcApplication1.Controllers
             Session["username"] = username;
             return RedirectToAction("HomePage");
             //return RedirectToAction("HomePage", new { username = username });
+        }
+
+        public ActionResult Following(String username)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {    
+                dynamic mymodel = new ExpandoObject();
+                mymodel.user = CRUD.view_user(Session["username"].ToString());
+                mymodel.no_of_followings = CRUD.no_of_followings(Session["username"].ToString());
+                mymodel.following = CRUD.get_following(Session["username"].ToString());
+                Console.Write(mymodel);
+                return View(mymodel);
+            }
+        }
+
+        public ActionResult Followers(String username)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                dynamic mymodel = new ExpandoObject();
+                mymodel.user = CRUD.view_user(Session["username"].ToString());
+                mymodel.no_of_followers = CRUD.no_of_followers(Session["username"].ToString());
+                mymodel.followers = CRUD.get_followers(Session["username"].ToString());
+                Console.Write(mymodel);
+                return View(mymodel);
+            }
+        }
+
+        public ActionResult Follow(String username)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.ToFollow(Session["username"].ToString(), username);
+                return RedirectToAction("Following");
+            }
+        }
+
+        public ActionResult UnFollow(String username)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.ToUnFollow(Session["username"].ToString(), username);
+                return RedirectToAction("Following");
+            }
+        }
+
+        public ActionResult RemoveFollower(String username)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.RemoveFollower(Session["username"].ToString(), username);
+                return RedirectToAction("Followers");
+            }
         }
     }
 }
