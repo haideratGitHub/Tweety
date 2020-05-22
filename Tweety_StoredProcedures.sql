@@ -1,4 +1,5 @@
 use tweety
+
 go
 
 -- --TO VIEW COMMENTS ON A TWEET-- --
@@ -675,13 +676,13 @@ execute comment
 -- --TO REMOVE A FOLLOWER-- --
 go
 create procedure remove_follower
-	@username varchar(30),@follower varchar(30),@password varchar(30)
+	@username varchar(30),@follower varchar(30)--,@password varchar(30)
 as
 begin
-	if @username in(select name from [user]) and @follower in(select name from [user])
-	begin
-		if @password=(select password from [user] where name=@username)
-		begin
+	--if @username in(select name from [user]) and @follower in(select name from [user])
+	--begin
+		--if @password=(select password from [user] where name=@username)
+		--begin
 			declare @uid int,@fid int
 			select @uid=userID from [user] where name=@username
 			select @fid=userID from [user] where name=@follower
@@ -695,11 +696,11 @@ begin
 			begin
 				print @follower+(' is already not your follower')
 			end
-		end
-		else
-		begin
-			print('wrong password')
-		end
+		--end
+		--else
+		--begin
+			--print('wrong password')
+		--end
 	end
 	else
 	begin
@@ -857,3 +858,70 @@ begin
 		set @output=1
 	end
 end
+
+-- --TO VIEW NO. OF FOLLOWING OF A USER-- --
+go
+create procedure no_of_followings
+	@username varchar(30)
+as
+begin
+	if @username in (select name from [user])
+	begin
+		select name as username,count(f.userID) as [following]
+		from [user] u left join follower f on u.userID=f.followerID
+		where @username=name
+		group by name
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+-- --executing code-- --
+execute no_of_followings
+	@username='sara_89'
+
+-- --TO GET FOLLOWING OF A USER-- --
+go
+create procedure followings
+	@username varchar(30)
+as
+begin
+	if @username in (select name from [user])
+	begin
+		select u.name as [following],u.displayPic,fname,lname,country,[status],gender,u1.name
+		from (([user] u join follower f on u.userID=f.userID)join [user] u1 on u1.userID=followerID)join [profile] on u.userID=[profile].userID
+		where u1.name=@username		
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+-- --executing code-- --
+execute followings
+	@username='sara_89'
+
+-- --TO GET FOLLOWERS OF A USER-- --
+go
+create procedure followers
+	@username varchar(30)
+as
+begin
+	if @username in (select name from [user])
+	begin
+		select u.name,u1.name as follower,u1.displayPic,fname,lname,country,[status],gender
+		from (([user] u join follower f on u.userID=f.userID)join [user] u1 on u1.userID=followerID)left join [profile] on u1.userID=[profile].userID
+		where u.name=@username	
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+-- --executing code-- --
+execute followers
+	@username='sara_89'
