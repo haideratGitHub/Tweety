@@ -55,16 +55,16 @@ as
 begin
 	if @tweet_id in (select tweetID from tweets)
 	begin
-		if @tweet_id in (select tweetID from likes)
-		begin
+		--if @tweet_id in (select tweetID from likes)
+		--begin
 			select u.name as liked_by_users
 			from (tweets t join likes l on t.tweetID=l.tweetID)join [user] u on l.likerID=u.userID
 			where t.tweetID=@tweet_id
-		end
-		else
-		begin
-			print('not liked by anyone yet')
-		end
+		--end
+		--else
+		--begin
+			--print('not liked by anyone yet')
+		--end
 	end
 	else
 	begin
@@ -84,16 +84,16 @@ as
 begin
 	if @tweet_id in (select tweetID from tweets)
 	begin
-		if @tweet_id in (select tweetID from dislikes)
-		begin
+		--if @tweet_id in (select tweetID from dislikes)
+		--begin
 			select u.name as disliked_by_users
 			from (tweets t join dislikes d on t.tweetID=d.tweetID)join [user] u on d.dislikerID=u.userID
 			where t.tweetID=@tweet_id
-		end
-		else
-		begin
-			print('not disliked by anyone yet')
-		end
+		--end
+		--else
+		--begin
+			--print('not disliked by anyone yet')
+		--end
 	end
 	else
 	begin
@@ -814,12 +814,13 @@ begin
 		set @output=0
 	end
 end
+go
 -- --executing code-- --
 declare @result int
 execute user_login
-	@username='ali_33',@password='p1234',@output=@result output
+	@username='ali_33',@password='p123',@output=@result output
 select @result
-
+go
 -- --TO VIEW A USER-- --
 go
 create procedure view_user
@@ -858,6 +859,63 @@ begin
 		set @output=1
 	end
 end
+
+--TRENDING HASHTAGS---
+
+
+go
+create procedure trending_hashtag
+as
+begin
+
+select top 5 hashtag.hashtag,count(hashtag.hashtag) as Count_#
+		
+from  hashtag join tweets on hashtag.tweetID=tweets.tweetID
+		
+where tweets.[date] <= GETDATE() and (DATEPART(m, tweets.[date]) >= DATEPART(m, DATEADD(m, -2, getdate())) )
+	
+group by hashtag.hashtag
+		
+order by count(hashtag.hashtag) desc
+end
+
+
+-------executing code-- --
+
+execute trending_hashtag
+
+
+
+
+
+
+-----People u should follow----
+
+go
+
+create procedure People_U_Should_Follow
+	@username varchar(30)
+
+as
+
+begin
+
+select distinct u2.name,u2.displayPic, p1.fname,p1.lname
+	
+from ((([user] as u join follower as f1 on u.userID=f1.userID)join follower as f2  on f1.followerID=f2.userID)join [user] as u2 on f2.followerID=u2.userID)join [profile] as p1 on f2.followerID=p1.userID
+	
+where u.name=@username and u.userID!=f2.followerID  and f2.followerID not in
+(select  f11.followerID
+	from ([user] as u1 join follower as f11 on u1.userID=f11.userID)
+	
+where  u1.name=@username)   
+
+end
+
+-- --executing code-- --
+
+execute People_U_Should_Follow
+	@username='sara_89'
 
 -- --TO VIEW NO. OF FOLLOWING OF A USER-- --
 go
@@ -925,3 +983,279 @@ go
 -- --executing code-- --
 execute followers
 	@username='sara_89'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- --TO GET NO OF TWEETS OF A USER-- --
+go
+create procedure no_of_tweets
+	@username varchar(30)
+as
+begin
+	if @username in (select name from [user])
+	begin
+		select name as username,count(t.tweetID) as tweets
+		from [user] u left join tweets t on u.userID=t.userID
+		where @username=name
+		group by name
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+-- --executing code-- --
+execute no_of_tweets
+	@username='sara_89'
+
+-- --TO GET NO OF LIKES OF A USER-- --
+go
+create procedure no_of_likes
+	@username varchar(30)
+as
+begin
+	if @username in (select name from [user])
+	begin
+		select name as username,count(l.likerID) as likes
+		from [user] u left join likes l on u.userID=l.likerID
+		where @username=name
+		group by name
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+-- --executing code-- --
+execute no_of_likes
+	@username='sara_89'
+
+-- --TO GET NO OF DISLIKES OF A USER-- --
+go
+create procedure no_of_dislikes
+	@username varchar(30)
+as
+begin
+	if @username in (select name from [user])
+	begin
+		select name as username,count(d.dislikerID) as dislikes
+		from [user] u left join dislikes d on u.userID=d.dislikerID
+		where @username=name
+		group by name
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+-- --executing code-- --
+execute no_of_dislikes
+	@username='ahmad_54'
+
+
+-- --TO GET TWEETS OF A USER-- --
+go
+create procedure tweets_of_user
+	@username varchar(30)
+as
+begin
+	if @username in (select name from [user])
+	begin
+		select name as username,t.tweetID,t.userID,t.tweet,convert(varchar,t.date,101) as date,convert(varchar(5),t.time)as time
+		from [user] u left join tweets t on u.userID=t.userID
+		where @username=name
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+-- --executing code-- --
+execute tweets_of_user
+	@username='alice_21'
+
+-- --TO GET NO OF COMMENTS ON A TWEET-- --
+go
+create procedure no_of_comments_on_a_tweet
+	@tweet_id int
+as
+begin
+	if @tweet_id in (select tweetID from tweets)
+	begin
+		select t.tweetID,count(commentID) as comments
+		from tweets t left join comments c on t.tweetID=c.tweetID
+		where t.tweetID=@tweet_id
+		group by t.tweetID
+	end
+	else
+	begin
+		print('The tweet does not exists')
+	end
+end
+go
+-- --executing code-- --
+execute no_of_comments_on_a_tweet
+	@tweet_id=1
+
+-- --TO GET NO OF LIKES ON A TWEET-- --
+go
+create procedure no_of_likes_on_a_tweet
+	@tweet_id int
+as
+begin
+	if @tweet_id in (select tweetID from tweets)
+	begin
+		select t.tweetID,count(likerID) as likes
+		from tweets t left join likes l on t.tweetID=l.tweetID
+		where t.tweetID=@tweet_id
+		group by t.tweetID
+	end
+	else
+	begin
+		print('The tweet does not exists')
+	end
+end
+go
+-- --executing code-- --
+execute no_of_likes_on_a_tweet
+	@tweet_id=4
+
+-- --TO GET NO OF DISLIKES ON A TWEET-- --
+go
+create procedure no_of_dislikes_on_a_tweet
+	@tweet_id int
+as
+begin
+	if @tweet_id in (select tweetID from tweets)
+	begin
+		select t.tweetID,count(dislikerID) as dislikes
+		from tweets t left join dislikes d on t.tweetID=d.tweetID
+		where t.tweetID=@tweet_id
+		group by t.tweetID
+	end
+	else
+	begin
+		print('The tweet does not exists')
+	end
+end
+go
+-- --executing code-- --
+execute no_of_dislikes_on_a_tweet
+	@tweet_id=4
+
+-- --TO GET COMMENTS ON A TWEET-- --
+go
+create procedure comments_on_a_tweet
+	@tweet_id int
+as
+begin
+	if @tweet_id in (select tweetID from tweets)
+	begin
+		select t.tweetID,c.commentID,c.comment,c.commenterID,u.name,convert(varchar,c.date,101) as date,convert(varchar(5),c.time)as time
+		from (tweets t left join comments c on t.tweetID=c.tweetID)join [user] u on commenterID=u.userID
+		where t.tweetID=@tweet_id
+	end
+	else
+	begin
+		print('The tweet does not exists')
+	end
+end
+go
+-- --executing code-- --
+execute comments_on_a_tweet
+	@tweet_id=4
