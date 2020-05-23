@@ -106,6 +106,7 @@ execute dislikers_of_a_tweet
 	@tweet_id=2
 
 -- --TO FOLLOW A USER-- --
+drop procedure follow
 go
 create procedure follow
 	@username varchar(30),@other_username varchar(30)
@@ -132,6 +133,12 @@ begin
 			begin
 				insert into follower values(@id2,@id1)
 				print @username+(' now following user ')+@other_username
+				
+				--pushing notification
+				declare @_text varchar(200)
+				set @_text = @username+(' started following you')
+				execute addNotification
+				@userID=@id2, @text=@_text
 			end
 		end
 		else
@@ -493,6 +500,10 @@ create procedure like_a_tweet
 	@tweet_id int,@liker varchar(30)
 as
 begin
+
+	execute undislike_a_tweet
+	@tweet_id=@tweet_id,@disliker=@liker
+
 	if @tweet_id in(select tweetID from tweets)
 	begin
 		if @liker in(select name from [user])
@@ -507,6 +518,13 @@ begin
 			begin
 				insert into likes values(@id,@tweet_id)
 				print @liker+(' liked this tweet')
+				
+				-- Pushing notification
+				declare @_userID int, @_text varchar(200), @tweetData varchar(15)
+				select @_userID = t.userID, @tweetData = t.tweet from tweets as t where t.tweetID = @tweet_id
+				set @_text = @liker+(' like your tweet " ')+@tweetData+('..."')
+				execute addNotification
+				@userID=@_userID, @text=@_text
 			end
 		end
 		else
@@ -569,6 +587,10 @@ create procedure dislike_a_tweet
 	@tweet_id int,@disliker varchar(30)
 as
 begin
+	
+	execute unlike_a_tweet
+	@tweet_id=@tweet_id,@liker=@disliker
+
 	if @tweet_id in(select tweetID from tweets)
 	begin
 		if @disliker in(select name from [user])
@@ -583,6 +605,14 @@ begin
 			begin
 				insert into dislikes values(@id,@tweet_id)
 				print @disliker+(' disliked this tweet')
+
+				
+				-- Pushing notification
+				declare @_userID int, @_text varchar(200), @tweetData varchar(15)
+				select @_userID = t.userID, @tweetData = t.tweet from tweets as t where t.tweetID = @tweet_id
+				set @_text = @disliker+(' dislike your tweet " ')+@tweetData+('..."')
+				execute addNotification
+				@userID=@_userID, @text=@_text
 			end
 		end
 		else
@@ -598,7 +628,7 @@ end
 go
 -- --executing code-- --
 execute dislike_a_tweet
-	@tweet_id=2,@disliker='mike_99'
+	@tweet_id=6,@disliker='mike_99'
 --select * from dislikes
 
 -- --TO UNDISLIKE A TWEET-- --
@@ -656,6 +686,14 @@ begin
 
 			insert into comments values(@id,@tweet_id,@uid,@comment,convert(date,getdate()),convert(time,getdate()))
 			print('comment posted')
+
+			-- Pushing notification
+				declare @_userID int, @_text varchar(200), @CommentData varchar(25), @tweetData varchar(15)
+				set @CommentData = @comment
+				select @_userID = t.userID, @tweetData = t.tweet from tweets as t where t.tweetID = @tweet_id
+				set @_text = @username+(' comment "')+@CommentData+('..." on your tweet "')+@tweetData+('..."')
+				execute addNotification
+				@userID=@_userID, @text=@_text
 		end
 		else
 		begin
@@ -1259,3 +1297,38 @@ go
 -- --executing code-- --
 execute comments_on_a_tweet
 	@tweet_id=4
+
+
+
+
+
+go
+--to add values in notification table
+create procedure addNotification
+	@userID int,
+	@text varchar(200)
+as
+begin
+	declare @nID int
+
+	select @nID=max(NotificationID) from Notifications
+		set @nID=@nID+1
+
+	insert into Notifications values (@nID, @userID, convert(datetime,getdate()),convert(time,getdate()),'U', @text)
+end
+
+go
+
+-- to show notifications for a user
+create procedure showNotifications
+	@username varchar(30)
+as
+begin
+	select N.notificationID, N.userID, N.nDate, N.nTime, N.readFlag, N.n_Text
+	from Notifications as N join [user] as U on N.userID = U.userID
+	where U.name = @username
+	order by convert(datetime, nDate) desc, convert(time, ntime) desc
+	
+end
+
+go

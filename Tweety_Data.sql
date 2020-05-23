@@ -114,7 +114,7 @@ insert into privateChat values
 
 
 insert into Notifications values
-(1,1,GETDATE(),CONVERT(time, GETDATE()), 'U', 'Welcome to Tweety')
+(1,2,CONVERT(datetime, GETDATE()),CONVERT(time, GETDATE()), 'U', 'Welcome to Tweety')
 
 ---- checking actions
 
