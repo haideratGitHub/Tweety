@@ -14,5 +14,7 @@ namespace MvcApplication1.Models
         public string comment;
         public string date;
         public string time;
+
+        public User commenter;
     }
 }
