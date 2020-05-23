@@ -48,6 +48,10 @@ namespace MvcApplication1.Controllers
             return View("Notifications");
         }
 
+        public ActionResult Explore()
+        {
+            return View("Explore");
+        }
 
         public ActionResult authenticate(String username, String password)
         {
@@ -84,7 +88,7 @@ namespace MvcApplication1.Controllers
                 model.User = users;
                 model.Suggested_people = People_U_Should_Follow_list;
                 model.trending_hashtags = trendingHashtags;
-
+              
                 return View(model);
             }
         }
