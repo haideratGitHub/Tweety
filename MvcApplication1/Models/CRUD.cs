@@ -820,5 +820,50 @@ namespace MvcApplication1.Models
                 return null;
             }
         }
+
+
+
+        public static List<Notification> showNotifications(string username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+
+            try
+            {
+                cmd = new SqlCommand("showNotifications", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                List<Notification> list = new List<Notification>();
+                while (rdr.Read())
+                {
+                    Notification notification = new Notification();
+
+                    notification.notificationID = rdr["notificationID"].ToString();
+                    notification.userID = rdr["userID"].ToString();
+                    notification.nDate = rdr["nDate"].ToString();
+                    notification.nTime = rdr["nTime"].ToString();
+                    notification.readFlag = rdr["readFlag"].ToString();
+                    notification.n_Text = rdr["n_Text"].ToString();
+                    list.Add(notification);
+                }
+                rdr.Close();
+                con.Close();
+
+                return list;
+
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+
+            }
+
+        }
     }
 }
