@@ -458,5 +458,367 @@ namespace MvcApplication1.Models
             }
 
         }
+
+        public static int no_of_tweets(string username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("no_of_tweets", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                {
+                    result = Convert.ToInt32(rdr["tweets"].ToString());
+                    return result;
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public static int no_of_likes(string username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("no_of_likes", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                {
+                    result = Convert.ToInt32(rdr["likes"].ToString());
+                    return result;
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public static int no_of_dislikes(string username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+            
+            try
+            {
+                cmd = new SqlCommand("no_of_dislikes", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                {
+                    result = Convert.ToInt32(rdr["dislikes"].ToString());
+                    return result;
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+
+        public static List<Tweet> tweets_of_a_user(String username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+
+            try
+            {
+                cmd = new SqlCommand("tweets_of_user", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                List<Tweet> list = new List<Tweet>();
+                int i = 0,j = -1;
+                while (rdr.Read())
+                {
+                    Tweet tweet = new Tweet();
+
+                    tweet.tweetID = rdr["tweetID"].ToString();
+                    tweet.userID = rdr["userID"].ToString();
+                    tweet.tweet = rdr["tweet"].ToString();
+                    tweet.date = rdr["date"].ToString();
+                    tweet.time = rdr["time"].ToString();
+
+                    tweet.no_of_likes = no_of_likes_on_a_tweet(Convert.ToInt32(tweet.tweetID));
+                    tweet.no_of_dislikes=no_of_dislikes_on_a_tweet(Convert.ToInt32(tweet.tweetID));
+                    tweet.no_of_comments=no_of_comments_on_a_tweet(Convert.ToInt32(tweet.tweetID));
+                    tweet.likers = likers_of_a_tweet(Convert.ToInt32(tweet.tweetID));
+                    tweet.dislikers = dislikers_of_a_tweet(Convert.ToInt32(tweet.tweetID));
+                    tweet.comments = comments_on_a_tweet(Convert.ToInt32(tweet.tweetID));
+
+                    //FOR MODALS USE
+                    tweet.modelID1 = i;
+                    tweet.modelID2 = j;
+                    i = i - 2;
+                    j = j - 2;
+                    list.Add(tweet);
+                }
+                rdr.Close();
+                con.Close();
+                return list;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+        public static int no_of_likes_on_a_tweet(int tweetID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("no_of_likes_on_a_tweet", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                {
+                    result = Convert.ToInt32(rdr["likes"].ToString());
+                    return result;
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public static int no_of_dislikes_on_a_tweet(int tweetID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("no_of_dislikes_on_a_tweet", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                {
+                    result = Convert.ToInt32(rdr["dislikes"].ToString());
+                    return result;
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public static int no_of_comments_on_a_tweet(int tweetID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("no_of_comments_on_a_tweet", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                {
+                    result = Convert.ToInt32(rdr["comments"].ToString());
+                    return result;
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public static List<User> likers_of_a_tweet(int tweetID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+
+            try
+            {
+                cmd = new SqlCommand("likers_of_a_tweet", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                string liker_name;
+                List<User> list = new List<User>();
+                while (rdr.Read())
+                {
+                    User user = new User();
+
+                    liker_name = rdr["liked_by_users"].ToString();
+                    user = view_user(liker_name);
+
+                    list.Add(user);
+                }
+                rdr.Close();
+                con.Close();
+                return list;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+        public static List<User> dislikers_of_a_tweet(int tweetID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+
+            try
+            {
+                cmd = new SqlCommand("dislikers_of_a_tweet", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                string disliker_name;
+                List<User> list = new List<User>();
+                while (rdr.Read())
+                {
+                    User user = new User();
+
+                    disliker_name = rdr["disliked_by_users"].ToString();
+                    user = view_user(disliker_name);
+
+                    list.Add(user);
+                }
+                rdr.Close();
+                con.Close();
+                return list;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+        public static List<Comment> comments_on_a_tweet(int tweetID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+
+            try
+            {
+                cmd = new SqlCommand("comments_on_a_tweet", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                string commenterName;
+                List<Comment> list = new List<Comment>();
+                while (rdr.Read())
+                {
+                    Comment c = new Comment();
+
+                    c.tweetID = rdr["tweetID"].ToString();
+                    c.commentID = rdr["commentID"].ToString();
+                    c.commenterID= rdr["commenterID"].ToString();
+                    c.date = rdr["date"].ToString();
+                    c.time = rdr["time"].ToString();
+                    c.comment = rdr["comment"].ToString();
+                    commenterName = rdr["name"].ToString();
+
+                    c.commenter = view_user(commenterName);
+
+                    list.Add(c);
+                }
+                rdr.Close();
+                con.Close();
+                return list;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿body {
-    border:3px solid red;
+    /*border:3px solid red;*/
 }
 
 div.main{
@@ -9,7 +9,7 @@ div.main{
     margin-top:2%;
     margin-bottom:2%;
 
-    border:thick solid yellow;
+    /*border:thick solid yellow;*/
 }
 #back{
     color:#0094ff;
@@ -72,16 +72,21 @@ li.f a:hover {
 
 li.active.f a {
   color: #0094ff;
-  border-bottom:3px solid #0094ff;
+  border-bottom:4px solid #0094ff;
 }
 
 div.centre-f{
     border:2px solid #0094ff;
-    margin-left:20.2%;
-    margin-right:24.2%;
+    margin-left:20%;
+    margin-right:24.6%;
     margin-bottom:1%;
     margin-top:-2%;
     padding:4%;
+    /*scroll changes*/
+    overflow-y:scroll;
+    max-height:280px;
+    width:602px;
+    height:270px;
 }
 
 #name{
@@ -89,7 +94,7 @@ div.centre-f{
 }
 
 .user-box{
-    border:thin solid yellow;
+    /*border:thin solid yellow;*/
     border-left-color:white;
     border-right-color:white;
     border-style:solid;
