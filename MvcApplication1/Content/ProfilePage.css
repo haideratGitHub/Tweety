@@ -1,14 +1,40 @@
 ﻿body {
 }
 
+.column {
+    float: left;
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
+}
+
+.left {
+    width: 25%;
+}
+
+.right {
+    width: 75%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+div.column {
+    margin-top: -45%;
+   
+}
+
 div.profile{
     border-style:solid;
     border-color:#56baed;
     border-width:thin;
-    margin-left:16%;
+    margin-left:26%;
     margin-top:2%;
     margin-bottom:2%;
-    margin-right:16%;
+    margin-right:1%;
     padding:1%;
 }
 
@@ -16,10 +42,10 @@ div.centre-column{
     border-style:solid;
     border-color:#56baed;
     border-width:thin;
-    margin-left:16%;
+    margin-left:26%;
     margin-top:2%;
     margin-bottom:2%;
-    margin-right:16%;
+    margin-right:1%;
     padding:1%;
 }
 
@@ -34,7 +60,11 @@ img{
     width:150px;
 }
 
-button#MyAccount{
+i{
+    color:#0094ff;
+}
+
+/*button#MyAccount{
     float:right;
     font-size:20px;
     font-weight:bold;
@@ -50,6 +80,22 @@ button#MyAccount:active{
     color:white;
 }
 button#MyAccount:hover{
+    background-color: lightblue;
+}*/
+
+button{
+    border-radius:10px;
+    padding: 0px;
+    background-color:white;
+    width:30px;
+    height:30px;
+}
+
+button:active{
+    background-color: #0094ff;
+    color:white;
+}
+button:hover{
     background-color: lightblue;
 }
 
@@ -75,6 +121,71 @@ a:hover{
     text-decoration:underline;
 }
 
+.user-box img{
+    float:left;
+    border-radius:50%;
+    border:thin solid #0094ff;
+    width:50px;
+    max-width:50px;
+    max-height:50px;
+}
+
+.user-box p#tweet-box{
+    /*border:thin solid red;*/
+    margin-left:7%;
+    padding:1%;
+}
+
+span#name{
+    font-weight:bold;
+    font-size:medium;
+}
+span#details{
+    font-size:medium;
+}
+
+div.user-box{ 
+    border-left-color:white;
+    border-right-color:white;
+    border-style:solid;
+    border-width:thin;
+    border-top-color:#E9E9E9;
+    border-bottom-color:#E9E9E9;
+    padding:1%;    
+}
+
+div.detail-box{
+    border-left-color:white;
+    border-right-color:white;
+    border-style:solid;
+    border-width:thin;
+    border-top-color:#E9E9E9;
+    border-bottom-color:#E9E9E9;
+    padding:1%;  
+}
+
+.detail-box img{
+    float:left;
+    border-radius:50%;
+    border:thin solid #0094ff;
+    width:50px;
+    max-width:50px;
+    max-height:50px;
+}
+.detail-box p#detail-box{
+    /*border:thin solid red;*/
+    margin-left:7%;
+    padding:1%;
+}
+#tag{
+    color:dimgray;
+    background-color:#E9E9E9;
+    border-radius:4px;
+    margin-right:30%;
+    padding:2px;
+}
+
+
 /*div.modal{
     overflow-y: initial !important;
 }
@@ -84,7 +195,7 @@ div.modal-content{
 }*/
 
 
-/*.modal {
+.modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -96,29 +207,50 @@ div.modal-content{
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+  margin-top:-4%;
 }
 
 /* Modal Content */
-/*.modal-content {
+.modal-content {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
   height:80%;
-}*/
+
+  overflow-y:scroll;
+  max-height:500px;
+  max-width:800px;
+}
 
 /* The Close Button */
-/*.close {
-  color: #aaaaaa;
+.close {
+  color: dimgray;
   float: right;
-  font-size: 28px;
-  font-weight: bold;
-}*/
+  font-size: 24px;
+  margin-top:-1%;
 
-/*.close:hover,
+  padding-left:0.5%;
+  padding-right:0.5%;
+  border-radius:25%;
+}
+
+.close:hover,
 .close:focus {
-  color: #000;
+  background-color: lightblue;
   text-decoration: none;
   cursor: pointer;
-}*/
+}
+
+div.modal-content header{
+     position:fixed;
+     width:790px;
+     font-size:large;
+     font-family:'Century Gothic';
+     font-weight:bold;
+     color:#0094ff;
+     background-color:white;
+     /*border:thick solid yellow;*/
+}

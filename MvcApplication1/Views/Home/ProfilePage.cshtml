@@ -12,96 +12,163 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Profile</title>
-    <link href="~/Content/Menubar.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/ProfilePage.css" rel="stylesheet" />
+    <link href="~/Content/Menubar.css" rel="stylesheet" type="text/css" />
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
-    
+
 
 </head>
 <body>
-    <div class="grid-container">
-        <div class="profile">
-            @{User user = (User)Model.user;
-                <p id="pcontent">
-                    @*<button id="MyAccount">Account <i class='fas fa-user-alt'></i></button>*@
-                    <img src="@user.display_pic" alt="Avatar">
-                    <h2>@user.first_name &nbsp; @user.last_name</h2>
-                    &#64; @user.username
-                    <br>
-                    <a href="~/Home/Following">@Model.no_of_followings Following</a> &nbsp;&nbsp; <a href="~/Home/Followers">@Model.no_of_followers Follower</a>
-                    <br>
-                    Tweets
-                </p>
-            }
-        </div>
-        <div class="centre-column">
-            <div id="centre-title">Tweets</div>
-            <br />
-        </div>
-        <header>
-            <div class="menu">
-                <ul>
-                    <li><a href="~/Home/HomePage">Home</a></li>
-                    <br>
-                    <li class="active"><a href="~/Home/ProfilePage">Profile</a></li>
-                    <br>
-                    <li><a href="~/Home/Notifications">Notifications</a></li>
-                    <br>
-                    <li><a href="~/Home/Messages">Messages</a></li>
-                    <br>
-                    <li><a href="~/Home/Settings">Settings</a></li>
-                    <br>
-                    <li><a href="~/Home/LogOut">Logout</a></li>
-                    <br>
-                </ul>
+    <div class="row">
+        <div class="grid-container">
+            <div class="profile">
+                @{User user = (User)Model.user;
+                    <p id="pcontent">
+                        @*<button id="MyAccount">Account <i class='fas fa-user-alt'></i></button>*@
+                        <img src="@user.display_pic" alt="Avatar">
+                        <h2>@user.first_name&nbsp;@user.last_name</h2>
+                        &#64; @user.username
+                        <br>
+                        <a href="~/Home/Following">@Model.no_of_followings Following</a> &nbsp;&nbsp; <a href="~/Home/Followers">@Model.no_of_followers Follower</a>
+                        <br>
+                        @Model.no_of_tweets Tweets &nbsp;&nbsp; @Model.no_of_likes Likes &nbsp;&nbsp; @Model.no_of_dislikes Dislikes
+                    </p>
+                }
             </div>
-        </header>
+            <div class="centre-column">
+                <div id="centre-title">Tweets</div>
+                <br />
+                @foreach (Tweet tweet in Model.tweets)
+                {
+                    <div class="user-box">
+                        @{User user1 = (User)Model.user;
+                            <img src="@user1.display_pic" alt="Avatar" id="tweet-box">
+                            <p id="tweet-box">
+                                <span id="name">@user1.first_name&nbsp;@user1.last_name</span> <span id="details">&nbsp; &#64;@user1.username</span><span id="details" style="float:right">@tweet.date&nbsp;&nbsp;@tweet.time</span>
+                                <br />
+                                <span style="color:black">@tweet.tweet</span>
+                                <br /><br />
+                                <span id="tweet-details">
+                                    @tweet.no_of_comments <button id="comment-btn" onclick="ShowModal(@tweet.tweetID)"><i style="color:#0094ff" id="tweet-details" class="far fa-comment-alt"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@tweet.no_of_likes <button id="like-btn" onclick="ShowModal(@tweet.modelID1)"><i style="color:#0094ff" id="tweet-details" class="far fa-thumbs-up"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@tweet.no_of_dislikes <button id="dislike-btn" onclick="ShowModal(@tweet.modelID2)"><i style="color:#0094ff" id="tweet-details" class="far fa-thumbs-down"></i></button>
+                                </span>
+                            </p>
+                        }
+                    </div>
+                    <!-- The Modal for comments-->
+                    <div id=@tweet.tweetID class="modal">
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <header>
+                                &nbsp;&nbsp;&nbsp;Comments
+                                <span class="close" onclick="HideModal(@tweet.tweetID)"><i class="fas fa-times"></i></span>
+                            </header>
+                            <div style="margin-top:4%;">
+                                @foreach (Comment c in tweet.comments)
+                                {
+                                    <div class="user-box">
+                                        @{User commenter = (User)c.commenter;
+                                            <img src="@commenter.display_pic" alt="Avatar" id="tweet-box">
+                                            <p id="tweet-box">
+                                                <span id="name">@commenter.first_name&nbsp;@commenter.last_name</span> <span id="details">&nbsp; &#64;@commenter.username</span><span id="details" style="float:right">@c.date&nbsp;&nbsp;@c.time</span>
+                                                <br />
+                                                <span style="color:black">@c.comment</span>
+                                            </p>
+                                        }
+                                    </div>
+                                }
+                                @*<br />@tweet.tweetID*@
+                            </div>
+                        </div>
+                    </div>
 
-        @*<!-- The Modal -->
-        <div id="myModal" class="modal">
+                    <!-- The Modal for likers-->
+                    <div id=@tweet.modelID1 class="modal">
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <header>
+                                &nbsp;&nbsp;&nbsp;Likers
+                                <span class="close" onclick="HideModal(@tweet.modelID1)"><i class="fas fa-times"></i></span>
+                            </header>
+                            <div style="margin-top:4%;">
+                                @foreach (User l in @tweet.likers)
+                                {
+                                    <div class="detail-box">
+                                        <img src="@l.display_pic" alt="Avatar" id="detail-box">
+                                        <p id="detail-box">
+                                            <span id="name">@l.first_name&nbsp;@l.last_name</span>
+                                            <br /><span id="details">&#64;@l.username</span>&nbsp;&nbsp; <span id="tag">Liked your tweet</span>
+                                        </p>
+                                    </div>
+                                }
+                            </div>
+                            @*<br />@tweet.modelID1*@
+                        </div>
+                    </div>
 
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>Some text in the Modal..</p>
-                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />hi
+                    <!-- The Modal for dislikers-->
+                    <div id=@tweet.modelID2 class="modal">
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <header>
+                                &nbsp;&nbsp;&nbsp;Dislikers
+                                <span class="close" onclick="HideModal(@tweet.modelID2)"><i class="fas fa-times"></i></span>
+                            </header>
+                            <div style="margin-top:4%;">
+                                @foreach (User d in @tweet.dislikers)
+                                {
+                                    <div class="detail-box">
+                                        <img src="@d.display_pic" alt="Avatar" id="detail-box">
+                                        <p id="detail-box">
+                                            <span id="name">@d.first_name&nbsp;@d.last_name</span>
+                                            <br /><span id="details">&#64;@d.username</span>&nbsp;&nbsp; <span id="tag">Disliked your tweet</span>
+                                        </p>
+                                    </div>
+                                }
+                            </div>
+                            @*<br />@tweet.modelID2*@
+                        </div>
+                    </div>
+                }
             </div>
 
-        </div>*@
+        </div>
 
     </div>
+    <div class="wrapper">
+        @*row*@
+        <div class="column">
+            <ul>
+                <li><a href="~/Home/HomePage"><i class="fas fa-home"></i>Home </a></li>
+                <br>
+                <li class="active"><a href="~/Home/ProfilePage"><i class="fas fa-user"></i>Profile     </a></li>
+                <br>
+                <li><a href="~/Home/Explore"><i class="fas fa-hashtag"></i>Explore     </a></li>
+                <br>
+                <li><a href="~/Home/Notifications"><i class="fas fa-bell"></i>Notifications     </a></li>
+                <br>
+                <li><a href="~/Home/Messages"><i class="fas fa-envelope"></i>Messages   </a></li>
+                <br>
+                <li><a href="~/Home/Settings"><i class="fas fa-cog"></i>Settings    </a></li>
+                <br>
+                <li><a href="~/Home/LogOut"><i class="fas fa-sign-out-alt"></i>Logout   </a></li>
+                <br>
+            </ul>
 
-    
+        </div>
+    </div>
 
 
-    @*<script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("edit");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks the button, open the modal
-        btn.onclick = function () {
+    <script>
+        function ShowModal(id) {
+            var modal = document.getElementById(id);
             modal.style.display = "block";
         }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
+        function HideModal(id) {
+            var modal = document.getElementById(id);
             modal.style.display = "none";
         }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>*@
+    </script>
 </body>
 </html>

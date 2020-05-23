@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewBag.Title = "HomePage";
 }
 @using MvcApplication1.Models;
@@ -17,31 +17,29 @@
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 </head>
 <body>
-    <div class="wrapper">
-        @*row*@
-        <div class="column">
-            @*column1*@
+    <div class="wrapper">   @*row*@
+        <div class="column"> @*column1*@
             @{User user = Model.User;
                 <img src="@user.display_pic" height="160" width="160" alt="Avatar">
                 <h2>@user.first_name&nbsp;@user.last_name</h2>
             }
-            <ul>
-                <li class="active"><a href="~/Home/HomePage"><i class="fas fa-home"></i>Home </a></li>
-                <br>
-                <li><a href="~/Home/ProfilePage"><i class="fas fa-user"></i>Profile     </a></li>
-                <br>
-                <li><a href="~/Home/Explore"><i class="fas fa-hashtag"></i>Explore     </a></li>
-                <br>
-                <li><a href="~/Home/Notifications"><i class="fas fa-bell"></i>Notifications     </a></li>
-                <br>
-                <li><a href="~/Home/Messages"><i class="fas fa-envelope"></i>Messages   </a></li>
-                <br>
-                <li><a href="~/Home/Settings"><i class="fas fa-cog"></i>Settings    </a></li>
-                <br>
-                <li><a href="~/Home/LogOut"><i class="fas fa-sign-out-alt"></i>Logout   </a></li>
-                <br>
-            </ul>
-
+        <ul>
+            <li class="active"><a href="~/Home/HomePage"><i class="fas fa-home"></i>Home </a></li>
+            <br>
+            <li><a href="~/Home/ProfilePage"><i class="fas fa-user"></i>Profile     </a></li>
+            <br>
+            <li><a href="~/Home/Explore"><i class="fas fa-hashtag"></i>Explore     </a></li>
+            <br>
+            <li><a href="~/Home/Notifications"><i class="fas fa-bell"></i>Notifications     </a></li>
+            <br>
+            <li><a href="~/Home/Messages"><i class="fas fa-envelope"></i>Messages   </a></li>
+            <br>
+            <li><a href="~/Home/Settings"><i class="fas fa-cog"></i>Settings    </a></li>
+            <br>
+            <li><a href="~/Home/LogOut"><i class="fas fa-sign-out-alt"></i>Logout   </a></li>
+            <br>
+        </ul>
+           
         </div>
         <div class="column">
             @*column to display tweets*@
@@ -89,9 +87,9 @@
             </table>
         </div>
     </div>
+        
+    
 
-
-
-
+    
 </body>
 </html>

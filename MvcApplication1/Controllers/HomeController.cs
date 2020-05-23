@@ -48,6 +48,10 @@ namespace MvcApplication1.Controllers
             return View("Notifications");
         }
 
+        public ActionResult Explore()
+        {
+            return View("Explore");
+        }
 
         public ActionResult authenticate(String username, String password)
         {
@@ -84,7 +88,7 @@ namespace MvcApplication1.Controllers
                 model.User = users;
                 model.Suggested_people = People_U_Should_Follow_list;
                 model.trending_hashtags = trendingHashtags;
-
+              
                 return View(model);
             }
         }
@@ -100,10 +104,10 @@ namespace MvcApplication1.Controllers
                 mymodel.user = CRUD.view_user(Session["username"].ToString());
                 mymodel.no_of_followers = CRUD.no_of_followers(Session["username"].ToString());
                 mymodel.no_of_followings = CRUD.no_of_followings(Session["username"].ToString());
-                //if (users == null)
-                //{
-                //    RedirectToAction("Login");
-                //}
+                mymodel.no_of_tweets = CRUD.no_of_tweets(Session["username"].ToString());
+                mymodel.no_of_likes = CRUD.no_of_likes(Session["username"].ToString());
+                mymodel.no_of_dislikes = CRUD.no_of_dislikes(Session["username"].ToString());
+                mymodel.tweets = CRUD.tweets_of_a_user(Session["username"].ToString());
                 Console.Write(mymodel);
                 return View(mymodel);
             }
