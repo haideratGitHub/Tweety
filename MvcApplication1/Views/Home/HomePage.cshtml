@@ -14,76 +14,84 @@
     <link href="~/Content/Menubar.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/HomePage.css" rel="stylesheet" />
     <link href="~/Content/RightColumn.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 </head>
 <body>
-    <header>
-        <div class="home">
-            <div class="menu">
-                <ul>
-                
-                    <li class="active"><a href="~/Home/HomePage">Home</a></li>
-                    <br>
-                    <li><a href="~/Home/ProfilePage">Profile</a></li>
-                    <br>
-                    <li><a href="~/Home/Notifications">Notifications</a></li>
-                    <br>
-                    <li><a href="~/Home/Messages">Messages</a></li>
-                    <br>
-                    <li><a href="~/Home/Settings">Settings</a></li>
-                    <br>
-                    <li><a href="~/Home/LogOut">Logout</a></li>
-                    <br>
-                </ul>
-            </div>
-
-            <div class="Right_Column">
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <td>Username</td>
-                            <td>Display Pic</td>
-                            <td>First Name</td>
-                            <td>Last Name</td>
-                        </tr>
-                    </thead>
-
-                    @foreach (User People_U_Should_Follow_list in Model.Suggested_people)
-                    {
-                        <tr>
-
-                            <td>@People_U_Should_Follow_list.username</td>
-                            <td>@People_U_Should_Follow_list.display_pic</td>
-                            <td>@People_U_Should_Follow_list.first_name</td>
-                            <td>@People_U_Should_Follow_list.last_name</td>
-                        </tr>
-                    }
-
-                </table>
-
+    <div class="wrapper">
+        @*row*@
+        <div class="column">
+            @*column1*@
+            @{User user = Model.User;
+                <img src="@user.display_pic" height="160" width="160" alt="Avatar">
+                <h2>@user.first_name&nbsp;@user.last_name</h2>
+            }
+            <ul>
+                <li class="active"><a href="~/Home/HomePage"><i class="fas fa-home"></i>Home </a></li>
                 <br>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <td>HashTag</td>
-                            <td>Count</td>
-                        </tr>
-                    </thead>
+                <li><a href="~/Home/ProfilePage"><i class="fas fa-user"></i>Profile     </a></li>
+                <br>
+                <li><a href="~/Home/Explore"><i class="fas fa-hashtag"></i>Explore     </a></li>
+                <br>
+                <li><a href="~/Home/Notifications"><i class="fas fa-bell"></i>Notifications     </a></li>
+                <br>
+                <li><a href="~/Home/Messages"><i class="fas fa-envelope"></i>Messages   </a></li>
+                <br>
+                <li><a href="~/Home/Settings"><i class="fas fa-cog"></i>Settings    </a></li>
+                <br>
+                <li><a href="~/Home/LogOut"><i class="fas fa-sign-out-alt"></i>Logout   </a></li>
+                <br>
+            </ul>
 
-                    @foreach (hashtag_trending Trends in Model.trending_hashtags)
-                    {
-                        <tr>
-
-                            <td>@Trends.hashtag</td>
-                            <td>@Trends.count</td>
-                        </tr>
-                    }
-
-                </table>
-            </div>
         </div>
+        <div class="column">
+            @*column to display tweets*@
+        </div>
+        <div class="column">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td>Username</td>
+                        <td>Display Pic</td>
+                        <td>First Name</td>
+                        <td>Last Name</td>
+                    </tr>
+                </thead>
 
-    </header>
+                @foreach (User People_U_Should_Follow_list in Model.Suggested_people)
+                {
+                    <tr>
 
-   
+                        <td>@People_U_Should_Follow_list.username</td>
+                        <td>@People_U_Should_Follow_list.display_pic</td>
+                        <td>@People_U_Should_Follow_list.first_name</td>
+                        <td>@People_U_Should_Follow_list.last_name</td>
+                    </tr>
+                }
+
+            </table>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td>HashTag</td>
+                        <td>Count</td>
+                    </tr>
+                </thead>
+
+                @foreach (hashtag_trending Trends in Model.trending_hashtags)
+                {
+                    <tr>
+
+                        <td>@Trends.hashtag</td>
+                        <td>@Trends.count</td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+
+
+
+
 </body>
 </html>
