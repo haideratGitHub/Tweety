@@ -17,67 +17,73 @@
 </head>
 <body>
     <header>
-        <div class="menu">
-            <ul>
-                <li class="active"><a href="~/Home/HomePage">Home</a></li>
+        <div class="home">
+            <div class="menu">
+                <ul>
+                
+                    <li class="active"><a href="~/Home/HomePage">Home</a></li>
+                    <br>
+                    <li><a href="~/Home/ProfilePage">Profile</a></li>
+                    <br>
+                    <li><a href="~/Home/Notifications">Notifications</a></li>
+                    <br>
+                    <li><a href="~/Home/Messages">Messages</a></li>
+                    <br>
+                    <li><a href="~/Home/Settings">Settings</a></li>
+                    <br>
+                    <li><a href="~/Home/LogOut">Logout</a></li>
+                    <br>
+                </ul>
+            </div>
+
+            <div class="Right_Column">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <td>Username</td>
+                            <td>Display Pic</td>
+                            <td>First Name</td>
+                            <td>Last Name</td>
+                        </tr>
+                    </thead>
+
+                    @foreach (User People_U_Should_Follow_list in Model.Suggested_people)
+                    {
+                        <tr>
+
+                            <td>@People_U_Should_Follow_list.username</td>
+                            <td>@People_U_Should_Follow_list.display_pic</td>
+                            <td>@People_U_Should_Follow_list.first_name</td>
+                            <td>@People_U_Should_Follow_list.last_name</td>
+                        </tr>
+                    }
+
+                </table>
+
                 <br>
-                <li><a href="~/Home/ProfilePage">Profile</a></li>
-                <br>
-                <li><a href="~/Home/Notifications">Notifications</a></li>
-                <br>
-                <li><a href="~/Home/Messages">Messages</a></li>
-                <br>
-                <li><a href="~/Home/Settings">Settings</a></li>
-                <br>
-                <li><a href="~/Home/LogOut">Logout</a></li>
-                <br>
-            </ul>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <td>HashTag</td>
+                            <td>Count</td>
+                        </tr>
+                    </thead>
+
+                    @foreach (hashtag_trending Trends in Model.trending_hashtags)
+                    {
+                        <tr>
+
+                            <td>@Trends.hashtag</td>
+                            <td>@Trends.count</td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
         </div>
+
     </header>
 
-    <div class="Right_Column">
-        <table border="1">
-            <thead>
-                <tr>
-                    <td>Username</td>
-                    <td>Display Pic</td>
-                    <td>First Name</td>
-                    <td>Last Name</td>
-                </tr>
-            </thead>
-
-            @foreach (User People_U_Should_Follow_list in Model.Suggested_people)
-            {
-                <tr>
-
-                    <td>@People_U_Should_Follow_list.username</td>
-                    <td>@People_U_Should_Follow_list.display_pic</td>
-                    <td>@People_U_Should_Follow_list.first_name</td>
-                    <td>@People_U_Should_Follow_list.last_name</td>
-                </tr>
-            }
-
-        </table>
-
-        <br>
-        <table border="1">
-            <thead>
-                <tr>
-                    <td>HashTag</td>
-                    <td>Count</td>
-                </tr>
-            </thead>
-
-            @foreach (hashtag_trending Trends in Model.trending_hashtags)
-            {
-                <tr>
-
-                    <td>@Trends.hashtag</td>
-                    <td>@Trends.count</td>
-                </tr>
-            }
-
-        </table>
-    </div>
+   
 </body>
 </html>

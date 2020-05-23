@@ -106,6 +106,7 @@ execute dislikers_of_a_tweet
 	@tweet_id=2
 
 -- --TO FOLLOW A USER-- --
+drop procedure follow
 go
 create procedure follow
 	@username varchar(30),@other_username varchar(30)
@@ -132,6 +133,11 @@ begin
 			begin
 				insert into follower values(@id2,@id1)
 				print @username+(' now following user ')+@other_username
+
+				declare @_text varchar(200)
+				set @_text = @username+(' started following you')
+				execute addNotification
+				@userID=@id2, @text=@_text
 			end
 		end
 		else
@@ -147,7 +153,7 @@ end
 go
 -- --executing code-- --
 execute follow
-	@username='ali_33',@other_username='ahmad_54'
+	@username='arhamdilshad',@other_username='ahmad_54'
 
 -- --TO UNFOLLOW A USER-- --
 go
@@ -493,6 +499,10 @@ create procedure like_a_tweet
 	@tweet_id int,@liker varchar(30)
 as
 begin
+
+	execute undislike_a_tweet
+	@tweet_id=@tweet_id,@disliker=@liker
+
 	if @tweet_id in(select tweetID from tweets)
 	begin
 		if @liker in(select name from [user])
@@ -507,6 +517,13 @@ begin
 			begin
 				insert into likes values(@id,@tweet_id)
 				print @liker+(' liked this tweet')
+				
+				-- Pushing notification
+				declare @_userID int, @_text varchar(200), @tweetData varchar(15)
+				select @_userID = t.userID, @tweetData = t.tweet from tweets as t where t.tweetID = @tweet_id
+				set @_text = @liker+(' like your tweet " ')+@tweetData+('..."')
+				execute addNotification
+				@userID=@_userID, @text=@_text
 			end
 		end
 		else
@@ -522,7 +539,7 @@ end
 go
 -- --executing code-- --
 execute like_a_tweet
-	@tweet_id=1,@liker='mike_99'
+	@tweet_id=2,@liker='arhamdilshad'
 --select * from likes
 
 -- --TO UNLIKE A TWEET-- --
@@ -569,6 +586,10 @@ create procedure dislike_a_tweet
 	@tweet_id int,@disliker varchar(30)
 as
 begin
+	
+	execute unlike_a_tweet
+	@tweet_id=@tweet_id,@liker=@disliker
+
 	if @tweet_id in(select tweetID from tweets)
 	begin
 		if @disliker in(select name from [user])
@@ -583,6 +604,14 @@ begin
 			begin
 				insert into dislikes values(@id,@tweet_id)
 				print @disliker+(' disliked this tweet')
+
+				
+				-- Pushing notification
+				declare @_userID int, @_text varchar(200), @tweetData varchar(15)
+				select @_userID = t.userID, @tweetData = t.tweet from tweets as t where t.tweetID = @tweet_id
+				set @_text = @disliker+(' dislike your tweet " ')+@tweetData+('..."')
+				execute addNotification
+				@userID=@_userID, @text=@_text
 			end
 		end
 		else
@@ -598,7 +627,7 @@ end
 go
 -- --executing code-- --
 execute dislike_a_tweet
-	@tweet_id=2,@disliker='mike_99'
+	@tweet_id=2,@disliker='arhamdilshad'
 --select * from dislikes
 
 -- --TO UNDISLIKE A TWEET-- --
@@ -656,6 +685,14 @@ begin
 
 			insert into comments values(@id,@tweet_id,@uid,@comment,convert(date,getdate()),convert(time,getdate()))
 			print('comment posted')
+
+			-- Pushing notification
+				declare @_userID int, @_text varchar(200), @CommentData varchar(25), @tweetData varchar(15)
+				set @CommentData = @comment
+				select @_userID = t.userID, @tweetData = t.tweet from tweets as t where t.tweetID = @tweet_id
+				set @_text = @username+(' comment "')+@CommentData+('..." on your tweet "')+@tweetData+('..."')
+				execute addNotification
+				@userID=@_userID, @text=@_text
 		end
 		else
 		begin
@@ -670,7 +707,7 @@ end
 go
 -- --executing code-- --
 execute comment
-	@tweet_id=1,@username='ahmad_54',@comment='one can see it for sure'
+	@tweet_id=1,@username='arhamdilshad',@comment='one can see it for sure'
 --select * from comments
 
 -- --TO REMOVE A FOLLOWER-- --
@@ -984,3 +1021,34 @@ go
 execute followers
 	@username='sara_89'
 
+
+go
+--to add values in notification table
+create procedure addNotification
+	@userID int,
+	@text varchar(200)
+as
+begin
+	declare @nID int
+
+	select @nID=max(NotificationID) from Notifications
+		set @nID=@nID+1
+
+	insert into Notifications values (@nID, @userID, convert(date,getdate()),convert(time,getdate()),'U', @text)
+end
+
+go
+
+-- to show notifications for a user
+create procedure showNotifications
+	@_userID int
+as
+begin
+	select *
+	from Notifications as n
+	where userID = @_userID
+	order by convert(date, nDate) desc, convert(datetime, ntime) desc
+	
+end
+
+go

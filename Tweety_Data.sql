@@ -112,6 +112,10 @@ insert into privateChat values
 (3,3,2,1,'See you tomorrow',GETDATE(),CONVERT(time, GETDATE())),
 (3,2,3,2,'ok :)',GETDATE(),CONVERT(time, GETDATE()))
 
+
+insert into Notifications values
+(1,1,GETDATE(),CONVERT(time, GETDATE()), 'U', 'Welcome to Tweety')
+
 ---- checking actions
 
 -- in likes and dislikes actions should be cascade

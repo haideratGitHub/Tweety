@@ -74,3 +74,22 @@ messageID int ,
 [time] time NOT NULL,
 primary key(chatID,messageID)
 )
+
+
+create table Notifications(
+notificationID int primary key,
+userID int not null foreign key references [user](userID) on delete no action on update no action,
+nDate date not null,
+nTime time not null,
+readFlag varchar(1) not null,
+n_Text varchar(200) not null
+)
+
+select *
+from Notifications
+
+select *
+from likes
+
+select *
+from dislikes
