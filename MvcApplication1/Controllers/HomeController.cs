@@ -48,6 +48,10 @@ namespace MvcApplication1.Controllers
             return View("Notifications");
         }
 
+        public ActionResult Explore()
+        {
+            return View("Explore");
+        }
 
         public ActionResult authenticate(String username, String password)
         {
