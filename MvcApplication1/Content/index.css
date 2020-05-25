@@ -61,6 +61,23 @@ body.segoe {
     width: 392px;
 }
 
+#back_to_login {
+	background-color: #1da1f2;
+	border: 1px solid #1da1f2;
+	border-radius: 100px;
+	box-shadow: none;
+	color: #fff;
+	font-size: 18px;
+	font-weight: bold;
+	height: auto;
+	line-height: 24px;
+	padding: 12px 20px;
+	position: relative;
+	text-align: center;
+	white-space: nowrap;
+}
+
+
 .wallcontainer{
 	width: 900px; overflow: hidden; margin:auto;
 }
