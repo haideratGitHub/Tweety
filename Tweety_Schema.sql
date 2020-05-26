@@ -1,6 +1,7 @@
 create database tweety
 use tweety
 
+
 create table [user](
 [userID] int primary key,
 [name] varchar(30) UNIQUE NOT NULL,

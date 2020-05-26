@@ -1,2 +1,79 @@
 ﻿body {
 }
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
+
+
+div.feed {
+    border-style: solid;
+    border-color: #56baed;
+    border-width: thin;
+    margin-left: 1%;
+    margin-right:0%;
+    margin-top: 2%;
+    padding: 1%;
+}
+
+button:active {
+    background-color: #0094ff;
+    color: white;
+}
+
+button:hover {
+    background-color: lightblue;
+}
+
+.user-box img {
+    float: left;
+    border-radius: 50%;
+    border: thin solid #0094ff;
+    width: 50px;
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.user-box p#tweet-box {
+    /*border:thin solid red;*/
+    margin-left: 7%;
+    padding: 1%;
+}
+
+span#name {
+    font-weight: bold;
+    font-size: medium;
+}
+
+span#details {
+    font-size: medium;
+}
+
+div.user-box {
+    border-left-color: white;
+    border-right-color: white;
+    border-style: solid;
+    border-width: thin;
+    border-top-color: #E9E9E9;
+    border-bottom-color: #E9E9E9;
+    padding: 1%;
+}
+
+/*div.centre-column {
+    border-style: solid;
+    border-color: #56baed;
+    border-width: thin;
+    margin-left: 26%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-right: 1%;
+    padding: 1%;
+}*/
+
+img {
+    border-radius: 50%;
+    border: 2px solid #0094ff;
+    width: 150px;
+}

@@ -418,9 +418,6 @@ namespace MvcApplication1.Models
 
         }
 
-
-
-
         public static List<hashtag_trending> trending_hashtag()
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -557,7 +554,6 @@ namespace MvcApplication1.Models
             }
             return result;
         }
-
 
         public static List<Tweet> tweets_of_a_user(String username)
         {
@@ -821,8 +817,6 @@ namespace MvcApplication1.Models
             }
         }
 
-
-
         public static List<Notification> showNotifications(string username)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -865,5 +859,7 @@ namespace MvcApplication1.Models
             }
 
         }
+
+
     }
 }
