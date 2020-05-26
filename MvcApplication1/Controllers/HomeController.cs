@@ -43,9 +43,25 @@ namespace MvcApplication1.Controllers
         {
             return View("Settings");
         }
-        public ActionResult Notifications()
+        public ActionResult Notifications(String username)
         {
-            return View("Notifications");
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                User users = CRUD.view_user(Session["username"].ToString());
+                List<User> People_U_Should_Follow_list = CRUD.People_U_Should_Follow(Session["username"].ToString());
+                List<hashtag_trending> trendingHashtags = CRUD.trending_hashtag();
+                List<Notification> notifications = CRUD.showNotifications(Session["username"].ToString());
+
+                dynamic model = new ExpandoObject();
+                model.User = users;
+                model.Suggested_people = People_U_Should_Follow_list;
+                model.trending_hashtags = trendingHashtags;
+                model.Notifications = notifications;
+
+                return View(model);
+            }
         }
 
         public ActionResult Explore()
