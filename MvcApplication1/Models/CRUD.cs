@@ -419,9 +419,6 @@ namespace MvcApplication1.Models
 
         }
 
-
-
-
         public static List<hashtag_trending> trending_hashtag()
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -558,7 +555,6 @@ namespace MvcApplication1.Models
             }
             return result;
         }
-
 
         public static List<Tweet> tweets_of_a_user(String username)
         {
@@ -822,8 +818,6 @@ namespace MvcApplication1.Models
             }
         }
 
-
-
         public static List<Notification> showNotifications(string username)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -896,57 +890,6 @@ namespace MvcApplication1.Models
                 rdr.Close();
                 con.Close();
 
-                return list;
-
-
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine("SQL Error" + ex.Message.ToString());
-                return null;
-
-            }
-
-
-
-
-
         }
-
-        public static void storeMessage(string senderName, string receverName,string message)
-        {
-            SqlConnection con = new SqlConnection(connectionString);
-            con.Open();
-            SqlCommand cmd;
-           
-
-            try
-            {
-                cmd = new SqlCommand("chat_in", con);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.Add("@sender", SqlDbType.NVarChar, 30).Value = senderName;
-                cmd.Parameters.Add("@receiver", SqlDbType.NVarChar, 30).Value = receverName;
-                cmd.Parameters.Add("@message", SqlDbType.NVarChar, 280).Value = message;
-
-
-
-                
-
-                cmd.ExecuteNonQuery();
-               
-            }
-
-            catch (SqlException ex)
-            {
-                Console.WriteLine("SQL Error" + ex.Message.ToString());
-               
-            }
-            finally
-            {
-                con.Close();
-            }
-        }
-
-
     }
 }
