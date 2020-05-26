@@ -41,7 +41,13 @@ namespace MvcApplication1.Controllers
         }
         public ActionResult Settings()
         {
-            return View("Settings");
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                User user = CRUD.view_user(Session["username"].ToString());
+                return View(user);
+            }
         }
         public ActionResult Notifications(String username)
         {

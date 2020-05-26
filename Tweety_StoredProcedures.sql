@@ -865,7 +865,7 @@ create procedure view_user
 	@username varchar(30)
 as
 begin
-		select name,password,displayPic,fname,lname,gender,DOB,email,country,status
+		select name,password,displayPic,fname,lname,gender,convert(varchar,DOB,101) as DOB,email,country,status
 		from [user] u left join [profile] p on u.userID=p.userID
 		where name=@username
 end
