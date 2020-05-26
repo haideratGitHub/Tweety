@@ -717,8 +717,8 @@ create procedure remove_follower
 	@username varchar(30),@follower varchar(30)--,@password varchar(30)
 as
 begin
-	--if @username in(select name from [user]) and @follower in(select name from [user])
-	--begin
+	if @username in(select name from [user]) and @follower in(select name from [user])
+	begin
 		--if @password=(select password from [user] where name=@username)
 		--begin
 			declare @uid int,@fid int
@@ -1029,92 +1029,6 @@ execute followers
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- --TO GET NO OF TWEETS OF A USER-- --
 go
 create procedure no_of_tweets
@@ -1332,3 +1246,153 @@ begin
 end
 
 go
+
+
+
+
+---Private Chat output-----
+
+go
+create procedure chat_out
+	@sender varchar(30),@recever varchar(30)
+as
+begin
+	if @sender in (select name from [user]) and @recever in (select name from [user])
+	begin
+		select u1.name as sender,u2.name as recever,p.message,p.time
+		from (privateChat as p join [user] as u1 on u1.userID=p.senderID)join [user] as u2 on u2.userID=p.receiverID
+		where u1.name=@sender and u2.name=@recever or u2.name=@sender and u1.name=@recever
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+
+-------execution code---
+execute chat_out
+@sender='ali_33',@recever='ahmad_54'
+
+
+
+---private chat input---
+use tweety 
+drop procedure chat_in
+go
+create procedure chat_in
+  @sender varchar(30),@receiver varchar(30),@message varchar(280)
+as
+begin
+	if @sender in (select name from [user]) and @receiver in (select name from [user])
+	begin
+	    declare @s_ID int,@r_iD int,@chatID int,@messageID int 
+		
+		select @s_ID=[user].userID from [user] where [user].name=@sender
+		set @s_ID=@s_ID
+
+		select @r_ID=[user].userID from [user] where [user].name=@receiver
+		set @r_ID=@r_ID
+
+		if @S_ID in (select privateChat.senderID from privateChat where @r_ID=receiverID) or @S_ID in (select privateChat.receiverID from privateChat where @r_ID=senderID)
+		begin
+		    select @chatID=privateChat.chatID from privateChat where  (@r_ID=receiverID and @s_ID =senderID) or (@s_ID=receiverID and @r_ID =senderID)
+			select @messageID=max(privateChat.messageID) from privateChat where  privateChat.chatID=@chatID
+			set @messageID=@messageID+1
+		end   
+		else
+		begin
+			select @chatID=max(privateChat.chatID) from privateChat
+			set @chatID=@chatID+1
+			set @messageID=1 
+		end
+
+		insert into privateChat values (@chatID,@s_ID,@r_iD,@messageID,@message,GETDATE(),CONVERT(time, GETDATE()))
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+------execution code----
+execute chat_in
+@sender='mike_99',@receiver='alice_21',@message='checking on u.'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

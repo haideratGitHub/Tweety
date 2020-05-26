@@ -35,10 +35,10 @@ namespace MvcApplication1.Controllers
             Session["username"] = null;
             return View("Login");
         }
-        public ActionResult Messages()
-        {
-            return View("Messages");
-        }
+        //public ActionResult Messages()
+        //{
+        //    return View("Messages");
+        //}
         public ActionResult Settings()
         {
             return View("Settings");
@@ -63,6 +63,34 @@ namespace MvcApplication1.Controllers
                 return View(model);
             }
         }
+
+        public ActionResult Messages()
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                User users = CRUD.view_user(Session["username"].ToString());
+                //List<User> People_U_Should_Follow_list = CRUD.People_U_Should_Follow(Session["username"].ToString());
+                //List<hashtag_trending> trendingHashtags = CRUD.trending_hashtag();
+
+                List<User> followers = CRUD.get_followers(Session["username"].ToString());
+
+
+                List<Messages> Messages = CRUD.showMessages(Session["username"].ToString(), "ahmad_54");
+
+                
+
+                dynamic model = new ExpandoObject();
+                model.User = users;
+                //model.Suggested_people = People_U_Should_Follow_list;
+                //model.trending_hashtags = trendingHashtags;
+                // model.Notifications = notifications;
+                model.Messages = Messages;
+                return View(model);
+            }
+        }
+
 
         public ActionResult Explore()
         {
