@@ -45,7 +45,9 @@
                         @{User user1 = (User)Model.user;
                             <img src="@user1.display_pic" alt="Avatar" id="tweet-box">
                             <p id="tweet-box">
-                                <span id="name">@user1.first_name&nbsp;@user1.last_name</span> <span id="details">&nbsp; &#64;@user1.username</span><span id="details" style="float:right">@tweet.date&nbsp;&nbsp;@tweet.time</span>
+                                <span id="name">@user1.first_name&nbsp;@user1.last_name</span>
+                                <span id="details">&nbsp; &#64;@user1.username</span>
+                                <span id="details" style="float:right">@tweet.date&nbsp;&nbsp;@tweet.time</span>
                                 <br />
                                 <span style="color:black">@tweet.tweet</span>
                                 <br /><br />
