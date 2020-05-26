@@ -44,36 +44,27 @@
 
         </div>
 
-        <div >
-            <table border="1">
-                <thead>
-                    <tr>
-                        <td>nID</td>
-                        <td>uID</td>
-                        <td>nDate</td>
-                        <td>nTime</td>
-                        <td>rFlag</td>
-                        <td>nText</td>
-                    </tr>
-                </thead>
+        <div class="centre-column">
+            <div id="centre-title">Notifications</div>
+            <br />
 
-                @foreach (Notification notifications in Model.Notifications)
-                {
-                    <tr>
 
-                        <td>@notifications.notificationID</td>
-                        <td>@notifications.userID</td>
-                        <td>@notifications.nDate</td>
-                        <td>@notifications.nTime</td>
-                        <td>@notifications.readFlag</td>
-                        <td>@notifications.n_Text</td>
-                    </tr>
-                }
+            @foreach (Notification notifications in Model.Notifications)
+            {
+                <div class="Notification_Box">
+                    <p id="Notification_data">
+                        <span id="text" >@notifications.n_Text</span>
+                        <span id="date">@notifications.nDate</span>
+                        <br />
+                        <br />
+                    </p>
+                </div>
+            }
 
-            </table>
+
         </div>
 
-        <div >
+        <div>
 
         </div>
     </div>
