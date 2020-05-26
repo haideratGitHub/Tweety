@@ -25,15 +25,18 @@
         <div class="topbar">
             <i class="fa fa-twitter logocenter" aria-hidden="true"></i>
         </div>
-
         <div class="AppContent wrapper wrapper-signup" id="page-container">
             <link rel="stylesheet" href="https://abs.twimg.com/a/1511833274/css/t1/t1_signup.bundle.css">
             <div class="page-canvas">
+
+                <input type="button" id="back_to_login" class="inactive underlineHover" value="Back to Login" onclick="location.href='../../Home/Login'" />
+
                 <div class="signup-wrapper">
                     <h1>
                         Join Tweety today.
                     </h1>
                     <form method="post" action="../Home/Add_User">
+
                         <div class="t1-form signup " id="phx-signup-form">
                             <div class="textbox">
                                 <div class="prompt name">
@@ -372,8 +375,8 @@
                                 <input type="submit" value="Sign up" id="submit_button" class="signup EdgeButton EdgeButton--primary EdgeButton--large submit">
                             </div>
                         </div>
-                        </form>
-</div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
