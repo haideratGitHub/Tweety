@@ -22,7 +22,7 @@ ul {
     float: left;
     list-style-type: none;
     padding: 10px;
-    border:thin solid #56baed;
+    /*border:thin solid #56baed;*/ border:none;
 }
 
     ul li {

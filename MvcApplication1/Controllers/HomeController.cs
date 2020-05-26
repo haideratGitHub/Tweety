@@ -94,7 +94,20 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Explore()
         {
-            return View("Explore");
+            if (Session["username"] == null)
+                return View("Explore");
+            else
+            {
+                User users = CRUD.view_user(Session["username"].ToString());
+                List<hashtag_trending> trendingHashtags = CRUD.trending_hashtag();
+
+                dynamic model = new ExpandoObject();
+                model.User = users;
+                model.trending_hashtags = trendingHashtags;
+
+                return View(model);
+            }
+            
         }
 
         public ActionResult authenticate(String username, String password)
@@ -128,11 +141,32 @@ namespace MvcApplication1.Controllers
                 List<User> People_U_Should_Follow_list = CRUD.People_U_Should_Follow(Session["username"].ToString());
                 List<hashtag_trending> trendingHashtags = CRUD.trending_hashtag();
 
+                List<feedObject> feedObjects = new List<feedObject>();
+                
+
+                List<User> following = CRUD.get_following(Session["username"].ToString());   
                 dynamic model = new ExpandoObject();
+                for (int i = 0; i < following.Count; i++)
+                {
+                    List<Tweet> tweets = CRUD.tweets_of_a_user(following[i].username);
+                    for(int j=0; j<tweets.Count; j++)
+                    {
+                        feedObject fo = new feedObject();
+                        fo.display_pic = following[i].display_pic;
+                        fo.first_name = following[i].first_name;
+                        fo.last_name = following[i].last_name;
+                        fo.username = following[i].username;
+                        fo.userTweet = tweets[j];
+                        feedObjects.Add(fo);
+                    }
+                    
+                }
+                feedObjects.OrderByDescending(o => o.userTweet.date).ToList();
                 model.User = users;
                 model.Suggested_people = People_U_Should_Follow_list;
                 model.trending_hashtags = trendingHashtags;
-              
+                model.feed = feedObjects;
+                   
                 return View(model);
             }
         }

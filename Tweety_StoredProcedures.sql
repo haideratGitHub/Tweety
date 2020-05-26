@@ -106,7 +106,6 @@ execute dislikers_of_a_tweet
 	@tweet_id=2
 
 -- --TO FOLLOW A USER-- --
-drop procedure follow
 go
 create procedure follow
 	@username varchar(30),@other_username varchar(30)
