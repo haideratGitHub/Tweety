@@ -196,7 +196,7 @@ execute unfollow
 -- --TO CHANGE USERNAME-- --
 go
 create procedure change_username
-	@old varchar(30),@new varchar(30),@password varchar(30)
+	@old varchar(30),@new varchar(30),@password varchar(30),@output int OUTPUT
 as
 begin
 	if @old in(select name from [user])
@@ -206,32 +206,37 @@ begin
 			if @new in(select name from [user])
 			begin
 				print ('username ')+@new+(' is not available')
+				set @output=0
 			end
 			else
 			begin
 				update [user] set name=@new where name=@old
+				set @output=1
 				print('username changed from ')+@old+(' to ')+@new
 			end
 		end
 		else
 		begin
 			print('wrong password')
+			set @output=0
 		end
 	end
 	else
 	begin
 		print ('There is no user with this user name')
+		set @output=0
 	end
 end
 go
 -- --executing code-- --
+declare @result int
 execute change_username
-	@old='ali',@new='ali_33',@password='p1234'
+	@old='ali',@new='ali_33',@password='p1234',@output=@result output
 
 -- --TO CHANGE PASSWORD-- --
 go
 create procedure change_password
-	@name varchar(30),@new varchar(30),@password varchar(30)
+	@name varchar(30),@new varchar(30),@password varchar(30),@output int OUTPUT
 as
 begin
 	if @name in(select name from [user])
@@ -239,22 +244,26 @@ begin
 		if @password=(select [password] from [user] where name=@name)
 		begin
 			update [user] set [password]=@new where name=@name
+			set @output=1
 			print('password changed from ')+@password+(' to ')+@new+(' for ')+@name
 		end
 		else
 		begin
 			print('wrong password')
+			set @output=0
 		end
 	end
 	else
 	begin
 		print ('There is no user with this user name')
+		set @output=0
 	end
 end
 go
 -- --executing code-- --
+declare @result int
 execute change_password
-	@name='ali_33',@new='p123',@password='p1234'
+	@name='ali_33',@new='p123',@password='p1234',@output=@result output
 
 -- --TO CHANGE FIRST NAME-- --
 go

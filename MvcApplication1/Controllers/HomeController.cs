@@ -215,5 +215,101 @@ namespace MvcApplication1.Controllers
                 return RedirectToAction("Followers");
             }
         }
+
+        public ActionResult Update_Name(String username,String password,String first_name,String last_name)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_FirstName(username, first_name, password);
+                CRUD.Update_LastName(username, last_name, password);
+                return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_Username(String username, String password, String new_username)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                if (CRUD.Update_UserName(username, new_username, password) == 1)
+                    return RedirectToAction("LogOut");
+                else
+                    return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_Email(String username, String password, String email)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_Email(username, email, password);
+                return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_Country(String username, String password, String country)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_Country(username, country, password);
+                return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_Status(String username, String password, String status)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_Status(username, status, password);
+                return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_Gender(String username, String password, String gender)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_Gender(username, gender, password);
+                return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_Password(String username, String new_password, String old_password)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                if (CRUD.Update_Password(username, new_password, old_password) == 1)
+                    return RedirectToAction("LogOut");
+                else
+                    return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_DP(String username, String password, String DP)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_DisplayPic(username, DP, password);
+                return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_DOB(String username, String password, String DOB)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_DOB(username, DOB, password);
+                return RedirectToAction("Settings");
+            }
+        }
     }
 }
