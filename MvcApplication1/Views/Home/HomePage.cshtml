@@ -19,7 +19,7 @@
 <body>
     <div class="wrapper">
         @*row*@
-        <div class="column">
+        <div class="column" style="width:20%">
             @*column1*@
             @{User user = Model.User;
                 <img src="@user.display_pic" height="160" width="160" alt="Avatar">
@@ -43,7 +43,7 @@
             </ul>
 
         </div>
-        <div class="feed">
+        <div class="feed" style="width:60%">
             @*column to display tweets*@
             @foreach (feedObject feedObject in Model.feed)
             {
@@ -57,7 +57,7 @@
                         <span style="color:black">@feedObject.userTweet.tweet</span>
                         <br /><br />
                         <span id="tweet-details">
-                            @feedObject.userTweet.no_of_comments <button id="comment-btn" onclick="ShowModal(@feedObject.userTweet.tweetID)"><i style="color:#0094ff" id="tweet-details" class="far fa-comment-alt"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@feedObject.userTweet.no_of_likes <button id="like-btn" onclick="ShowModal(@feedObject.userTweet.modelID1)"><i style="color:#0094ff" id="tweet-details" class="far fa-thumbs-up"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@feedObject.userTweet.no_of_dislikes <button id="dislike-btn" onclick="ShowModal(@feedObject.userTweet.modelID2)"><i style="color:#0094ff" id="tweet-details" class="far fa-thumbs-down"></i></button>
+                            @feedObject.userTweet.no_of_comments <button id="comment-btn" onclick="ShowModal(@feedObject.userTweet.tweetID)"><i style="color:#0094ff" id="tweet-details" class="far fa-comment-alt"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@feedObject.userTweet.no_of_likes <button id="like-btn" onclick="location.href = '../../Home/likeTweet?tweetID=@feedObject.userTweet.tweetID'"><i style="color:#0094ff" id="tweet-details" class="far fa-thumbs-up"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@feedObject.userTweet.no_of_dislikes <button id="dislike-btn" onclick="location.href = '../../Home/dislikeTweet?tweetID=@feedObject.userTweet.tweetID'"><i style="color:#0094ff" id="tweet-details" class="far fa-thumbs-down"></i></button>
                         </span>
                     </p>
                 </div>
@@ -65,7 +65,7 @@
 
             
         </div>
-        <div class="column">
+        <div class="column" style="width:20%">
                 <table border="1">
                     <thead>
                         <tr>
