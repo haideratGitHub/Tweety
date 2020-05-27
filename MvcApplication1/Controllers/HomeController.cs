@@ -250,37 +250,6 @@ namespace MvcApplication1.Controllers
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public ActionResult Update_Name(String username,String password,String first_name,String last_name)
         {
             if (Session["username"] == null)
@@ -375,6 +344,24 @@ namespace MvcApplication1.Controllers
                 CRUD.Update_DOB(username, DOB, password);
                 return RedirectToAction("Settings");
             }
+        }
+        
+        
+        public ActionResult likeTweet(int tweetID)
+        {
+            int result = CRUD.like_a_tweet(tweetID, Session["username"].ToString());
+            return RedirectToAction("HomePage");
+        }
+
+        public ActionResult dislikeTweet(int tweetID)
+        {
+            int result = CRUD.dislike_a_tweet(tweetID, Session["username"].ToString());
+            return RedirectToAction("HomePage");
+        }
+
+        public ActionResult commentTweet()
+        {
+            return View();
         }
     }
 }

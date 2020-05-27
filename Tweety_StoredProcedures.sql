@@ -505,7 +505,7 @@ execute change_status
 -- --TO LIKE A TWEET-- --
 go
 create procedure like_a_tweet
-	@tweet_id int,@liker varchar(30)
+	@tweet_id int,@liker varchar(30),@output int output
 as
 begin
 
@@ -521,12 +521,13 @@ begin
 			if @id in(select likerID from likes where tweetID=@tweet_id)
 			begin
 				print ('This tweet is already liked by ')+@liker
+				set @output = 2
 			end
 			else
 			begin
 				insert into likes values(@id,@tweet_id)
 				print @liker+(' liked this tweet')
-				
+				set @output = 1
 				-- Pushing notification
 				declare @_userID int, @_text varchar(200), @tweetData varchar(15)
 				select @_userID = t.userID, @tweetData = t.tweet from tweets as t where t.tweetID = @tweet_id
@@ -547,8 +548,10 @@ begin
 end
 go
 -- --executing code-- --
+declare @result int
 execute like_a_tweet
-	@tweet_id=1,@liker='mike_99'
+	@tweet_id=4,@liker='ali_33',@output=@result output
+select @result
 --select * from likes
 
 -- --TO UNLIKE A TWEET-- --
@@ -585,14 +588,17 @@ begin
 end
 go
 -- --executing code-- --
+
+
 execute unlike_a_tweet
 	@tweet_id=1,@liker='mike_99'
+
 --select * from likes
 
 -- --TO DISLIKE A TWEET-- --
 go
 create procedure dislike_a_tweet
-	@tweet_id int,@disliker varchar(30)
+	@tweet_id int,@disliker varchar(30),@output1 int output
 as
 begin
 	
@@ -608,11 +614,13 @@ begin
 			if @id in(select dislikerID from dislikes where tweetID=@tweet_id)
 			begin
 				print ('This tweet is already disliked by ')+@disliker
+				set @output1 = 2
 			end
 			else
 			begin
 				insert into dislikes values(@id,@tweet_id)
 				print @disliker+(' disliked this tweet')
+				set @output1 = 1
 
 				
 				-- Pushing notification
@@ -635,8 +643,10 @@ begin
 end
 go
 -- --executing code-- --
+declare @result int
 execute dislike_a_tweet
-	@tweet_id=6,@disliker='mike_99'
+	@tweet_id=2,@disliker='mike_99',@output1=@result output
+select @result
 --select * from dislikes
 
 -- --TO UNDISLIKE A TWEET-- --
@@ -645,7 +655,7 @@ create procedure undislike_a_tweet
 	@tweet_id int,@disliker varchar(30)
 as
 begin
-	if @tweet_id in(select tweetID from tweets)
+	if @tweet_id in(select tweets.tweetID from dbo.tweets)
 	begin
 		if @disliker in(select name from [user])
 		begin

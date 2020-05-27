@@ -1161,5 +1161,91 @@ namespace MvcApplication1.Models
             return result;
         }
 
+        public static int like_a_tweet(int tweetID , string username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("like_a_tweet", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@liker", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
+                cmd.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
+                
+                cmd.ExecuteNonQuery();
+                result = Convert.ToInt32(cmd.Parameters["@output"].Value);
+                //@output = 2 means already liked tweet 
+                if (result == 2)
+                {
+                    cmd = new SqlCommand("unlike_a_tweet", con);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@liker", SqlDbType.NVarChar, 30).Value = username;
+                    cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public static int dislike_a_tweet(int tweetID, string username)
+        {
+
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("dislike_a_tweet", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@disliker", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
+                cmd.Parameters.Add("@output1", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                cmd.ExecuteNonQuery();
+                result = Convert.ToInt32(cmd.Parameters["@output1"].Value);
+                //@output = 2 means already unliked tweet 
+                if (result == 2)
+                {
+                    cmd = new SqlCommand("undislike_a_tweet", con);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@disliker", SqlDbType.NVarChar, 30).Value = username;
+                    cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public static void comment_on_a_tweet()
+        {
+
+        }
+
     }
 }
