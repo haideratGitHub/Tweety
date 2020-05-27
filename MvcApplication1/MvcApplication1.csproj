@@ -129,14 +129,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\feedObject.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CRUD.cs" />
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Tweet.cs" />
     <Compile Include="Models\hashtag_trending.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Explore.css" />
     <Content Include="Content\HomePage.css" />
     <Content Include="Content\Menubar.css" />
     <Content Include="Content\index.css" />
@@ -194,6 +197,7 @@
     <Content Include="Views\Home\Notifications.cshtml" />
     <Content Include="Views\Home\Following.cshtml" />
     <Content Include="Views\Home\Followers.cshtml" />
+    <Content Include="Views\Home\Explore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

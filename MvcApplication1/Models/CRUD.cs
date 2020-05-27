@@ -418,9 +418,6 @@ namespace MvcApplication1.Models
 
         }
 
-
-
-
         public static List<hashtag_trending> trending_hashtag()
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -557,7 +554,6 @@ namespace MvcApplication1.Models
             }
             return result;
         }
-
 
         public static List<Tweet> tweets_of_a_user(String username)
         {
@@ -820,5 +816,350 @@ namespace MvcApplication1.Models
                 return null;
             }
         }
+
+        public static List<Notification> showNotifications(string username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+
+            try
+            {
+                cmd = new SqlCommand("showNotifications", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                List<Notification> list = new List<Notification>();
+                while (rdr.Read())
+                {
+                    Notification notification = new Notification();
+
+                    notification.notificationID = rdr["notificationID"].ToString();
+                    notification.userID = rdr["userID"].ToString();
+                    notification.nDate = rdr["nDate"].ToString();
+                    notification.nTime = rdr["nTime"].ToString();
+                    notification.readFlag = rdr["readFlag"].ToString();
+                    notification.n_Text = rdr["n_Text"].ToString();
+                    list.Add(notification);
+                }
+                rdr.Close();
+                con.Close();
+
+                return list;
+
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+
+            }
+
+        }
+
+        public static int Update_FirstName(String username, String first_name, String password)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("change_first_name", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@password", SqlDbType.NVarChar, 30).Value = password;
+                cmd.Parameters.Add("@new", SqlDbType.NVarChar, 30).Value = first_name;
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+        public static int Update_LastName(String username, String last_name, String password)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("change_last_name", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@password", SqlDbType.NVarChar, 30).Value = password;
+                cmd.Parameters.Add("@new", SqlDbType.NVarChar, 30).Value = last_name;
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+        public static int Update_Gender(String username, String gender, String password)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("change_gender", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@password", SqlDbType.NVarChar, 30).Value = password;
+                cmd.Parameters.Add("@new", SqlDbType.Char).Value = gender;
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+        public static int Update_Email(String username, String email, String password)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("change_email", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@password", SqlDbType.NVarChar, 30).Value = password;
+                cmd.Parameters.Add("@new", SqlDbType.NVarChar, 30).Value = email;
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+        public static int Update_Country(String username, String country, String password)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("change_country", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@password", SqlDbType.NVarChar, 30).Value = password;
+                cmd.Parameters.Add("@new", SqlDbType.NVarChar, 30).Value = country;
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+        public static int Update_Status(String username, String status, String password)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("change_status", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@password", SqlDbType.NVarChar, 30).Value = password;
+                cmd.Parameters.Add("@new", SqlDbType.NVarChar, 120).Value = status;
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+        public static int Update_UserName(String old_username, String new_username, String password)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("change_username", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@old", SqlDbType.NVarChar, 30).Value = old_username;
+                cmd.Parameters.Add("@password", SqlDbType.NVarChar, 30).Value = password;
+                cmd.Parameters.Add("@new", SqlDbType.NVarChar, 30).Value = new_username;
+                cmd.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                result = Convert.ToInt32(cmd.Parameters["@output"].Value);
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+        public static int Update_Password(String username, String new_password, String old_password)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("change_password", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@password", SqlDbType.NVarChar, 30).Value = old_password;
+                cmd.Parameters.Add("@new", SqlDbType.NVarChar, 30).Value = new_password;
+                cmd.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                result = Convert.ToInt32(cmd.Parameters["@output"].Value);
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+        public static int Update_DisplayPic(String username, String DP, String password)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("change_displayPic", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@password", SqlDbType.NVarChar, 30).Value = password;
+                cmd.Parameters.Add("@new", SqlDbType.NVarChar, 1000).Value = DP;
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+        public static int Update_DOB(String username, String DOB, String password)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("change_DOB", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@password", SqlDbType.NVarChar, 30).Value = password;
+                cmd.Parameters.Add("@new", SqlDbType.Date).Value = DOB;
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
     }
 }

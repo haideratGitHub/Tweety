@@ -16,7 +16,7 @@ body {
     height: 46px;
     position: relative;
     width: 100%;
-	text-align:center;
+    text-align: center;
 }
 
 body.segoe {
@@ -33,15 +33,15 @@ body.segoe {
     position: relative;
 }
 
-.logocenter{
-	font-size: 23px !important;
-	margin-top: 11px;
-	color:white;
+.logocenter {
+    font-size: 23px !important;
+    margin-top: 11px;
+    color: white;
 }
 
-.topcontainer{
-	background:#FFF;
-	height: 100%;
+.topcontainer {
+    background: #FFF;
+    height: 100%;
 }
 
 #submit_button {
@@ -60,147 +60,315 @@ body.segoe {
     white-space: nowrap;
     width: 392px;
 }
+    #submit_button:hover {
+        background-color: #0e82ca;
+    }
 
-.wallcontainer{
-	width: 900px; overflow: hidden; margin:auto;
+#back_to_login {
+    background-color:#e5e5e5;
+    color: black;
+    padding: 13px;
+    text-align: center;
+    border-radius: 10px 10px 10px 10px;
+    font-size:larger;
+    font-weight:600;
 }
 
-.profilecard{
-	width: 290px; float: left; background: #FFF; margin: 10px; position: relative;
+    #back_to_login:hover {
+        background-color: #56baed;
+        color: white
+    }
+
+.Birthdate {
+    border: solid thin;
+    border-color: #d8e3ea;
+    border-radius: 4px;
+    padding: 12px;
+    background-color: white;
 }
 
-.profilecardhead{
-	background-color:#ff0000;height:95px;
+.gender {
+    border: solid thin;
+    border-color: #d8e3ea;
+    border-radius: 4px;
+    padding: 12px;
+    background-color: white;
 }
 
-.profilecardimagediv{
-	margin:-30px 0 0 8px;padding:1px;background:#FFF;display:inline-block;border-radius:50%;
+.Countries {
+    border: solid thin;
+    border-color: #d8e3ea;
+    border-radius: 4px;
+    padding: 12px;
+    background-color: white;
 }
 
-.profilecardimagediv img{
-	width:72px;height:72px;border-radius:50%;box-sizing:border-box;border:2px solid #FFF;
+
+.wallcontainer {
+    width: 900px;
+    overflow: hidden;
+    margin: auto;
 }
 
-.profilecardnameidcont{
-	position:absolute;top:103px;left:90px;width:185px;
+.profilecard {
+    width: 290px;
+    float: left;
+    background: #FFF;
+    margin: 10px;
+    position: relative;
 }
 
-.profilecardnamecont{
-	font-size:18px;font-weight:bold;line-height:25px;margin:-1px 0 -2px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal
+.profilecardhead {
+    background-color: #ff0000;
+    height: 95px;
 }
 
-#profilecardname{
-	color:inherit;text-transform:uppercase;
+.profilecardimagediv {
+    margin: -30px 0 0 8px;
+    padding: 1px;
+    background: #FFF;
+    display: inline-block;
+    border-radius: 50%;
 }
 
-#profilecarduid{
-	color:#667786;font-size:14px;padding-right:5px;text-transform:uppercase;
+    .profilecardimagediv img {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        border: 2px solid #FFF;
+    }
+
+.profilecardnameidcont {
+    position: absolute;
+    top: 103px;
+    left: 90px;
+    width: 185px;
 }
 
-.profilecardstatsdiv{
-	padding:16px;
+.profilecardnamecont {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 25px;
+    margin: -1px 0 -2px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal
 }
 
-.profilecardstatslist{
-	table-layout:fixed;box-sizing:border-box;display:table;margin:0;min-width:100%;padding:0;list-style:outside none;
+#profilecardname {
+    color: inherit;
+    text-transform: uppercase;
 }
 
-.profilecardstatslistitem{
-	width:1%;vertical-align:bottom;display:table-cell;padding:0;box-sizing:border-box;line-height:1;overflow:hidden;transition:all 0.15s ease-in-out 0s;text-align:inherit;
+#profilecarduid {
+    color: #667786;
+    font-size: 14px;
+    padding-right: 5px;
+    text-transform: uppercase;
 }
 
-.dispblk{
-	display:block;
+.profilecardstatsdiv {
+    padding: 16px;
 }
 
-.statslistitemhead{
-	color:#657786;font-size:12px;font-weight:bold;letter-spacing:0,02em;line-height:16px;overflow:hidden;transition:color 0.15s ease-in-out 0s;display:block;
+.profilecardstatslist {
+    table-layout: fixed;
+    box-sizing: border-box;
+    display: table;
+    margin: 0;
+    min-width: 100%;
+    padding: 0;
+    list-style: outside none;
 }
 
-.statslistitemcount{
-	display:block;font-size:18px;font-weight:bold;padding-top:3px;transition: color .15s ease-in-out 0s;color:#ff0000;
+.profilecardstatslistitem {
+    width: 1%;
+    vertical-align: bottom;
+    display: table-cell;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1;
+    overflow: hidden;
+    transition: all 0.15s ease-in-out 0s;
+    text-align: inherit;
 }
 
-.rightcontainer{
-	width:580px;float:right;margin-top:10px;margin-right:10px;
+.dispblk {
+    display: block;
 }
 
-.posttweetcontainer{
-	background:#ffe5e5;padding:10px 12px;position:relative;
+.statslistitemhead {
+    color: #657786;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0,02em;
+    line-height: 16px;
+    overflow: hidden;
+    transition: color 0.15s ease-in-out 0s;
+    display: block;
 }
 
-.posttweetprofimg{
-	width:32px;height:32px;position:absolute;left:28px;top:13px;border-radius:50%;
+.statslistitemcount {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 3px;
+    transition: color .15s ease-in-out 0s;
+    color: #ff0000;
 }
 
-.ml56px{
-	margin-left:56px;
+.rightcontainer {
+    width: 580px;
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
 }
 
-.ml58px{
-	margin-left:58px;
+.posttweetcontainer {
+    background: #ffe5e5;
+    padding: 10px 12px;
+    position: relative;
 }
 
-.mt10px{
-	margin-top: 10px;
+.posttweetprofimg {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    left: 28px;
+    top: 13px;
+    border-radius: 50%;
 }
 
-.posttweettacontainer{
-	border-radius: 8px; border: 1px solid rgb(255, 153, 153); border-image: none; line-height: 20px; box-shadow: 0px 0px 0px 1px #ff9999; background-color: rgb(255, 255, 255);
+.ml56px {
+    margin-left: 56px;
 }
 
-.posttweetta{
-	border-width: 1px 1px 0px; border-style: solid solid none; border-color: rgb(230, 236, 240) rgb(230, 236, 240) currentColor; margin: 0px; padding: 8px; outline: 0px; border-radius: 8px; border-image: none; width: 100%; height: 50px; font-family: "Segoe UI",Arial,sans-serif; font-size: 14px; box-sizing: border-box; opacity: 0.8; background-color: rgb(255, 255, 255);
+.ml58px {
+    margin-left: 58px;
 }
 
-.posttweetcountcont{
-	overflow: hidden; margin-top: 10px;
+.mt10px {
+    margin-top: 10px;
 }
 
-.posttweetcount{
-	margin-right: 10px; display: block; float: right;
+.posttweettacontainer {
+    border-radius: 8px;
+    border: 1px solid rgb(255, 153, 153);
+    border-image: none;
+    line-height: 20px;
+    box-shadow: 0px 0px 0px 1px #ff9999;
+    background-color: rgb(255, 255, 255);
 }
 
-.posttweetbutcont{
-	overflow: hidden; margin-top: 10px;
+.posttweetta {
+    border-width: 1px 1px 0px;
+    border-style: solid solid none;
+    border-color: rgb(230, 236, 240) rgb(230, 236, 240) currentColor;
+    margin: 0px;
+    padding: 8px;
+    outline: 0px;
+    border-radius: 8px;
+    border-image: none;
+    width: 100%;
+    height: 50px;
+    font-family: "Segoe UI",Arial,sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+    opacity: 0.8;
+    background-color: rgb(255, 255, 255);
 }
 
-.posttweetbut{
-	padding: 6px 16px; border-radius: 100px; border: 1px solid rgb(255, 50, 50); border-image: none; text-align: center; color: rgb(255, 255, 255); line-height: 20px; font-size: 14px; font-weight: bold; white-space: nowrap; position: relative; cursor: pointer; float: right; box-shadow: none; background-color: rgb(255, 50, 50);
+.posttweetcountcont {
+    overflow: hidden;
+    margin-top: 10px;
 }
 
-.tweetscontainer{
-	background: rgb(255, 255, 255); list-style: none; margin: 0px; padding: 0px;
+.posttweetcount {
+    margin-right: 10px;
+    display: block;
+    float: right;
 }
 
-.tweetcontainer{
-	margin: 0px; padding: 10px; overflow: hidden; border-bottom-color: rgb(230, 236, 240); border-bottom-width: 1px; border-bottom-style: solid;
+.posttweetbutcont {
+    overflow: hidden;
+    margin-top: 10px;
 }
 
-.tweetprofimg{
-	border-radius: 50%; width: 48px; height: 48px; margin-right: 10px; float: left;
+.posttweetbut {
+    padding: 6px 16px;
+    border-radius: 100px;
+    border: 1px solid rgb(255, 50, 50);
+    border-image: none;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    position: relative;
+    cursor: pointer;
+    float: right;
+    box-shadow: none;
+    background-color: rgb(255, 50, 50);
 }
 
-.tweetprofname{
-	color:#14171a;font-size:14px;font-weight:bold;
+.tweetscontainer {
+    background: rgb(255, 255, 255);
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
 }
 
-.tweetprofuid{
-	color:#657786;font-size:14px;margin-left:5px;
+.tweetcontainer {
+    margin: 0px;
+    padding: 10px;
+    overflow: hidden;
+    border-bottom-color: rgb(230, 236, 240);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
 }
 
-.tweetstats{
-	margin-right: 30px; cursor: pointer;
+.tweetprofimg {
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    margin-right: 10px;
+    float: left;
 }
 
-.tweetstats i{
-	color: rgb(101, 119, 134); font-size: 16px;
+.tweetprofname {
+    color: #14171a;
+    font-size: 14px;
+    font-weight: bold;
 }
 
-.tweetstatscount{
-	color: rgb(101, 119, 134); line-height: 1; font-size: 12px; font-weight: bold; margin-left: 6px;
+.tweetprofuid {
+    color: #657786;
+    font-size: 14px;
+    margin-left: 5px;
 }
 
-.red i, .red span{
-	color:#f00 !important;
+.tweetstats {
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+    .tweetstats i {
+        color: rgb(101, 119, 134);
+        font-size: 16px;
+    }
+
+.tweetstatscount {
+    color: rgb(101, 119, 134);
+    line-height: 1;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 6px;
+}
+
+.red i, .red span {
+    color: #f00 !important;
 }

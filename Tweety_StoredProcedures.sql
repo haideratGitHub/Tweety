@@ -132,6 +132,12 @@ begin
 			begin
 				insert into follower values(@id2,@id1)
 				print @username+(' now following user ')+@other_username
+				
+				--pushing notification
+				declare @_text varchar(200)
+				set @_text = @username+(' started following you')
+				execute addNotification
+				@userID=@id2, @text=@_text
 			end
 		end
 		else
@@ -189,7 +195,7 @@ execute unfollow
 -- --TO CHANGE USERNAME-- --
 go
 create procedure change_username
-	@old varchar(30),@new varchar(30),@password varchar(30)
+	@old varchar(30),@new varchar(30),@password varchar(30),@output int OUTPUT
 as
 begin
 	if @old in(select name from [user])
@@ -199,32 +205,37 @@ begin
 			if @new in(select name from [user])
 			begin
 				print ('username ')+@new+(' is not available')
+				set @output=0
 			end
 			else
 			begin
 				update [user] set name=@new where name=@old
+				set @output=1
 				print('username changed from ')+@old+(' to ')+@new
 			end
 		end
 		else
 		begin
 			print('wrong password')
+			set @output=0
 		end
 	end
 	else
 	begin
 		print ('There is no user with this user name')
+		set @output=0
 	end
 end
 go
 -- --executing code-- --
+declare @result int
 execute change_username
-	@old='ali',@new='ali_33',@password='p1234'
+	@old='ali',@new='ali_33',@password='p1234',@output=@result output
 
 -- --TO CHANGE PASSWORD-- --
 go
 create procedure change_password
-	@name varchar(30),@new varchar(30),@password varchar(30)
+	@name varchar(30),@new varchar(30),@password varchar(30),@output int OUTPUT
 as
 begin
 	if @name in(select name from [user])
@@ -232,22 +243,26 @@ begin
 		if @password=(select [password] from [user] where name=@name)
 		begin
 			update [user] set [password]=@new where name=@name
+			set @output=1
 			print('password changed from ')+@password+(' to ')+@new+(' for ')+@name
 		end
 		else
 		begin
 			print('wrong password')
+			set @output=0
 		end
 	end
 	else
 	begin
 		print ('There is no user with this user name')
+		set @output=0
 	end
 end
 go
 -- --executing code-- --
+declare @result int
 execute change_password
-	@name='ali_33',@new='p123',@password='p1234'
+	@name='ali_33',@new='p123',@password='p1234',@output=@result output
 
 -- --TO CHANGE FIRST NAME-- --
 go
@@ -493,6 +508,10 @@ create procedure like_a_tweet
 	@tweet_id int,@liker varchar(30)
 as
 begin
+
+	execute undislike_a_tweet
+	@tweet_id=@tweet_id,@disliker=@liker
+
 	if @tweet_id in(select tweetID from tweets)
 	begin
 		if @liker in(select name from [user])
@@ -507,6 +526,13 @@ begin
 			begin
 				insert into likes values(@id,@tweet_id)
 				print @liker+(' liked this tweet')
+				
+				-- Pushing notification
+				declare @_userID int, @_text varchar(200), @tweetData varchar(15)
+				select @_userID = t.userID, @tweetData = t.tweet from tweets as t where t.tweetID = @tweet_id
+				set @_text = @liker+(' like your tweet " ')+@tweetData+('..."')
+				execute addNotification
+				@userID=@_userID, @text=@_text
 			end
 		end
 		else
@@ -569,6 +595,10 @@ create procedure dislike_a_tweet
 	@tweet_id int,@disliker varchar(30)
 as
 begin
+	
+	execute unlike_a_tweet
+	@tweet_id=@tweet_id,@liker=@disliker
+
 	if @tweet_id in(select tweetID from tweets)
 	begin
 		if @disliker in(select name from [user])
@@ -583,6 +613,14 @@ begin
 			begin
 				insert into dislikes values(@id,@tweet_id)
 				print @disliker+(' disliked this tweet')
+
+				
+				-- Pushing notification
+				declare @_userID int, @_text varchar(200), @tweetData varchar(15)
+				select @_userID = t.userID, @tweetData = t.tweet from tweets as t where t.tweetID = @tweet_id
+				set @_text = @disliker+(' dislike your tweet " ')+@tweetData+('..."')
+				execute addNotification
+				@userID=@_userID, @text=@_text
 			end
 		end
 		else
@@ -598,7 +636,7 @@ end
 go
 -- --executing code-- --
 execute dislike_a_tweet
-	@tweet_id=2,@disliker='mike_99'
+	@tweet_id=6,@disliker='mike_99'
 --select * from dislikes
 
 -- --TO UNDISLIKE A TWEET-- --
@@ -656,6 +694,14 @@ begin
 
 			insert into comments values(@id,@tweet_id,@uid,@comment,convert(date,getdate()),convert(time,getdate()))
 			print('comment posted')
+
+			-- Pushing notification
+				declare @_userID int, @_text varchar(200), @CommentData varchar(25), @tweetData varchar(15)
+				set @CommentData = @comment
+				select @_userID = t.userID, @tweetData = t.tweet from tweets as t where t.tweetID = @tweet_id
+				set @_text = @username+(' comment "')+@CommentData+('..." on your tweet "')+@tweetData+('..."')
+				execute addNotification
+				@userID=@_userID, @text=@_text
 		end
 		else
 		begin
@@ -827,7 +873,7 @@ create procedure view_user
 	@username varchar(30)
 as
 begin
-		select name,password,displayPic,fname,lname,gender,DOB,email,country,status
+		select name,password,displayPic,fname,lname,gender,convert(varchar,DOB,101) as DOB,email,country,status
 		from [user] u left join [profile] p on u.userID=p.userID
 		where name=@username
 end
@@ -1259,3 +1305,103 @@ go
 -- --executing code-- --
 execute comments_on_a_tweet
 	@tweet_id=4
+
+
+
+
+
+go
+--to add values in notification table
+create procedure addNotification
+	@userID int,
+	@text varchar(200)
+as
+begin
+	declare @nID int
+
+	select @nID=max(NotificationID) from Notifications
+		set @nID=@nID+1
+
+	insert into Notifications values (@nID, @userID, convert(datetime,getdate()),convert(time,getdate()),'U', @text)
+end
+
+go
+
+-- to show notifications for a user
+create procedure showNotifications
+	@username varchar(30)
+as
+begin
+	select N.notificationID, N.userID, N.nDate, N.nTime, N.readFlag, N.n_Text
+	from Notifications as N join [user] as U on N.userID = U.userID
+	where U.name = @username
+	order by convert(datetime, nDate) desc, convert(time, ntime) desc
+	
+end
+
+go
+
+-- --TO CHANGE Display Pic-- --
+go
+create procedure change_displayPic
+	@username varchar(30),@new varchar(1000),@password varchar(30)
+as
+begin
+	if @username in(select name from [user])
+	begin
+		if @password=(select [password] from [user] where name=@username)
+		begin
+				update [user] set displayPic=@new where name=@username
+				print('display picture changed to ')+@new+(' for ')+@username
+		end
+		else
+		begin
+			print('wrong password')
+		end
+	end
+	else
+	begin
+		print ('There is no user with this user name')
+	end
+end
+go
+-- --executing code-- --
+execute change_displayPic
+	@username='ali',@new='https://herbalforlife.co.uk/wp-content/uploads/2019/08/user-placeholder.png',@password='p1234'
+
+-- --TO CHANGE DOB-- --
+go
+create procedure change_DOB
+	@username varchar(30),@new date,@password varchar(30)
+as
+begin
+	if @username in(select name from [user])
+	begin
+		if @password=(select [password] from [user] where name=@username)
+		begin
+			declare @id int
+			select @id=[userID] from [user] where name=@username
+			if @id in(select userID from [profile])
+			begin
+				update [profile] set DOB=@new where [userID]=@id
+				--print('DOB changed to ')+@new+(' for ')+@username
+			end
+			else
+			begin
+				print @username+(' does not have a profile yet')
+			end
+		end
+		else
+		begin
+			print('wrong password')
+		end
+	end
+	else
+	begin
+		print ('There is no user with this user name')
+	end
+end
+go
+-- --executing code-- --
+execute change_DOB
+	@username='ali_33',@new='2001-12-12',@password='p1234'

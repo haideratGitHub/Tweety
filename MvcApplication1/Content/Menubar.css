@@ -2,16 +2,27 @@
     margin: 0;
     padding: 0;
     font-family: 'Century Gothic';
+    box-sizing: border-box;
 }
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
+
+.wrapper {
+    display: flex;
+    position: relative;
+}
+
+.wrapper
 
 ul {
     float: left;
     list-style-type: none;
     padding: 10px;
-    margin-top:10%;
-
-    margin-right:90%;
-    border:thin solid #56baed;
+    /*border:thin solid #56baed;*/ border:none;
 }
 
     ul li {
@@ -27,6 +38,10 @@ ul {
             border-radius: 25px;
             border: none;
             transition: 0.7s ease;
+            margin-right: auto;
+            width:140px;
+            margin-top:5px;
+            margin-bottom:5px;
         }
 
             ul li a:hover {

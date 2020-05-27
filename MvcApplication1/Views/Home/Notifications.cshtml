@@ -2,6 +2,9 @@
     ViewBag.Title = "Notifications";
 }
 
+@using MvcApplication1.Models;
+@model dynamic
+
 <!DOCTYPE html>
 
 <html>
@@ -10,25 +13,64 @@
     <title>Home</title>
     <link href="~/Content/Menubar.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/Notifications.css" rel="stylesheet" />
+    <link href="~/Content/RightColumn.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 </head>
 <body>
-    <header>
-        <div class="menu">
+    <div class="wrapper">
+        @*row*@
+        <div class="column">
+            @*column1*@
+            @{User user = Model.User;
+                <img src="@user.display_pic" height="160" width="160" alt="Avatar">
+                <h2>@user.first_name&nbsp;@user.last_name</h2>
+            }
             <ul>
-                <li><a href="~/Home/HomePage">Home</a></li>
+                <li><a href="~/Home/HomePage"><i class="fas fa-home"></i>Home </a></li>
                 <br>
-                <li><a href="~/Home/ProfilePage">Profile</a></li>
+                <li><a href="~/Home/ProfilePage"><i class="fas fa-user"></i>Profile     </a></li>
                 <br>
-                <li class="active"><a href="~/Home/Notifications">Notifications</a></li>
+                <li><a href="~/Home/Explore"><i class="fas fa-hashtag"></i>Explore     </a></li>
                 <br>
-                <li><a href="~/Home/Messages">Messages</a></li>
+                <li class="active"><a href="~/Home/Notifications"><i class="fas fa-bell"></i>Notifications     </a></li>
                 <br>
-                <li><a href="~/Home/Settings">Settings</a></li>
+                <li><a href="~/Home/Messages"><i class="fas fa-envelope"></i>Messages   </a></li>
                 <br>
-                <li><a href="~/Home/LogOut">Logout</a></li>
+                <li><a href="~/Home/Settings"><i class="fas fa-cog"></i>Settings    </a></li>
+                <br>
+                <li><a href="~/Home/LogOut"><i class="fas fa-sign-out-alt"></i>Logout   </a></li>
                 <br>
             </ul>
+
         </div>
-    </header>
+
+        <div class="centre-column">
+            <div id="centre-title">Notifications</div>
+            <br />
+
+
+            @foreach (Notification notifications in Model.Notifications)
+            {
+                <div class="Notification_Box">
+                    <p id="Notification_data">
+                        <span id="text" >@notifications.n_Text</span>
+                        <span id="date">@notifications.nDate</span>
+                        <br />
+                        <br />
+                    </p>
+                </div>
+            }
+
+
+        </div>
+
+        <div>
+
+        </div>
+    </div>
+
+
+
+
 </body>
 </html>

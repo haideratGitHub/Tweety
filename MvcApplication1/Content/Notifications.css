@@ -1,2 +1,63 @@
 ﻿body {
 }
+
+div.centre-column {
+    border-style: solid;
+    border-color: #56baed;
+    border-width: thin;
+    margin-left: 8%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-right: 1%;
+    padding: 2%;
+    background-color:#f1fafe;
+    max-width:600px;
+    min-width:599px;
+}
+
+#centre-title {
+    font-size: 30px;
+    font-family: 'Century Gothic';
+    color: #0094ff;
+    text-align: center;
+    padding: 2px;
+    font-weight: bold;
+    border-bottom: 2px solid #0094ff;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+
+div.Notification_Box {
+    border-left-color: white;
+    border-right-color: white;
+    border-style: solid;
+    border-width: thin;
+    border-top-color: #E9E9E9;
+    border-bottom-color: #E9E9E9;
+    padding: 1%;
+    transition: 0.9s ease;
+}
+
+    div.Notification_Box:hover {
+        background-color: #e2ecf1;
+    } 
+
+.Notification_Box p#Notification_data {
+    padding: 1%;
+}
+
+p {
+    font-family: 'Century Gothic';
+    font-size: large;
+}
+
+span#text {
+    font-weight: bold
+}
+
+span#date {
+    float:right;
+    color:#56baed;
+}
+
