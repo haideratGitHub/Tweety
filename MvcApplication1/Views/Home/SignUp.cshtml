@@ -27,7 +27,7 @@
         </div>
         <div class="AppContent wrapper wrapper-signup" id="page-container">
             <link rel="stylesheet" href="https://abs.twimg.com/a/1511833274/css/t1/t1_signup.bundle.css">
-            <div class="page-canvas">
+            <div class="page-canvas" style="background-color:#f1fafe; width:650px">
 
                 <input type="button" id="back_to_login" class="inactive underlineHover" value="Back to Login" onclick="location.href='../../Home/Login'" />
 
@@ -45,6 +45,7 @@
                                             <p id="nameerror" role="alert" class="blank invalid error">What's your name?</p>
                                         </div>
                                         <input type="text" placeholder="First Name" aria-required="true" maxlength="50" id="full-name" class="" name="first_name">
+                                        <br><br>
                                         <input type="text" placeholder="Last Name" aria-required="true" maxlength="50" id="full-name" class="" name="last_name">
                                     </div>
                                 </div>
@@ -80,9 +81,10 @@
 
                                 <div class="Birthdate">
                                     <fieldset>
-                                        <label>Birthday</label>
+                                        <label style="font-weight:700; font-size:18px; color:rgb(114, 114, 140);">Birthday</label>
+                                        <br />
                                         <label class="month">
-                                            <select class="select-style" name="BirthMonth">
+                                            <select class="select-style" name="BirthMonth" style="border-color:#d8e3ea;">
                                                 <option value="">Month</option>
                                                 <option value="01">January</option>
                                                 <option value="02">February</option>
@@ -98,24 +100,35 @@
                                                 <option value="12">December</option>
 
                                             </select>
-                                            <label>Day<input class="birthday" maxlength="2" name="BirthDay" placeholder="Day" required=""></label>
-                                            <label>Year <input class="birthyear" maxlength="4" name="BirthYear" placeholder="Year" required=""></label>
+                                            &nbsp;
+                                            <label>
+                                                <input class="birthday" maxlength="2" name="BirthDay" placeholder="Day" required="" style="max-width:35px;">
+                                            </label>
+                                            &nbsp;
+                                            <label>
+                                                <input class="birthyear" maxlength="4" name="BirthYear" placeholder="Year" required="" style="max-width:40px;">
+                                            </label>
                                         </label>
                                     </fieldset>
                                 </div>
 
+                                <br />
 
                                 <div class="gender">
-                                    <select class="select-style gender" name="gender">
-                                        <option value="select">i am..</option>
+                                    <label style="font-weight:700; font-size:18px; color:rgb(114, 114, 140);">Gender</label>&nbsp;
+                                    <select class="select-style gender" style="border-color:#d8e3ea; padding:0px;" name="gender">
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
                                         <option value="others">Other</option>
-                                    </select><br><br>
+                                    </select>
                                 </div>
 
+                                <br />
+
                                 <div class="Countries">
-                                    <select id="country" name="country">
+
+                                    <label style="font-weight:700; font-size:18px; color:rgb(114, 114, 140);">Country</label>&nbsp;
+                                    <select id="country" name="country" style="border-color:#d8e3ea;>
                                         <option value="Afganistan">Afghanistan</option>
                                         <option value="Albania">Albania</option>
                                         <option value="Algeria">Algeria</option>
