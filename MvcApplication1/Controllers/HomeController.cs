@@ -243,5 +243,23 @@ namespace MvcApplication1.Controllers
                 return RedirectToAction("Followers");
             }
         }
+
+        public ActionResult likeTweet(int tweetID)
+        {
+            int result = CRUD.like_a_tweet(tweetID, Session["username"].ToString());
+            return RedirectToAction("HomePage");
+        }
+
+        public ActionResult dislikeTweet(int tweetID)
+        {
+            int result = CRUD.dislike_a_tweet(tweetID, Session["username"].ToString());
+            return RedirectToAction("HomePage");
+        }
+
+        public ActionResult commentTweet()
+        {
+            return View();
+        }
+
     }
 }
