@@ -199,3 +199,7 @@ option:hover{
     background-color:#56baed;
     color:white;
 }
+
+.wrapper ul{
+    border:thin solid #56baed;
+}
