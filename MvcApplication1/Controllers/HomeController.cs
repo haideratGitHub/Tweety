@@ -216,6 +216,37 @@ namespace MvcApplication1.Controllers
             }
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public ActionResult Update_Name(String username,String password,String first_name,String last_name)
         {
             if (Session["username"] == null)
