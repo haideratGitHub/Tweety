@@ -195,7 +195,7 @@ execute unfollow
 -- --TO CHANGE USERNAME-- --
 go
 create procedure change_username
-	@old varchar(30),@new varchar(30),@password varchar(30)
+	@old varchar(30),@new varchar(30),@password varchar(30),@output int OUTPUT
 as
 begin
 	if @old in(select name from [user])
@@ -205,32 +205,37 @@ begin
 			if @new in(select name from [user])
 			begin
 				print ('username ')+@new+(' is not available')
+				set @output=0
 			end
 			else
 			begin
 				update [user] set name=@new where name=@old
+				set @output=1
 				print('username changed from ')+@old+(' to ')+@new
 			end
 		end
 		else
 		begin
 			print('wrong password')
+			set @output=0
 		end
 	end
 	else
 	begin
 		print ('There is no user with this user name')
+		set @output=0
 	end
 end
 go
 -- --executing code-- --
+declare @result int
 execute change_username
-	@old='ali',@new='ali_33',@password='p1234'
+	@old='ali',@new='ali_33',@password='p1234',@output=@result output
 
 -- --TO CHANGE PASSWORD-- --
 go
 create procedure change_password
-	@name varchar(30),@new varchar(30),@password varchar(30)
+	@name varchar(30),@new varchar(30),@password varchar(30),@output int OUTPUT
 as
 begin
 	if @name in(select name from [user])
@@ -238,22 +243,26 @@ begin
 		if @password=(select [password] from [user] where name=@name)
 		begin
 			update [user] set [password]=@new where name=@name
+			set @output=1
 			print('password changed from ')+@password+(' to ')+@new+(' for ')+@name
 		end
 		else
 		begin
 			print('wrong password')
+			set @output=0
 		end
 	end
 	else
 	begin
 		print ('There is no user with this user name')
+		set @output=0
 	end
 end
 go
 -- --executing code-- --
+declare @result int
 execute change_password
-	@name='ali_33',@new='p123',@password='p1234'
+	@name='ali_33',@new='p123',@password='p1234',@output=@result output
 
 -- --TO CHANGE FIRST NAME-- --
 go
@@ -864,7 +873,7 @@ create procedure view_user
 	@username varchar(30)
 as
 begin
-		select name,password,displayPic,fname,lname,gender,DOB,email,country,status
+		select name,password,displayPic,fname,lname,gender,convert(varchar,DOB,101) as DOB,email,country,status
 		from [user] u left join [profile] p on u.userID=p.userID
 		where name=@username
 end
@@ -1331,3 +1340,68 @@ begin
 end
 
 go
+
+-- --TO CHANGE Display Pic-- --
+go
+create procedure change_displayPic
+	@username varchar(30),@new varchar(1000),@password varchar(30)
+as
+begin
+	if @username in(select name from [user])
+	begin
+		if @password=(select [password] from [user] where name=@username)
+		begin
+				update [user] set displayPic=@new where name=@username
+				print('display picture changed to ')+@new+(' for ')+@username
+		end
+		else
+		begin
+			print('wrong password')
+		end
+	end
+	else
+	begin
+		print ('There is no user with this user name')
+	end
+end
+go
+-- --executing code-- --
+execute change_displayPic
+	@username='ali',@new='https://herbalforlife.co.uk/wp-content/uploads/2019/08/user-placeholder.png',@password='p1234'
+
+-- --TO CHANGE DOB-- --
+go
+create procedure change_DOB
+	@username varchar(30),@new date,@password varchar(30)
+as
+begin
+	if @username in(select name from [user])
+	begin
+		if @password=(select [password] from [user] where name=@username)
+		begin
+			declare @id int
+			select @id=[userID] from [user] where name=@username
+			if @id in(select userID from [profile])
+			begin
+				update [profile] set DOB=@new where [userID]=@id
+				--print('DOB changed to ')+@new+(' for ')+@username
+			end
+			else
+			begin
+				print @username+(' does not have a profile yet')
+			end
+		end
+		else
+		begin
+			print('wrong password')
+		end
+	end
+	else
+	begin
+		print ('There is no user with this user name')
+	end
+end
+go
+-- --executing code-- --
+execute change_DOB
+	@username='ali_33',@new='2001-12-12',@password='p1234'

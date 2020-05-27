@@ -61,7 +61,7 @@ img{
     width:150px;
 }
 
-i{
+i.centre-column{
     color:#0094ff;
 }
 
@@ -247,7 +247,7 @@ div.modal-content{
 
 div.modal-content header{
      position:fixed;
-     width:790px;
+     width:760px;
      font-size:large;
      font-family:'Century Gothic';
      font-weight:bold;
