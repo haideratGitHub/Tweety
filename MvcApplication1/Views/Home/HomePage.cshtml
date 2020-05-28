@@ -42,6 +42,10 @@
                 <br>
             </ul>
 
+            <button id="tweet-button">Tweet</button>
+        </div>
+        <div>
+            
         </div>
         <div class="feed" style="width:60%">
             @*column to display tweets*@
@@ -63,33 +67,31 @@
                 </div>
             }
 
-            
+
         </div>
-        <div class="column" style="width:20%">
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <td>Username</td>
-                            <td>Display Pic</td>
-                            <td>First Name</td>
-                            <td>Last Name</td>
-                        </tr>
-                    </thead>
+        <div class="column3" style="width:20%">
 
-                    @foreach (User People_U_Should_Follow_list in Model.Suggested_people)
-                    {
-                        <tr>
+            <br />
+            <h2 style="animation">People You May Know...</h2>
+            <br />
+            @foreach (User People_U_Should_Follow_list in Model.Suggested_people)
+            {
+                <div class="user-box">
+                    <img src="@People_U_Should_Follow_list.display_pic" alt="Avatar" id="tweet-box">
+                    <p id="tweet-box">
+                        <span id="name">@People_U_Should_Follow_list.first_name&nbsp;@People_U_Should_Follow_list.last_name</span>
+                        <span id="details">&nbsp; &#64;@People_U_Should_Follow_list.username</span>
+                        <span id="details" style="float:right">&nbsp;&nbsp;</span>
+                        <br />
+                        <span style="color:black"></span>
+                        <br /><br />
+                    </p>
+                </div>
+            }
 
-                            <td>@People_U_Should_Follow_list.username</td>
-                            <td>@People_U_Should_Follow_list.display_pic</td>
-                            <td>@People_U_Should_Follow_list.first_name</td>
-                            <td>@People_U_Should_Follow_list.last_name</td>
-                        </tr>
-                    }
 
-                </table>
 
-            </div>
+        </div>
     </div>
 
 
