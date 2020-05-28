@@ -195,7 +195,7 @@ execute unfollow
 -- --TO CHANGE USERNAME-- --
 go
 create procedure change_username
-	@old varchar(30),@new varchar(30),@password varchar(30)
+	@old varchar(30),@new varchar(30),@password varchar(30),@output int OUTPUT
 as
 begin
 	if @old in(select name from [user])
@@ -205,32 +205,37 @@ begin
 			if @new in(select name from [user])
 			begin
 				print ('username ')+@new+(' is not available')
+				set @output=0
 			end
 			else
 			begin
 				update [user] set name=@new where name=@old
+				set @output=1
 				print('username changed from ')+@old+(' to ')+@new
 			end
 		end
 		else
 		begin
 			print('wrong password')
+			set @output=0
 		end
 	end
 	else
 	begin
 		print ('There is no user with this user name')
+		set @output=0
 	end
 end
 go
 -- --executing code-- --
+declare @result int
 execute change_username
-	@old='ali',@new='ali_33',@password='p1234'
+	@old='ali',@new='ali_33',@password='p1234',@output=@result output
 
 -- --TO CHANGE PASSWORD-- --
 go
 create procedure change_password
-	@name varchar(30),@new varchar(30),@password varchar(30)
+	@name varchar(30),@new varchar(30),@password varchar(30),@output int OUTPUT
 as
 begin
 	if @name in(select name from [user])
@@ -238,22 +243,26 @@ begin
 		if @password=(select [password] from [user] where name=@name)
 		begin
 			update [user] set [password]=@new where name=@name
+			set @output=1
 			print('password changed from ')+@password+(' to ')+@new+(' for ')+@name
 		end
 		else
 		begin
 			print('wrong password')
+			set @output=0
 		end
 	end
 	else
 	begin
 		print ('There is no user with this user name')
+		set @output=0
 	end
 end
 go
 -- --executing code-- --
+declare @result int
 execute change_password
-	@name='ali_33',@new='p123',@password='p1234'
+	@name='ali_33',@new='p123',@password='p1234',@output=@result output
 
 -- --TO CHANGE FIRST NAME-- --
 go
@@ -496,7 +505,7 @@ execute change_status
 -- --TO LIKE A TWEET-- --
 go
 create procedure like_a_tweet
-	@tweet_id int,@liker varchar(30)
+	@tweet_id int,@liker varchar(30),@output int output
 as
 begin
 
@@ -512,12 +521,13 @@ begin
 			if @id in(select likerID from likes where tweetID=@tweet_id)
 			begin
 				print ('This tweet is already liked by ')+@liker
+				set @output = 2
 			end
 			else
 			begin
 				insert into likes values(@id,@tweet_id)
 				print @liker+(' liked this tweet')
-				
+				set @output = 1
 				-- Pushing notification
 				declare @_userID int, @_text varchar(200), @tweetData varchar(15)
 				select @_userID = t.userID, @tweetData = t.tweet from tweets as t where t.tweetID = @tweet_id
@@ -538,8 +548,10 @@ begin
 end
 go
 -- --executing code-- --
+declare @result int
 execute like_a_tweet
-	@tweet_id=1,@liker='mike_99'
+	@tweet_id=4,@liker='ali_33',@output=@result output
+select @result
 --select * from likes
 
 -- --TO UNLIKE A TWEET-- --
@@ -576,14 +588,17 @@ begin
 end
 go
 -- --executing code-- --
+
+
 execute unlike_a_tweet
 	@tweet_id=1,@liker='mike_99'
+
 --select * from likes
 
 -- --TO DISLIKE A TWEET-- --
 go
 create procedure dislike_a_tweet
-	@tweet_id int,@disliker varchar(30)
+	@tweet_id int,@disliker varchar(30),@output1 int output
 as
 begin
 	
@@ -599,11 +614,13 @@ begin
 			if @id in(select dislikerID from dislikes where tweetID=@tweet_id)
 			begin
 				print ('This tweet is already disliked by ')+@disliker
+				set @output1 = 2
 			end
 			else
 			begin
 				insert into dislikes values(@id,@tweet_id)
 				print @disliker+(' disliked this tweet')
+				set @output1 = 1
 
 				
 				-- Pushing notification
@@ -626,8 +643,10 @@ begin
 end
 go
 -- --executing code-- --
+declare @result int
 execute dislike_a_tweet
-	@tweet_id=6,@disliker='mike_99'
+	@tweet_id=2,@disliker='mike_99',@output1=@result output
+select @result
 --select * from dislikes
 
 -- --TO UNDISLIKE A TWEET-- --
@@ -636,7 +655,7 @@ create procedure undislike_a_tweet
 	@tweet_id int,@disliker varchar(30)
 as
 begin
-	if @tweet_id in(select tweetID from tweets)
+	if @tweet_id in(select tweets.tweetID from dbo.tweets)
 	begin
 		if @disliker in(select name from [user])
 		begin
@@ -716,8 +735,8 @@ create procedure remove_follower
 	@username varchar(30),@follower varchar(30)--,@password varchar(30)
 as
 begin
-	--if @username in(select name from [user]) and @follower in(select name from [user])
-	--begin
+	if @username in(select name from [user]) and @follower in(select name from [user])
+	begin
 		--if @password=(select password from [user] where name=@username)
 		--begin
 			declare @uid int,@fid int
@@ -864,7 +883,7 @@ create procedure view_user
 	@username varchar(30)
 as
 begin
-		select name,password,displayPic,fname,lname,gender,DOB,email,country,status
+		select name,password,displayPic,fname,lname,gender,convert(varchar,DOB,101) as DOB,email,country,status
 		from [user] u left join [profile] p on u.userID=p.userID
 		where name=@username
 end
@@ -1020,92 +1039,6 @@ go
 -- --executing code-- --
 execute followers
 	@username='sara_89'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1331,3 +1264,137 @@ begin
 end
 
 go
+
+-- --TO CHANGE Display Pic-- --
+go
+create procedure change_displayPic
+	@username varchar(30),@new varchar(1000),@password varchar(30)
+as
+begin
+	if @username in(select name from [user])
+	begin
+		if @password=(select [password] from [user] where name=@username)
+		begin
+				update [user] set displayPic=@new where name=@username
+				print('display picture changed to ')+@new+(' for ')+@username
+		end
+		else
+		begin
+			print('wrong password')
+		end
+	end
+	else
+	begin
+		print ('There is no user with this user name')
+	end
+end
+go
+-- --executing code-- --
+execute change_displayPic
+	@username='ali',@new='https://herbalforlife.co.uk/wp-content/uploads/2019/08/user-placeholder.png',@password='p1234'
+
+-- --TO CHANGE DOB-- --
+go
+create procedure change_DOB
+	@username varchar(30),@new date,@password varchar(30)
+as
+begin
+	if @username in(select name from [user])
+	begin
+		if @password=(select [password] from [user] where name=@username)
+		begin
+			declare @id int
+			select @id=[userID] from [user] where name=@username
+			if @id in(select userID from [profile])
+			begin
+				update [profile] set DOB=@new where [userID]=@id
+				--print('DOB changed to ')+@new+(' for ')+@username
+			end
+			else
+			begin
+				print @username+(' does not have a profile yet')
+			end
+		end
+		else
+		begin
+			print('wrong password')
+		end
+	end
+	else
+	begin
+		print ('There is no user with this user name')
+	end
+end
+go
+-- --executing code-- --
+execute change_DOB
+	@username='ali_33',@new='2001-12-12',@password='p1234'
+
+---Private Chat output-----
+
+go
+create procedure chat_out
+	@sender varchar(30),@recever varchar(30)
+as
+begin
+	if @sender in (select name from [user]) and @recever in (select name from [user])
+	begin
+		select u1.name as sender,u2.name as recever,p.message,p.time
+		from (privateChat as p join [user] as u1 on u1.userID=p.senderID)join [user] as u2 on u2.userID=p.receiverID
+		where u1.name=@sender and u2.name=@recever or u2.name=@sender and u1.name=@recever
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+
+-------execution code---
+execute chat_out
+@sender='ali_33',@recever='ahmad_54'
+
+
+
+---private chat input--- 
+go
+create procedure chat_in
+  @sender varchar(30),@receiver varchar(30),@message varchar(280)
+as
+begin
+	if @sender in (select name from [user]) and @receiver in (select name from [user])
+	begin
+	    declare @s_ID int,@r_iD int,@chatID int,@messageID int 
+		
+		select @s_ID=[user].userID from [user] where [user].name=@sender
+		set @s_ID=@s_ID
+
+		select @r_ID=[user].userID from [user] where [user].name=@receiver
+		set @r_ID=@r_ID
+
+		if @S_ID in (select privateChat.senderID from privateChat where @r_ID=receiverID) or @S_ID in (select privateChat.receiverID from privateChat where @r_ID=senderID)
+		begin
+		    select @chatID=privateChat.chatID from privateChat where  (@r_ID=receiverID and @s_ID =senderID) or (@s_ID=receiverID and @r_ID =senderID)
+			select @messageID=max(privateChat.messageID) from privateChat where  privateChat.chatID=@chatID
+			set @messageID=@messageID+1
+		end   
+		else
+		begin
+			select @chatID=max(privateChat.chatID) from privateChat
+			set @chatID=@chatID+1
+			set @messageID=1 
+		end
+
+		insert into privateChat values (@chatID,@s_ID,@r_iD,@messageID,@message,GETDATE(),CONVERT(time, GETDATE()))
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+------execution code----
+execute chat_in
+@sender='mike_99',@receiver='alice_21',@message='checking on u.'
+
+

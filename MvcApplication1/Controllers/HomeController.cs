@@ -10,6 +10,13 @@ namespace MvcApplication1.Controllers
 {
     public class HomeController : Controller
     {
+        static class Globals
+        {
+           
+            public static string recever=null;
+
+            
+        }
 
         public ActionResult Login()
         {
@@ -34,14 +41,16 @@ namespace MvcApplication1.Controllers
         {
             Session["username"] = null;
             return View("Login");
-        }
-        public ActionResult Messages()
+        } 
+       public ActionResult Settings()
         {
-            return View("Messages");
-        }
-        public ActionResult Settings()
-        {
-            return View("Settings");
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                User user = CRUD.view_user(Session["username"].ToString());
+                return View(user);
+            }
         }
         public ActionResult Notifications(String username)
         {
@@ -63,6 +72,42 @@ namespace MvcApplication1.Controllers
                 return View(model);
             }
         }
+
+        public ActionResult Messages(string rec=null)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                User users = CRUD.view_user(Session["username"].ToString());
+                List<User> followers = CRUD.get_followers(Session["username"].ToString());
+                List<Messages> Messages;
+                if (rec == null && Globals.recever==null)
+                {
+                    Messages = CRUD.showMessages(Session["username"].ToString(), " ");
+                }
+                else if(rec == null && Globals.recever != null)
+                {
+
+                    
+                    Messages = CRUD.showMessages(Session["username"].ToString(), Globals.recever);
+                    
+                }
+                else
+                {
+                    Globals.recever = rec;
+                    Messages = CRUD.showMessages(Session["username"].ToString(), Globals.recever);
+                }
+
+
+                dynamic model = new ExpandoObject();
+                model.User = users;
+                model.followers = followers;
+                model.Messages = Messages;
+                return View(model);
+            }
+        }
+
 
         public ActionResult Explore()
         {
@@ -243,5 +288,129 @@ namespace MvcApplication1.Controllers
                 return RedirectToAction("Followers");
             }
         }
+        public ActionResult Update_Name(String username,String password,String first_name,String last_name)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_FirstName(username, first_name, password);
+                CRUD.Update_LastName(username, last_name, password);
+                return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_Username(String username, String password, String new_username)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                if (CRUD.Update_UserName(username, new_username, password) == 1)
+                    return RedirectToAction("LogOut");
+                else
+                    return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_Email(String username, String password, String email)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_Email(username, email, password);
+                return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_Country(String username, String password, String country)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_Country(username, country, password);
+                return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_Status(String username, String password, String status)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_Status(username, status, password);
+                return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_Gender(String username, String password, String gender)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_Gender(username, gender, password);
+                return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_Password(String username, String new_password, String old_password)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                if (CRUD.Update_Password(username, new_password, old_password) == 1)
+                    return RedirectToAction("LogOut");
+                else
+                    return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_DP(String username, String password, String DP)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_DisplayPic(username, DP, password);
+                return RedirectToAction("Settings");
+            }
+        }
+        public ActionResult Update_DOB(String username, String password, String DOB)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.Update_DOB(username, DOB, password);
+                return RedirectToAction("Settings");
+            }
+        }
+        
+        
+        public ActionResult likeTweet(int tweetID)
+        {
+            int result = CRUD.like_a_tweet(tweetID, Session["username"].ToString());
+            return RedirectToAction("HomePage");
+        }
+
+        public ActionResult dislikeTweet(int tweetID)
+        {
+            int result = CRUD.dislike_a_tweet(tweetID, Session["username"].ToString());
+            return RedirectToAction("HomePage");
+        }
+
+        public ActionResult commentTweet()
+        {
+            return View();
+        }
+        public ActionResult Store_message(string message)
+        {
+            string sender = Session["username"].ToString();
+            if(Globals.recever == null)
+                CRUD.storeMessage(sender, " ", message);
+            else
+                 CRUD.storeMessage(sender, Globals.recever, message);
+
+            return RedirectToAction("Messages");
+        }
+
     }
 }
