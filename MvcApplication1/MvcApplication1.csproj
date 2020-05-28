@@ -132,6 +132,7 @@
     <Compile Include="Models\feedObject.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CRUD.cs" />
+    <Compile Include="Models\Messages.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Tweet.cs" />
