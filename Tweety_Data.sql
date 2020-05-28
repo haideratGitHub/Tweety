@@ -13,7 +13,7 @@ select * from likes
 select * from dislikes
 select * from comments
 select * from privateChat
-
+select * from Notifications
 ----
 
 insert into [user] values

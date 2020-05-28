@@ -10,6 +10,13 @@ namespace MvcApplication1.Controllers
 {
     public class HomeController : Controller
     {
+        static class Globals
+        {
+           
+            public static string recever=null;
+
+            
+        }
 
         public ActionResult Login()
         {
@@ -34,12 +41,8 @@ namespace MvcApplication1.Controllers
         {
             Session["username"] = null;
             return View("Login");
-        }
-        public ActionResult Messages()
-        {
-            return View("Messages");
-        }
-        public ActionResult Settings()
+        } 
+       public ActionResult Settings()
         {
             if (Session["username"] == null)
                 return View("login");
@@ -69,6 +72,42 @@ namespace MvcApplication1.Controllers
                 return View(model);
             }
         }
+
+        public ActionResult Messages(string rec=null)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                User users = CRUD.view_user(Session["username"].ToString());
+                List<User> followers = CRUD.get_followers(Session["username"].ToString());
+                List<Messages> Messages;
+                if (rec == null && Globals.recever==null)
+                {
+                    Messages = CRUD.showMessages(Session["username"].ToString(), " ");
+                }
+                else if(rec == null && Globals.recever != null)
+                {
+
+                    
+                    Messages = CRUD.showMessages(Session["username"].ToString(), Globals.recever);
+                    
+                }
+                else
+                {
+                    Globals.recever = rec;
+                    Messages = CRUD.showMessages(Session["username"].ToString(), Globals.recever);
+                }
+
+
+                dynamic model = new ExpandoObject();
+                model.User = users;
+                model.followers = followers;
+                model.Messages = Messages;
+                return View(model);
+            }
+        }
+
 
         public ActionResult Explore()
         {
@@ -249,7 +288,6 @@ namespace MvcApplication1.Controllers
                 return RedirectToAction("Followers");
             }
         }
-
         public ActionResult Update_Name(String username,String password,String first_name,String last_name)
         {
             if (Session["username"] == null)
@@ -363,5 +401,16 @@ namespace MvcApplication1.Controllers
         {
             return View();
         }
+        public ActionResult Store_message(string message)
+        {
+            string sender = Session["username"].ToString();
+            if(Globals.recever == null)
+                CRUD.storeMessage(sender, " ", message);
+            else
+                 CRUD.storeMessage(sender, Globals.recever, message);
+
+            return RedirectToAction("Messages");
+        }
+
     }
 }

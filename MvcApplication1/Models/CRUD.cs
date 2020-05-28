@@ -6,6 +6,7 @@ using System.Web;
 using System.Data.SqlClient;
 using System.Data.Sql;
 using System.Data;
+using System.Web.Services.Description;
 
 namespace MvcApplication1.Models
 {
@@ -400,6 +401,8 @@ namespace MvcApplication1.Models
                     user.display_pic = rdr["displayPic"].ToString();
                     user.first_name = rdr["fname"].ToString();
                     user.last_name = rdr["lname"].ToString();
+                    if (user.display_pic == "")
+                        user.display_pic = "https://herbalforlife.co.uk/wp-content/uploads/2019/08/user-placeholder.png";
                     list.Add(user);
                 }
                 rdr.Close();
@@ -858,6 +861,86 @@ namespace MvcApplication1.Models
 
             }
 
+        }
+        public static List<Messages> showMessages(string senderName,string receverName)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            try
+            {
+                cmd = new SqlCommand("chat_out", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                
+                cmd.Parameters.Add("@sender", SqlDbType.NVarChar, 30).Value = senderName;
+                cmd.Parameters.Add("@recever", SqlDbType.NVarChar, 30).Value = receverName;
+
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                List<Messages> list = new List<Messages>();
+                while (rdr.Read())
+                {
+                    Messages message = new Messages();
+
+                    message.senderName = rdr["sender"].ToString();
+                    message.receverName = rdr["recever"].ToString();
+                    message.message = rdr["message"].ToString();
+                    message.time = rdr["time"].ToString();
+                    list.Add(message);
+                }
+       rdr.Close();
+                con.Close();
+
+                return list;
+
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+
+            }
+
+
+
+
+
+        }
+
+        public static void storeMessage(string senderName, string receverName,string message)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+           
+
+            try
+            {
+                cmd = new SqlCommand("chat_in", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@sender", SqlDbType.NVarChar, 30).Value = senderName;
+                cmd.Parameters.Add("@receiver", SqlDbType.NVarChar, 30).Value = receverName;
+                cmd.Parameters.Add("@message", SqlDbType.NVarChar, 280).Value = message;
+
+
+
+                
+
+                cmd.ExecuteNonQuery();
+               
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+               
+            }
+            finally
+            {
+                con.Close();
+            }
         }
 
         public static int Update_FirstName(String username, String first_name, String password)
