@@ -15,23 +15,18 @@
     <title></title>
 </head>
 <body>
-    <div class="tags">
-        <h1>Trending Hashtags</h1>
-        @foreach (hashtag_trending Trends in Model.trending_hashtags)
-        {
-            <h2>@Trends.hashtag&nbsp;</h2>
-            <h4>@Trends.count tweets</h4> 
-            <br>
-
-        }
-    </div>
+    
     <div class="wrapper">
         @*row*@
         <div class="column">
+            @{User user = Model.User;
+                <img src="@user.display_pic" height="160" width="160" alt="Avatar">
+                <h2>@user.first_name&nbsp;@user.last_name</h2>
+            }s
             <ul>
                 <li><a href="~/Home/HomePage"><i class="fas fa-home"></i>Home </a></li>
                 <br>
-                <li ><a href="~/Home/ProfilePage"><i class="fas fa-user"></i>Profile     </a></li>
+                <li><a href="~/Home/ProfilePage"><i class="fas fa-user"></i>Profile     </a></li>
                 <br>
                 <li class="active"><a href="~/Home/Explore"><i class="fas fa-hashtag"></i>Explore     </a></li>
                 <br>
@@ -46,5 +41,26 @@
             </ul>
 
         </div>
+
+
+        <div class="centre-column">
+
+        </div>
+
+
+
+
+
+        <div class="tags">
+            <h1>Trending Hashtags</h1>
+            @foreach (hashtag_trending Trends in Model.trending_hashtags)
+            {
+                <h2>@Trends.hashtag&nbsp;</h2>
+                <h4>@Trends.count tweets</h4>
+                <br>
+
+            }
+        </div>
+    </div>
 </body>
 </html>

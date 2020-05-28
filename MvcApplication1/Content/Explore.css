@@ -8,17 +8,25 @@
 }
 
 
-div.column {
+/*div.column {
     margin-top: -30%;
-}
+}*/
 
+div.centre-column {
+    border-color: #ff0000;
+    border-width: thin;
+    width: 60%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    padding: 1%;
+}
 
 div.tags {
     border-color: #56baed;
     border-width: thin;
-    margin-left: 26%;
+    float:right;
+    width:20%;
     margin-top: 2%;
     margin-bottom: 2%;
-    margin-right: 1%;
     padding: 1%;
 }
