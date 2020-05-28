@@ -401,6 +401,8 @@ namespace MvcApplication1.Models
                     user.display_pic = rdr["displayPic"].ToString();
                     user.first_name = rdr["fname"].ToString();
                     user.last_name = rdr["lname"].ToString();
+                    if (user.display_pic == "")
+                        user.display_pic = "https://herbalforlife.co.uk/wp-content/uploads/2019/08/user-placeholder.png";
                     list.Add(user);
                 }
                 rdr.Close();
