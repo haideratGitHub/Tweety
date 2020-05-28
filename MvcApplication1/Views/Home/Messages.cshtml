@@ -12,9 +12,10 @@
     <meta name="viewport" content="width=device-width" />
     <title>Home</title>
     <link href="~/Content/Menubar.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/Notifications.css" rel="stylesheet" />
+    
     <link href="~/Content/RightColumn.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <link href="~/Content/Messages.css" rel="stylesheet" />
 </head>
 <body>
     <div class="wrapper">
@@ -32,9 +33,9 @@
                 <br>
                 <li><a href="~/Home/Explore"><i class="fas fa-hashtag"></i>Explore     </a></li>
                 <br>
-                <li class="active"><a href="~/Home/Notifications"><i class="fas fa-bell"></i>Notifications     </a></li>
+                <li><a href="~/Home/Notifications"><i class="fas fa-bell"></i>Notifications     </a></li>
                 <br>
-                <li><a href="~/Home/Messages"><i class="fas fa-envelope"></i>Messages   </a></li>
+                <li class="active"><a href="~/Home/Messages"><i class="fas fa-envelope"></i>Messages   </a></li>
                 <br>
                 <li><a href="~/Home/Settings"><i class="fas fa-cog"></i>Settings    </a></li>
                 <br>
@@ -43,37 +44,79 @@
             </ul>
 
         </div>
-
         <div>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <td>sender</td>
-                        <td>recever</td>
-                        <td>message</td>
-                        <td>time</td>                                  
-                    </tr>
-                </thead>
+            <div class="Message_board" style="overflow-y:scroll">
+                <div id="centre-title">Messages</div>
+                <br />
+
 
                 @foreach (Messages message in Model.Messages)
                 {
-                    <tr>
+                    <div class="message_Box">
+                        <p id="message_data">
+                            <span id="name">@message.senderName</span> :
+                            <span id="text">@message.message</span>
+                            <br />
+                            <span id="time">@message.time</span>
+                            <br />
+                            <br />
 
-                        <td>@message.senderName</td>
-                        <td>@message.receverName</td>
-                        <td>@message.message</td>
-                        <td>@message.time</td>
-                    </tr>
+                        </p>
+                    </div>
                 }
 
-            </table>
+
+            </div>
+            <div class="Send_message">
+                <form method="post" action="../Home/Store_message">
+
+
+                    
+
+
+                    <input type="text" placeholder="message" aria-required="true" maxlength="280" id="m_id" class="" name="message">
+
+                    <input type="submit" value="Send" id="submit_button" class="signup EdgeButton EdgeButton--primary EdgeButton--large submit">
+
+                </form>
+            </div>
         </div>
 
-        <div>
-            all is well all is well....
+        <div class="follower_list">
+            <div id="centre-title_f">Followers</div>
+            
+
+            <form method="post" action="../Home/Messages">
+
+
+
+                <label>
+                    <select id="rec" name="rec" style="margin-left:30px">
+
+
+                        @foreach (User follower in Model.followers)
+                        {
+
+                            <option value="@follower.username">@follower.username</option>
+
+
+
+                        }
+                    </select>
+
+                </label>
+
+                <input type="submit" value="Chat" id="submit_button" class="signup EdgeButton EdgeButton--primary EdgeButton--large submit">
+
+            </form>
+
+
         </div>
+
+
+
     </div>
-
+    
 
 
 
