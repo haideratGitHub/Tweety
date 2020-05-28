@@ -12,6 +12,7 @@ div.centre-column {
     padding: 2%;
     background-color:#f1fafe;
     max-width:600px;
+    min-width:599px;
 }
 
 #centre-title {
