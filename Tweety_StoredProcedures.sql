@@ -1126,7 +1126,7 @@ begin
 	if @username in (select name from [user])
 	begin
 		select name as username,t.tweetID,t.userID,t.tweet,convert(varchar,t.date,101) as date,convert(varchar(5),t.time)as time
-		from [user] u left join tweets t on u.userID=t.userID
+		from [user] u join tweets t on u.userID=t.userID
 		where @username=name
 	end
 	else
