@@ -1402,3 +1402,19 @@ execute chat_in
 @sender='mike_99',@receiver='alice_21',@message='checking on u.'
 
 
+
+
+-- --SEARCH Users-- --
+go
+create procedure search_user
+	@text varchar(140)
+as
+begin
+	select *
+	from [profile] p join [user] u  on p.userID=u.userID
+	where CHARINDEX(@text,u.name) != 0 or CHARINDEX(@text,p.fname) != 0 or CHARINDEX(@text,p.lname) != 0
+end
+go
+-- --executing code-- --
+execute search_user
+	@text='al'
