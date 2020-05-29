@@ -1126,7 +1126,7 @@ begin
 	if @username in (select name from [user])
 	begin
 		select name as username,t.tweetID,t.userID,t.tweet,convert(varchar,t.date,101) as date,convert(varchar(5),t.time)as time
-		from [user] u left join tweets t on u.userID=t.userID
+		from [user] u join tweets t on u.userID=t.userID
 		where @username=name
 	end
 	else
@@ -1398,3 +1398,19 @@ execute chat_in
 @sender='mike_99',@receiver='alice_21',@message='checking on u.'
 
 
+
+
+-- --SEARCH Users-- --
+go
+create procedure search_user
+	@text varchar(140)
+as
+begin
+	select *
+	from [profile] p join [user] u  on p.userID=u.userID
+	where CHARINDEX(@text,u.name) != 0 or CHARINDEX(@text,p.fname) != 0 or CHARINDEX(@text,p.lname) != 0
+end
+go
+-- --executing code-- --
+execute search_user
+	@text='al'

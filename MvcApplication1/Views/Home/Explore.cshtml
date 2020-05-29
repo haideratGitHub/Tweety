@@ -15,9 +15,8 @@
     <title></title>
 </head>
 <body>
-    
+
     <div class="wrapper">
-        @*row*@
         <div class="column">
             @{User user = Model.User;
                 <img src="@user.display_pic" height="160" width="160" alt="Avatar">
@@ -43,10 +42,37 @@
         </div>
 
 
-        <div class="centre-column">
+        <div style="width:60%;">
+            <!-- Search Form -->
+            <form method="post" action="../Home/Explore">
+                <input type="text" id="search" name="search" placeholder="Search User" class="search_input">
+                <input type="submit" value="Search" class="search_button">
+            </form>
 
+
+
+            <div class="centre-column">
+                <div id="centre-title">Search Result</div>
+                <br />
+                @foreach (User U in Model.Searched_people)
+                {
+                    <div class="Searched_list">
+                        <p id="Searched_list_data">
+
+                            <span>@U.display_pic</span><br />
+                            <span>@U.first_name</span><br />
+                            <span>@U.last_name</span><br />
+                            <span>@U.username</span><br />
+                            <span>@U.gender</span><br />
+                            <span>@U.country</span><br />
+                            <br />
+                            <br />
+                        </p>
+                    </div>
+                }
+
+            </div>
         </div>
-
 
 
 
