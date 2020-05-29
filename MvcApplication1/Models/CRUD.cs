@@ -1330,5 +1330,37 @@ namespace MvcApplication1.Models
 
         }
 
+        public static int postTweet(string tweet , string username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("tweet", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@tweet", SqlDbType.NVarChar,280).Value = tweet;
+                cmd.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                cmd.ExecuteNonQuery();
+                result = Convert.ToInt32(cmd.Parameters["@output"].Value);
+                //1 means succesfully posted
+                //0 means no user with this name found
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
     }
 }

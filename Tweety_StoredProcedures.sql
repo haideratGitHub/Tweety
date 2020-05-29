@@ -824,7 +824,7 @@ execute search_tweet
 -- --TO POST A TWEET-- --
 go
 create procedure tweet
-	@username varchar(30),@tweet varchar(280)
+	@username varchar(30),@tweet varchar(280),@output int output
 as
 begin
 	if @username in (select name from [user])
@@ -836,16 +836,20 @@ begin
 
 		insert into tweets values(@tid,@uid,@tweet,convert(date,getdate()),convert(time,getdate()))
 		print('tweet posted')
+		set @output = 1
 	end
 	else
 	begin
 		print('There is no user with this username')
+		set @output = 0
 	end
 end
 go
 -- --executing code-- --
+declare @result int
 execute tweet
-	@username='ali_33',@tweet='I got a promotion #life'
+	@username='ali_33',@tweet='I got a promotion #life',@output = @result output
+select @result
 --select * from tweets
 
 -- --TO LOGIN-- --
@@ -1126,7 +1130,7 @@ begin
 	if @username in (select name from [user])
 	begin
 		select name as username,t.tweetID,t.userID,t.tweet,convert(varchar,t.date,101) as date,convert(varchar(5),t.time)as time
-		from [user] u left join tweets t on u.userID=t.userID
+		from [user] u join tweets t on u.userID=t.userID
 		where @username=name
 	end
 	else
