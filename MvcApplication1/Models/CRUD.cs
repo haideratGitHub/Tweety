@@ -1330,8 +1330,8 @@ namespace MvcApplication1.Models
 
         }
 
-     
-      public static List<User> show_search_list_of_users(String text)
+
+        public static List<User> show_search_list_of_users(String text)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
@@ -1367,7 +1367,7 @@ namespace MvcApplication1.Models
                 con.Close();
 
                 return list;
-            
+
 
             }
             catch (SqlException ex)
@@ -1376,8 +1376,8 @@ namespace MvcApplication1.Models
                 return null;
             }
         }
-      
-      public static int postTweet(string tweet , string username)
+
+        public static int postTweet(string tweet, string username)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
@@ -1389,7 +1389,7 @@ namespace MvcApplication1.Models
                 cmd = new SqlCommand("tweet", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
-                cmd.Parameters.Add("@tweet", SqlDbType.NVarChar,280).Value = tweet;
+                cmd.Parameters.Add("@tweet", SqlDbType.NVarChar, 280).Value = tweet;
                 cmd.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                 cmd.ExecuteNonQuery();
@@ -1409,7 +1409,7 @@ namespace MvcApplication1.Models
             }
             return result;
         }
-      
-      
+
+
     }
 }
