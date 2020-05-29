@@ -886,7 +886,7 @@ namespace MvcApplication1.Models
                     message.senderName = rdr["sender"].ToString();
                     message.receverName = rdr["recever"].ToString();
                     message.message = rdr["message"].ToString();
-                    message.time = rdr["time"].ToString();
+                    message.time = rdr["date"].ToString();
                     list.Add(message);
                 }
                 rdr.Close();
