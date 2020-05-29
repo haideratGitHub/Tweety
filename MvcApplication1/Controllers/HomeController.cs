@@ -109,18 +109,24 @@ namespace MvcApplication1.Controllers
         }
 
 
-        public ActionResult Explore()
+        public ActionResult Explore(string search)
         {
             if (Session["username"] == null)
-                return View("Explore");
+                return View("Login");
             else
             {
+                if(search == null)
+                {
+                    search = "";
+                }
                 User users = CRUD.view_user(Session["username"].ToString());
                 List<hashtag_trending> trendingHashtags = CRUD.trending_hashtag();
+                List<User> people_of_search = CRUD.show_search_list_of_users(search);
 
                 dynamic model = new ExpandoObject();
                 model.User = users;
                 model.trending_hashtags = trendingHashtags;
+                model.Searched_people = people_of_search;
 
                 return View(model);
             }
@@ -410,6 +416,15 @@ namespace MvcApplication1.Controllers
                  CRUD.storeMessage(sender, Globals.recever, message);
 
             return RedirectToAction("Messages");
+        }
+
+        public ActionResult postTweet(string tweet)
+        {
+            if(tweet != "")
+            {
+                int result = CRUD.postTweet(tweet, Session["username"].ToString());
+            }
+            return RedirectToAction("HomePage");
         }
 
     }

@@ -42,6 +42,25 @@
                 <br>
             </ul>
 
+            @*<button id="tweet-button">Tweet</button>*@
+
+
+            <button id="tweet-button" style="padding: 15px 25px; color:#fff; background-color: #56baed; border-radius: 15px; display: inline-block; cursor: pointer; text-align: center; box-shadow: 0 9px #999; border: none; outline: none; margin-left:1%; font-size: 24px;" >Tweet</button>
+
+            <!-- The Modal for tweet -->
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <form autocomplete="off" method="post" action="../Home/postTweet">
+                        <input id="tweet" type="text" name="tweet" placeholder="What's Happening...."><br><br>
+                        <input type="submit" value="Tweet">
+                    </form>
+                    
+                </div>
+
+            </div>
         </div>
         <div class="feed" style="width:60%">
             @*column to display tweets*@
@@ -63,36 +82,60 @@
                 </div>
             }
 
-            
+
         </div>
-        <div class="column" style="width:20%">
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <td>Username</td>
-                            <td>Display Pic</td>
-                            <td>First Name</td>
-                            <td>Last Name</td>
-                        </tr>
-                    </thead>
+        <div class="column3" style="width:20%">
 
-                    @foreach (User People_U_Should_Follow_list in Model.Suggested_people)
-                    {
-                        <tr>
+            <br />
+            <h2 style="animation">People You May Know...</h2>
+            <br />
+            @foreach (User People_U_Should_Follow_list in Model.Suggested_people)
+            {
+                <div class="user-box">
+                    <img src="@People_U_Should_Follow_list.display_pic" alt="Avatar" id="tweet-box">
+                    <p id="tweet-box">
+                        <span id="name">@People_U_Should_Follow_list.first_name&nbsp;@People_U_Should_Follow_list.last_name</span>
+                        <span id="details">&nbsp; &#64;@People_U_Should_Follow_list.username</span>
+                        <span id="details" style="float:right">&nbsp;&nbsp;</span>
+                        <br />
+                        <span style="color:black"></span>
+                        <br /><br />
+                    </p>
+                </div>
+            }
 
-                            <td>@People_U_Should_Follow_list.username</td>
-                            <td>@People_U_Should_Follow_list.display_pic</td>
-                            <td>@People_U_Should_Follow_list.first_name</td>
-                            <td>@People_U_Should_Follow_list.last_name</td>
-                        </tr>
-                    }
 
-                </table>
 
-            </div>
+        </div>
     </div>
 
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
 
+        // Get the button that opens the modal
+        var btn = document.getElementById("tweet-button");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 
 
 </body>
