@@ -132,7 +132,7 @@ namespace MvcApplication1.Models
             }
             return result;
         }
-       public static int no_of_followers(string username)
+        public static int no_of_followers(string username)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
@@ -346,7 +346,7 @@ namespace MvcApplication1.Models
             return result;
         }
 
-        public static int RemoveFollower(string username,string toRemove)
+        public static int RemoveFollower(string username, string toRemove)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
@@ -401,6 +401,8 @@ namespace MvcApplication1.Models
                     user.display_pic = rdr["displayPic"].ToString();
                     user.first_name = rdr["fname"].ToString();
                     user.last_name = rdr["lname"].ToString();
+                    if (user.display_pic == "")
+                        user.display_pic = "https://herbalforlife.co.uk/wp-content/uploads/2019/08/user-placeholder.png";
                     list.Add(user);
                 }
                 rdr.Close();
@@ -529,7 +531,7 @@ namespace MvcApplication1.Models
             con.Open();
             SqlCommand cmd;
             int result = 0;
-            
+
             try
             {
                 cmd = new SqlCommand("no_of_dislikes", con);
@@ -571,7 +573,7 @@ namespace MvcApplication1.Models
                 SqlDataReader rdr = cmd.ExecuteReader();
 
                 List<Tweet> list = new List<Tweet>();
-                int i = 0,j = -1;
+                int i = 0, j = -1;
                 while (rdr.Read())
                 {
                     Tweet tweet = new Tweet();
@@ -583,8 +585,8 @@ namespace MvcApplication1.Models
                     tweet.time = rdr["time"].ToString();
 
                     tweet.no_of_likes = no_of_likes_on_a_tweet(Convert.ToInt32(tweet.tweetID));
-                    tweet.no_of_dislikes=no_of_dislikes_on_a_tweet(Convert.ToInt32(tweet.tweetID));
-                    tweet.no_of_comments=no_of_comments_on_a_tweet(Convert.ToInt32(tweet.tweetID));
+                    tweet.no_of_dislikes = no_of_dislikes_on_a_tweet(Convert.ToInt32(tweet.tweetID));
+                    tweet.no_of_comments = no_of_comments_on_a_tweet(Convert.ToInt32(tweet.tweetID));
                     tweet.likers = likers_of_a_tweet(Convert.ToInt32(tweet.tweetID));
                     tweet.dislikers = dislikers_of_a_tweet(Convert.ToInt32(tweet.tweetID));
                     tweet.comments = comments_on_a_tweet(Convert.ToInt32(tweet.tweetID));
@@ -797,7 +799,7 @@ namespace MvcApplication1.Models
 
                     c.tweetID = rdr["tweetID"].ToString();
                     c.commentID = rdr["commentID"].ToString();
-                    c.commenterID= rdr["commenterID"].ToString();
+                    c.commenterID = rdr["commenterID"].ToString();
                     c.date = rdr["date"].ToString();
                     c.time = rdr["time"].ToString();
                     c.comment = rdr["comment"].ToString();
@@ -860,7 +862,7 @@ namespace MvcApplication1.Models
             }
 
         }
-        public static List<Messages> showMessages(string senderName,string receverName)
+        public static List<Messages> showMessages(string senderName, string receverName)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
@@ -869,7 +871,7 @@ namespace MvcApplication1.Models
             {
                 cmd = new SqlCommand("chat_out", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                
+
                 cmd.Parameters.Add("@sender", SqlDbType.NVarChar, 30).Value = senderName;
                 cmd.Parameters.Add("@recever", SqlDbType.NVarChar, 30).Value = receverName;
 
@@ -887,7 +889,7 @@ namespace MvcApplication1.Models
                     message.time = rdr["time"].ToString();
                     list.Add(message);
                 }
-       rdr.Close();
+                rdr.Close();
                 con.Close();
 
                 return list;
@@ -907,12 +909,12 @@ namespace MvcApplication1.Models
 
         }
 
-        public static void storeMessage(string senderName, string receverName,string message)
+        public static void storeMessage(string senderName, string receverName, string message)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
             SqlCommand cmd;
-           
+
 
             try
             {
@@ -924,16 +926,16 @@ namespace MvcApplication1.Models
 
 
 
-                
+
 
                 cmd.ExecuteNonQuery();
-               
+
             }
 
             catch (SqlException ex)
             {
                 Console.WriteLine("SQL Error" + ex.Message.ToString());
-               
+
             }
             finally
             {
@@ -1242,7 +1244,7 @@ namespace MvcApplication1.Models
             return result;
         }
 
-        public static int like_a_tweet(int tweetID , string username)
+        public static int like_a_tweet(int tweetID, string username)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
@@ -1256,7 +1258,7 @@ namespace MvcApplication1.Models
                 cmd.Parameters.Add("@liker", SqlDbType.NVarChar, 30).Value = username;
                 cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
                 cmd.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
-                
+
                 cmd.ExecuteNonQuery();
                 result = Convert.ToInt32(cmd.Parameters["@output"].Value);
                 //@output = 2 means already liked tweet 
@@ -1327,6 +1329,87 @@ namespace MvcApplication1.Models
         {
 
         }
+
+
+        public static List<User> show_search_list_of_users(String text)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            try
+            {
+                cmd = new SqlCommand("search_user", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@text", SqlDbType.NVarChar, 140).Value = text;
+
+                cmd.ExecuteNonQuery();
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                List<User> list = new List<User>();
+                while (rdr.Read())
+                {
+                    User user = new User();
+
+                    user.username = rdr["name"].ToString();
+                    user.country = rdr["country"].ToString();
+                    user.DOB = rdr["country"].ToString();
+                    user.email = rdr["email"].ToString();
+                    user.gender = rdr["gender"].ToString();
+                    user.status = rdr["status"].ToString();
+                    user.display_pic = rdr["displayPic"].ToString();
+                    user.first_name = rdr["fname"].ToString();
+                    user.last_name = rdr["lname"].ToString();
+                    if (user.display_pic == "")
+                        user.display_pic = "https://herbalforlife.co.uk/wp-content/uploads/2019/08/user-placeholder.png";
+                    list.Add(user);
+                }
+                rdr.Close();
+                con.Close();
+
+                return list;
+
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+        public static int postTweet(string tweet, string username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("tweet", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@tweet", SqlDbType.NVarChar, 280).Value = tweet;
+                cmd.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                cmd.ExecuteNonQuery();
+                result = Convert.ToInt32(cmd.Parameters["@output"].Value);
+                //1 means succesfully posted
+                //0 means no user with this name found
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
 
     }
 }
