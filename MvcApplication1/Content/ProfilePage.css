@@ -1,19 +1,25 @@
 ﻿body {
+    background-color: #CCE4F0;
 }
 
-.column {
+/*.column {
     float: left;
     padding: 10px;
-    height: 300px; /* Should be removed. Only for demonstration */
+    height: 300px; /* Should be removed. Only for demonstration 
+}*/
+
+.grid-container {
+    display: flex;
+    position: relative;
 }
 
-.left {
+/*.left {
     width: 25%;
 }
 
 .right {
     width: 75%;
-}
+}*/
 
 /* Clear floats after the columns */
 .row:after {
@@ -22,28 +28,24 @@
     clear: both;
 }
 
-div.column {
-    margin-top: -45%;
-   
-}
 
 div.profile {
     border-style: solid;
     border-color: #56baed;
     border-width: thin;
-    margin-left: 26%;
+    /*margin-left: 26%;*/
     margin-top: 2%;
     margin-bottom: 2%;
     margin-right: 1%;
     padding: 1%;
-    background-color: #e2ecf1;
+    /*background-color: #e2ecf1;*/
 }
 
 div.centre-column{
     border-style:solid;
     border-color:#56baed;
     border-width:thin;
-    margin-left:26%;
+    /*margin-left:26%;*/
     margin-top:2%;
     margin-bottom:2%;
     margin-right:1%;
@@ -112,15 +114,7 @@ button:hover{
     margin-right:45%;
 }
 
-a,a:active,a:visited,a:link,a:link:active,a:visited:active{
-    color:dimgray;
-    text-decoration:none;
-}
 
-a:hover{
-    color:#0094ff;
-    text-decoration:underline;
-}
 
 .user-box img{
     float:left;
