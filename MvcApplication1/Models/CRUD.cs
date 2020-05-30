@@ -1410,6 +1410,39 @@ namespace MvcApplication1.Models
             return result;
         }
 
+        public static int commentOnTweet(int tweetID, string commentText, string username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("comment", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
+                cmd.Parameters.Add("@comment", SqlDbType.NVarChar, 280).Value = commentText;
+                //cmd.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                cmd.ExecuteNonQuery();
+                //result = Convert.ToInt32(cmd.Parameters["@output"].Value);
+                
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
 
     }
 }
