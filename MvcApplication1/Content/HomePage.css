@@ -1,5 +1,6 @@
 ﻿body {
     background-color: #CCE4F0;
+    padding:1%;
 }
 
 @media screen and (max-width: 600px) {
@@ -35,6 +36,7 @@ div.feed {
     margin-right: 0%;
     margin-top: 2%;
     padding: 1%;
+    background-color:white;
 }
 
 #like-btn {
@@ -120,6 +122,7 @@ div.user-box {
     border-top-color: #E9E9E9;
     border-bottom-color: #E9E9E9;
     padding: 1%;
+    background-color:white;
 }
 
 
@@ -154,19 +157,33 @@ img {
 }
 
 /* The Close Button */
-.close {
+#close1 {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
 
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+.close2 {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#close1:hover,
+#close1:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.close2:hover,
+.close2:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 input[type=text], select {
     width: 100%;
@@ -263,4 +280,15 @@ input[type=submit] {
         bottom: 0;
         opacity: 0;
     }
+}
+#centre-title {
+    font-size: 30px;
+    font-family: 'Century Gothic';
+    color: #0094ff;
+    text-align: center;
+    padding: 2px;
+    font-weight: bold;
+    border-bottom: 2px solid #0094ff;
+    margin-left: 30%;
+    margin-right: 30%;
 }
