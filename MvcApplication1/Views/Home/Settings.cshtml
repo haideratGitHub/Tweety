@@ -16,240 +16,242 @@
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 </head>
 <body>
-    @{User user = (User)Model;
-        <div class="row">
-            <a onclick="ShowModal('DP')"><img src="@user.display_pic" alt="Avatar"></a>
-            <span><b style="color:#56baed">Name:</b> @user.first_name&nbsp;@user.last_name&nbsp;&nbsp;</span>   <button onclick="ShowModal('name')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
-            <span><b style="color:#56baed">Username:</b> &#64;@user.username&nbsp;&nbsp;</span>   <button onclick="ShowModal('username')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
-            <span><b style="color:#56baed">DOB(mm/dd/yyyy):</b> @user.DOB&nbsp;&nbsp;</span>   <button onclick="ShowModal('DOB')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
-            <span><b style="color:#56baed">Gender:</b> @user.gender&nbsp;&nbsp;</span>   <button onclick="ShowModal('gender')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
-            <span><b style="color:#56baed">Status:</b> @user.status&nbsp;&nbsp;</span>   <button onclick="ShowModal('status')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
-            <span><b style="color:#56baed">Country:</b> @user.country&nbsp;&nbsp;</span>   <button onclick="ShowModal('country')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
-            <span><b style="color:#56baed">Email:</b> @user.email&nbsp;&nbsp;</span>   <button onclick="ShowModal('email')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
-            <a id="p" onclick="ShowModal('password')">Change Password</a><br /><br />
-            <a id="d" onclick="ShowModal('delete')">Delete My Account</a>
+    <div class="wholepage">
+        @{User user = (User)Model;
+            <div class="row">
+                <a onclick="ShowModal('DP')"><img src="@user.display_pic" alt="Avatar"></a>
+                <span><b style="color:#56baed">Name:</b> @user.first_name&nbsp;@user.last_name&nbsp;&nbsp;</span>   <button onclick="ShowModal('name')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
+                <span><b style="color:#56baed">Username:</b> &#64;@user.username&nbsp;&nbsp;</span>   <button onclick="ShowModal('username')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
+                <span><b style="color:#56baed">DOB(mm/dd/yyyy):</b> @user.DOB&nbsp;&nbsp;</span>   <button onclick="ShowModal('DOB')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
+                <span><b style="color:#56baed">Gender:</b> @user.gender&nbsp;&nbsp;</span>   <button onclick="ShowModal('gender')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
+                <span><b style="color:#56baed">Status:</b> @user.status&nbsp;&nbsp;</span>   <button onclick="ShowModal('status')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
+                <span><b style="color:#56baed">Country:</b> @user.country&nbsp;&nbsp;</span>   <button onclick="ShowModal('country')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
+                <span><b style="color:#56baed">Email:</b> @user.email&nbsp;&nbsp;</span>   <button onclick="ShowModal('email')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
+                <a id="p" onclick="ShowModal('password')">Change Password</a><br /><br />
+                <a id="d" onclick="ShowModal('delete')">Delete My Account</a>
 
-            @*<span><b style="color:#56baed">Password:</b> @user.password&nbsp;&nbsp;</span>   <button onclick="ShowModal('password')"><i class="fas fa-pen fa-2x"></i></button><br />*@
-            @*<br /><br /><br /><br /><br /><br /><br />*@
-        </div>
+                @*<span><b style="color:#56baed">Password:</b> @user.password&nbsp;&nbsp;</span>   <button onclick="ShowModal('password')"><i class="fas fa-pen fa-2x"></i></button><br />*@
+                @*<br /><br /><br /><br /><br /><br /><br />*@
+            </div>
 
 
     <!-- The Modal for Updating DP-->
-    <div id="DP" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <header>
-                Updating DP
-                <span class="close" onclick="HideModal('DP')"><i class="fas fa-times"></i></span>
-            </header>
-            <div style="margin-top:20%;">
-                <form method="post" action="../Home/Update_DP?username=@user.username&password=@user.password">
-                    <input type="text" name="DP" placeholder="URL" maxlength="1000">
-                    <br /><br /><br /><br />
-                    <input type="submit" value="Update">
-                    @*<br><label style="color:red">@Model</label>*@
-                </form>
+            <div id="DP" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <header>
+                        Updating DP
+                        <span class="close" onclick="HideModal('DP')"><i class="fas fa-times"></i></span>
+                    </header>
+                    <div style="margin-top:20%;">
+                        <form method="post" action="../Home/Update_DP?username=@user.username&password=@user.password">
+                            <input type="text" name="DP" placeholder="URL" maxlength="1000">
+                            <br />
+                            <input type="submit" value="Update">
+                            @*<br><label style="color:red">@Model</label>*@
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>       
     <!-- The Modal for Updating Name-->
-    <div id="name" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <header>
-                Updating Name
-                <span class="close" onclick="HideModal('name')"><i class="fas fa-times"></i></span>
-            </header>
-            <div style="margin-top:20%;">
-                <form method="post" action="../Home/Update_Name?username=@user.username&password=@user.password">
-                    <input type="text" name="first_name" placeholder="first name" aria-required="true" maxlength="30">
-                    <br /><br /><br />
-                    <input type="text" name="last_name" placeholder="last name" aria-required="true" maxlength="30">
-                    <br />
-                    <input type="submit" value="Update">
-                    @*<br><label style="color:red">@Model</label>*@
-                </form>
+            <div id="name" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <header>
+                        Updating Name
+                        <span class="close" onclick="HideModal('name')"><i class="fas fa-times"></i></span>
+                    </header>
+                    <div style="margin-top:20%;">
+                        <form method="post" action="../Home/Update_Name?username=@user.username&password=@user.password">
+                            <input type="text" name="first_name" placeholder="first name" aria-required="true" maxlength="30">
+                            <br /><br /><br />
+                            <input type="text" name="last_name" placeholder="last name" aria-required="true" maxlength="30">
+                            <br />
+                            <input type="submit" value="Update">
+                            @*<br><label style="color:red">@Model</label>*@
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
     <!-- The Modal for Updating Username-->
-    <div id="username" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <header>
-                Updating Username
-                <span class="close" onclick="HideModal('username')"><i class="fas fa-times"></i></span>
-            </header>
-            <div style="margin-top:20%;">
-                <form method="post" action="../Home/Update_Username?username=@user.username&password=@user.password">
-                    <input type="text" name="new_username" placeholder="username" aria-required="true" maxlength="30">
-                    <br /><br /><br /><br />
-                    <input type="submit" value="Update">
-                    @*<br><label style="color:red">@Model</label>*@
-                </form>
+            <div id="username" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <header>
+                        Updating Username
+                        <span class="close" onclick="HideModal('username')"><i class="fas fa-times"></i></span>
+                    </header>
+                    <div style="margin-top:20%;">
+                        <form method="post" action="../Home/Update_Username?username=@user.username&password=@user.password">
+                            <input type="text" name="new_username" placeholder="username" aria-required="true" maxlength="30">
+                            <br />
+                            <input type="submit" value="Update">
+                            @*<br><label style="color:red">@Model</label>*@
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
     <!-- The Modal for Updating DOB-->
-    <div id="DOB" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <header>
-                Updating DOB
-                <span class="close" onclick="HideModal('DOB')"><i class="fas fa-times"></i></span>
-            </header>
-            <div style="margin-top:20%;">
-                <form method="post" action="../Home/Update_DOB?username=@user.username&password=@user.password">
-                    <input type="text" name="DOB" placeholder="yyyy-mm-dd">
-                    <br /><br /><br /><br />
-                    <input type="submit" value="Update">
-                    @*<br><label style="color:red">@Model</label>*@
-                </form>
+            <div id="DOB" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <header>
+                        Updating DOB
+                        <span class="close" onclick="HideModal('DOB')"><i class="fas fa-times"></i></span>
+                    </header>
+                    <div style="margin-top:20%;">
+                        <form method="post" action="../Home/Update_DOB?username=@user.username&password=@user.password">
+                            <input type="text" name="DOB" placeholder="yyyy-mm-dd">
+                            <br />
+                            <input type="submit" value="Update">
+                            @*<br><label style="color:red">@Model</label>*@
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
     <!-- The Modal for Updating Gender-->
-    <div id="gender" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <header>
-                Updating Gender
-                <span class="close" onclick="HideModal('gender')"><i class="fas fa-times"></i></span>
-            </header>
-            <div style="margin-top:20%;">
-                <form method="post" action="../Home/Update_Gender?username=@user.username&password=@user.password">
-                    @*<input type="text" name="gender" placeholder="" >*@
-                        <label for="gender">Choose a gender:</label>
-                        <select name="gender">
-                            <option value="M">Male</option>
-                            <option value="F">Female</option>
-                            <option value="Null">None</option>
-                        </select>
-                        <br /><br /><br /><br />
-                        <input type="submit" value="Update">
-                        @*<br><label style="color:red">@Model</label>*@
-                </form>
+            <div id="gender" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <header>
+                        Updating Gender
+                        <span class="close" onclick="HideModal('gender')"><i class="fas fa-times"></i></span>
+                    </header>
+                    <div style="margin-top:20%;">
+                        <form method="post" action="../Home/Update_Gender?username=@user.username&password=@user.password">
+                            @*<input type="text" name="gender" placeholder="" >*@
+                            <label for="gender">Choose a gender:</label>
+                            <select name="gender">
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                @*<option value="Null">None</option>*@
+                            </select>
+                            <br />
+                            <input type="submit" value="Update">
+                            @*<br><label style="color:red">@Model</label>*@
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
     <!-- The Modal for Updating Status-->
-    <div id="status" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <header>
-                Updating Status
-                <span class="close" onclick="HideModal('status')"><i class="fas fa-times"></i></span>
-            </header>
-            <div style="margin-top:20%;">
-                <form method="post" action="../Home/Update_Status?username=@user.username&password=@user.password">
-                    <input type="text" name="status" placeholder="Status" maxlength="120">
-                    <br /><br /><br /><br />
-                    <input type="submit" value="Update">
-                    @*<br><label style="color:red">@Model</label>*@
-                </form>
+            <div id="status" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <header>
+                        Updating Status
+                        <span class="close" onclick="HideModal('status')"><i class="fas fa-times"></i></span>
+                    </header>
+                    <div style="margin-top:20%;">
+                        <form method="post" action="../Home/Update_Status?username=@user.username&password=@user.password">
+                            <input type="text" name="status" placeholder="Status" maxlength="120">
+                            <br />
+                            <input type="submit" value="Update">
+                            @*<br><label style="color:red">@Model</label>*@
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
     <!-- The Modal for Updating Country-->
-    <div id="country" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <header>
-                Updating Country
-                <span class="close" onclick="HideModal('country')"><i class="fas fa-times"></i></span>
-            </header>
-            <div style="margin-top:20%;">
-                <form method="post" action="../Home/Update_Country?username=@user.username&password=@user.password">
-                    <input type="text" name="country" placeholder="Country Name" maxlength="30">
-                    <br /><br /><br /><br />
-                    <input type="submit" value="Update">
-                    @*<br><label style="color:red">@Model</label>*@
-                </form>
+            <div id="country" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <header>
+                        Updating Country
+                        <span class="close" onclick="HideModal('country')"><i class="fas fa-times"></i></span>
+                    </header>
+                    <div style="margin-top:20%;">
+                        <form method="post" action="../Home/Update_Country?username=@user.username&password=@user.password">
+                            <input type="text" name="country" placeholder="Country Name" maxlength="30">
+                            <br />
+                            <input type="submit" value="Update">
+                            @*<br><label style="color:red">@Model</label>*@
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
     <!-- The Modal for Updating Email-->
-    <div id="email" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <header>
-                Updating Email
-                <span class="close" onclick="HideModal('email')"><i class="fas fa-times"></i></span>
-            </header>
-            <div style="margin-top:20%;">
-                <form method="post" action="../Home/Update_Email?username=@user.username&password=@user.password">
-                    <input type="text" name="email" placeholder="example abc&#64;gmail.com" maxlength="30">
-                    <br /><br /><br /><br />
-                    <input type="submit" value="Update">
-                    @*<br><label style="color:red">@Model</label>*@
-                </form>
+            <div id="email" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <header>
+                        Updating Email
+                        <span class="close" onclick="HideModal('email')"><i class="fas fa-times"></i></span>
+                    </header>
+                    <div style="margin-top:20%;">
+                        <form method="post" action="../Home/Update_Email?username=@user.username&password=@user.password">
+                            <input type="text" name="email" placeholder="example abc&#64;gmail.com" maxlength="30">
+                            <br />
+                            <input type="submit" value="Update">
+                            @*<br><label style="color:red">@Model</label>*@
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
     <!-- The Modal for Updating Password-->
-    <div id="password" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <header>
-                Updating Password
-                <span class="close" onclick="HideModal('password')"><i class="fas fa-times"></i></span>
-            </header>
-            <div style="margin-top:20%;">
-                <form method="post" action="../Home/Update_Password?username=@user.username">
-                    <input type="text" name="old_password" placeholder="old password" aria-required="true" maxlength="30">
-                    <br /><br /><br />
-                    <input type="text" name="new_password" placeholder="new password" aria-required="true" maxlength="30">
-                    <br />
-                    <input type="submit" value="Update">
-                    @*<br><label style="color:red">@Model</label>*@
-                </form>
+            <div id="password" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <header>
+                        Updating Password
+                        <span class="close" onclick="HideModal('password')"><i class="fas fa-times"></i></span>
+                    </header>
+                    <div style="margin-top:20%;">
+                        <form method="post" action="../Home/Update_Password?username=@user.username">
+                            <input type="text" name="old_password" placeholder="old password" aria-required="true" maxlength="30">
+                            <br /><br /><br />
+                            <input type="text" name="new_password" placeholder="new password" aria-required="true" maxlength="30">
+                            <br />
+                            <input type="submit" value="Update">
+                            @*<br><label style="color:red">@Model</label>*@
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
     <!-- The Modal for Confirming Deletion of account-->
-        <div id="delete" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close" onclick="HideModal('delete')"><i class="fas fa-times"></i></span>
-                <br /><br />
-                <span style="font:medium;font-family:'Century Gothic'">Are you sure that you want to delete your account?</span>
-                <br /><br /><br /><br />
-                <span style="float:right"><button class="btn" id="no" onclick="HideModal('delete')">NO</button>&nbsp;&nbsp;&nbsp;<button class="btn" id="yes" onclick="location.href = '../../Home/DeleteMyAccount'">YES</button></span>
+            <div id="delete" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close" onclick="HideModal('delete')"><i class="fas fa-times"></i></span>
+                    <br /><br />
+                    <span style="font:medium;font-family:'Century Gothic'">Are you sure that you want to delete your account?</span>
+                    <br />
+                    <span style="float:right"><button class="btn" id="no" onclick="HideModal('delete')">NO</button>&nbsp;&nbsp;&nbsp;<button class="btn" id="yes" onclick="location.href = '../../Home/DeleteMyAccount'">YES</button></span>
+                </div>
+            </div>
+        }
+        <div class="wrapper">
+            @*row*@
+            <div class="column">
+                <ul>
+                    <li><a href="~/Home/HomePage"><i class="fas fa-home"></i>Home </a></li>
+                    <br>
+                    <li><a href="~/Home/ProfilePage"><i class="fas fa-user"></i>Profile     </a></li>
+                    <br>
+                    <li><a href="~/Home/Explore"><i class="fas fa-hashtag"></i>Explore     </a></li>
+                    <br>
+                    <li><a href="~/Home/Notifications"><i class="fas fa-bell"></i>Notifications     </a></li>
+                    <br>
+                    <li><a href="~/Home/Messages"><i class="fas fa-envelope"></i>Messages   </a></li>
+                    <br>
+                    <li class="active"><a href="~/Home/Settings"><i class="fas fa-cog"></i>Settings    </a></li>
+                    <br>
+                    <li><a href="~/Home/LogOut"><i class="fas fa-sign-out-alt"></i>Logout   </a></li>
+                    <br>
+                </ul>
+
             </div>
         </div>
-    }
-    <div class="wrapper">
-        @*row*@
-        <div class="column">
-            <ul>
-                <li><a href="~/Home/HomePage"><i class="fas fa-home"></i>Home </a></li>
-                <br>
-                <li><a href="~/Home/ProfilePage"><i class="fas fa-user"></i>Profile     </a></li>
-                <br>
-                <li><a href="~/Home/Explore"><i class="fas fa-hashtag"></i>Explore     </a></li>
-                <br>
-                <li><a href="~/Home/Notifications"><i class="fas fa-bell"></i>Notifications     </a></li>
-                <br>
-                <li><a href="~/Home/Messages"><i class="fas fa-envelope"></i>Messages   </a></li>
-                <br>
-                <li  class="active"><a href="~/Home/Settings"><i class="fas fa-cog"></i>Settings    </a></li>
-                <br>
-                <li><a href="~/Home/LogOut"><i class="fas fa-sign-out-alt"></i>Logout   </a></li>
-                <br>
-            </ul>
 
-        </div>
+        <script>
+            function ShowModal(id) {
+                var modal = document.getElementById(id);
+                modal.style.display = "block";
+            }
+            function HideModal(id) {
+                var modal = document.getElementById(id);
+                modal.style.display = "none";
+            }
+        </script>
     </div>
-    
-    <script>
-        function ShowModal(id) {
-            var modal = document.getElementById(id);
-            modal.style.display = "block";
-        }
-        function HideModal(id) {
-            var modal = document.getElementById(id);
-            modal.style.display = "none";
-        }
-    </script>
 </body>
 </html>

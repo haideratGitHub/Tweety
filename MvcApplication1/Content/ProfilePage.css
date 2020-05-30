@@ -1,5 +1,6 @@
 ﻿body {
     background-color: #CCE4F0;
+    padding:1%;
 }
 
 /*.column {
@@ -39,6 +40,7 @@ div.profile {
     margin-right: 1%;
     padding: 1%;
     /*background-color: #e2ecf1;*/
+    background: linear-gradient(to right, white 0%, #56baed 100%);
 }
 
 div.centre-column{
@@ -68,24 +70,6 @@ i.centre-column{
     color:#0094ff;
 }
 
-/*button#MyAccount{
-    float:right;
-    font-size:20px;
-    font-weight:bold;
-    color:#0094ff;
-    border:1px solid #0094ff;
-    border-radius:10px;
-    padding: 5px 5px;
-    background-color:white;
-}
-
-button#MyAccount:active{
-    background-color: #0094ff;
-    color:white;
-}
-button#MyAccount:hover{
-    background-color: lightblue;
-}*/
 
 button{
     border-radius:10px;
@@ -115,7 +99,15 @@ button:hover{
     margin-right:45%;
 }
 
+a#fl,a#fl:active,a#fl:visited,a#fl:link,a#fl:link:active,a#fl:visited:active{
+    color:dimgray;
+    text-decoration:none;
+}
 
+a#fl:hover{
+    color:#0094ff;
+    text-decoration:underline;
+}
 
 .user-box img{
     float:left;
@@ -223,7 +215,7 @@ div.modal-content{
 
 /* The Close Button */
 .close {
-  color: dimgray;
+  color: #0094ff;
   float: right;
   font-size: 24px;
   margin-top:-1%;
@@ -249,4 +241,16 @@ div.modal-content header{
      color:#0094ff;
      background-color:white;
      /*border:thick solid yellow;*/
+}
+
+ul#menu-box{
+    border:thin solid #56baed;
+    background-color:white;
+    margin-top:60%;
+}
+/*to adjust with window size*/
+div.wholepage{
+    width:1200px;
+    margin-left:auto;
+    margin-right:auto;
 }

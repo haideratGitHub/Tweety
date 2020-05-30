@@ -33,6 +33,7 @@
             @foreach (User follower in Model.followers)
             {
                 <div class="user-box">
+                    <img src="@follower.display_pic" alt="Avatar">
                     <p>
                         <h2>@follower.first_name &nbsp; @follower.last_name</h2><button class="btn" id="remove" onclick="location.href = '../../Home/RemoveFollower?username=@follower.username'">Remove <i class='fas fa-user-minus'></i></button><button class="btn" id="follow" onclick="location.href = '../../Home/Follow?username=@follower.username'">Follow <i class='fas fa-user-plus'></i></button>
                         &#64;@follower.username &nbsp;&nbsp;&nbsp;<span id="ftag">Follows you</span>

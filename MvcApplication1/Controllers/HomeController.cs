@@ -300,8 +300,11 @@ namespace MvcApplication1.Controllers
                 return View("login");
             else
             {
-                CRUD.Update_FirstName(username, first_name, password);
-                CRUD.Update_LastName(username, last_name, password);
+                if(first_name!="" && last_name!="")
+                {
+                    CRUD.Update_FirstName(username, first_name, password);
+                    CRUD.Update_LastName(username, last_name, password);
+                }
                 return RedirectToAction("Settings");
             }
         }
@@ -311,8 +314,13 @@ namespace MvcApplication1.Controllers
                 return View("login");
             else
             {
-                if (CRUD.Update_UserName(username, new_username, password) == 1)
-                    return RedirectToAction("LogOut");
+                if(new_username!="")
+                {
+                    if (CRUD.Update_UserName(username, new_username, password) == 1)
+                        return RedirectToAction("LogOut");
+                    else
+                        return RedirectToAction("Settings");
+                }
                 else
                     return RedirectToAction("Settings");
             }
@@ -363,8 +371,13 @@ namespace MvcApplication1.Controllers
                 return View("login");
             else
             {
-                if (CRUD.Update_Password(username, new_password, old_password) == 1)
-                    return RedirectToAction("LogOut");
+                if(new_password!="")
+                {
+                    if (CRUD.Update_Password(username, new_password, old_password) == 1)
+                        return RedirectToAction("LogOut");
+                    else
+                        return RedirectToAction("Settings");
+                }
                 else
                     return RedirectToAction("Settings");
             }

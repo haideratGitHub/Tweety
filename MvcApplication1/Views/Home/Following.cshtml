@@ -33,6 +33,7 @@
             @foreach (User followed in Model.following)
             {
                 <div class="user-box">
+                    <img src="@followed.display_pic" alt="Avatar">
                     <p>
                         <h2>@followed.first_name &nbsp; @followed.last_name</h2><button class="btn" id="unfollow" onclick="location.href = '../../Home/UnFollow?username=@followed.username'">Unfollow <i class='fas fa-user-minus'></i></button>
                         &#64;@followed.username &nbsp;&nbsp;&nbsp;<span id="ftag">Following</span>
@@ -43,8 +44,5 @@
             }
         </div>
     </header>
-    <script>
-
-    </script>
 </body>
 </html>
