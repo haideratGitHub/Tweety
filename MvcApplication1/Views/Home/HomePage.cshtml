@@ -24,6 +24,7 @@
             @{User user = Model.User;
                 <img src="@user.display_pic" height="160" width="160" alt="Avatar">
                 <h2>@user.first_name&nbsp;@user.last_name</h2>
+                <h4>@user.username</h4>
             }
             <ul>
                 <li class="active"><a href="~/Home/HomePage"><i class="fas fa-home"></i>Home </a></li>
@@ -98,25 +99,43 @@
 
 
         </div>
-        <div class="column3" style="width:20%">
+        <div class="column3">
+
+            <div class="tags">
+                <h1 style="color:#0094ff">Trending Hashtags</h1>
+                @foreach (hashtag_trending Trends in Model.trending_hashtags)
+                {
+                    <h2>@Trends.hashtag&nbsp;</h2>
+                    <h4>@Trends.count tweets</h4>
+                    <br>
+
+                }
+            </div>
+
 
             <br />
-            <h2 style="animation">People You May Know...</h2>
             <br />
-            @foreach (User People_U_Should_Follow_list in Model.Suggested_people)
-            {
-                <div class="user-box">
-                    <img src="@People_U_Should_Follow_list.display_pic" alt="Avatar" id="tweet-box">
-                    <p id="tweet-box">
-                        <span id="name">@People_U_Should_Follow_list.first_name&nbsp;@People_U_Should_Follow_list.last_name</span>
-                        <span id="details">&nbsp; &#64;@People_U_Should_Follow_list.username</span>
-                        <span id="details" style="float:right">&nbsp;&nbsp;</span>
-                        <br />
-                        <span style="color:black"></span>
-                        <br /><br />
-                    </p>
-                </div>
-            }
+            <br />
+            <div class="Suggested_people">
+                <h2 style="color:#0094ff">People You May Know...</h2>
+                <br />
+                @foreach (User People_U_Should_Follow_list in Model.Suggested_people)
+                {
+                    <div class="user-box">
+                        <img src="@People_U_Should_Follow_list.display_pic" alt="Avatar" id="tweet-box">
+                        <p id="tweet-box">
+                            <span id="name">@People_U_Should_Follow_list.first_name&nbsp;@People_U_Should_Follow_list.last_name</span>
+                            <br />
+                            <span id="details">&nbsp; &#64;@People_U_Should_Follow_list.username</span>
+                            <button style="float:right" class="btn" id="follow" onclick="location.href = '../../Home/Follow_in_HomePage?username=@People_U_Should_Follow_list.username'">Follow <i class='fas fa-user-plus'></i></button>
+
+                            <br />
+                            <span style="color:black"></span>
+                            <br /><br />
+                        </p>
+                    </div>
+                }
+            </div>
 
 
 

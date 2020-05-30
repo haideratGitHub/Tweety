@@ -11,6 +11,8 @@
     <meta name="viewport" content="width=device-width" />
     <link href="~/Content/Explore.css" rel="stylesheet" />
     <link href="~/Content/Menubar.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/RightColumn.css" rel="stylesheet" />
+    <link href="~/Content/HomePage.css" rel="stylesheet" />
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <title></title>
 </head>
@@ -96,15 +98,46 @@
 
 
 
-        <div class="tags">
-            <h1>Trending Hashtags</h1>
-            @foreach (hashtag_trending Trends in Model.trending_hashtags)
-            {
-                <h2>@Trends.hashtag&nbsp;</h2>
-                <h4>@Trends.count tweets</h4>
-                <br>
+        <div class="column3">
 
-            }
+            <div class="tags">
+                <h1 style="color:#0094ff">Trending Hashtags</h1>
+                @foreach (hashtag_trending Trends in Model.trending_hashtags)
+                {
+                    <h2>@Trends.hashtag&nbsp;</h2>
+                    <h4>@Trends.count tweets</h4>
+                    <br>
+
+                }
+            </div>
+
+
+            <br />
+            <br />
+            <br />
+            <div class="Suggested_people">
+                <h2 style="color:#0094ff">People You May Know...</h2>
+                <br />
+                @foreach (User People_U_Should_Follow_list in Model.Suggested_people)
+                {
+                    <div class="user-box">
+                        <img src="@People_U_Should_Follow_list.display_pic" alt="Avatar" id="pic2">
+                        <p id="tweet-box">
+                            <span id="name">@People_U_Should_Follow_list.first_name&nbsp;@People_U_Should_Follow_list.last_name</span>
+                            <br />
+                            <span id="details">&nbsp; &#64;@People_U_Should_Follow_list.username</span>
+                            <button style="float:right" class="btn" id="follow" onclick="location.href = '../../Home/Follow_in_Explore?username=@People_U_Should_Follow_list.username'">Follow <i class='fas fa-user-plus'></i></button>
+
+                            <br />
+                            <span style="color:black"></span>
+                            <br /><br />
+                        </p>
+                    </div>
+                }
+            </div>
+
+
+
         </div>
     </div>
 </body>

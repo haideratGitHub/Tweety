@@ -128,13 +128,13 @@ namespace MvcApplication1.Controllers
                 List<hashtag_trending> trendingHashtags = CRUD.trending_hashtag();
                 List<User> following_of_search = CRUD.show_search_list_of_following(search, Session["username"].ToString());
                 List<User> strangers_of_search = CRUD.show_search_list_of_strangers(search, Session["username"].ToString());
-
+                List<User> People_U_Should_Follow_list = CRUD.People_U_Should_Follow(Session["username"].ToString());
                 dynamic model = new ExpandoObject();
                 model.User = users;
                 model.trending_hashtags = trendingHashtags;
                 model.Searched_following = following_of_search;
                 model.Searched_strangers = strangers_of_search;
-
+                model.Suggested_people = People_U_Should_Follow_list;
                 return View(model);
             }
             
@@ -499,6 +499,17 @@ namespace MvcApplication1.Controllers
             {
                 CRUD.ToFollow(Session["username"].ToString(), username);
                 return RedirectToAction("Explore");
+            }
+        }
+        
+        public ActionResult Follow_in_HomePage(String username)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.ToFollow(Session["username"].ToString(), username);
+                return RedirectToAction("Homepage");
             }
         }
     }
