@@ -886,7 +886,7 @@ namespace MvcApplication1.Models
                     message.senderName = rdr["sender"].ToString();
                     message.receverName = rdr["recever"].ToString();
                     message.message = rdr["message"].ToString();
-                    message.time = rdr["time"].ToString();
+                    message.time = rdr["date"].ToString();
                     list.Add(message);
                 }
                 rdr.Close();
@@ -1325,12 +1325,6 @@ namespace MvcApplication1.Models
             return result;
         }
 
-        public static void comment_on_a_tweet()
-        {
-
-        }
-
-
         public static List<User> show_search_list_of_users(String text)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -1396,6 +1390,39 @@ namespace MvcApplication1.Models
                 result = Convert.ToInt32(cmd.Parameters["@output"].Value);
                 //1 means succesfully posted
                 //0 means no user with this name found
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public static int commentOnTweet(int tweetID, string commentText, string username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("comment", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
+                cmd.Parameters.Add("@comment", SqlDbType.NVarChar, 280).Value = commentText;
+                //cmd.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                cmd.ExecuteNonQuery();
+                //result = Convert.ToInt32(cmd.Parameters["@output"].Value);
+                
             }
 
             catch (SqlException ex)
