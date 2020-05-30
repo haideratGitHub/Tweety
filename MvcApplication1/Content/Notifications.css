@@ -1,4 +1,6 @@
 ﻿body {
+    background-color: #CCE4F0;
+    padding:1%;
 }
 
 div.centre-column {
@@ -11,8 +13,7 @@ div.centre-column {
     margin-right: 1%;
     padding: 2%;
     background-color:#f1fafe;
-    max-width:600px;
-    min-width:599px;
+    width:60%;
 }
 
 #centre-title {

@@ -735,8 +735,8 @@ create procedure remove_follower
 	@username varchar(30),@follower varchar(30)--,@password varchar(30)
 as
 begin
-	--if @username in(select name from [user]) and @follower in(select name from [user])
-	--begin
+	if @username in(select name from [user]) and @follower in(select name from [user])
+	begin
 		--if @password=(select password from [user] where name=@username)
 		--begin
 			declare @uid int,@fid int
@@ -824,7 +824,7 @@ execute search_tweet
 -- --TO POST A TWEET-- --
 go
 create procedure tweet
-	@username varchar(30),@tweet varchar(280)
+	@username varchar(30),@tweet varchar(280),@output int output
 as
 begin
 	if @username in (select name from [user])
@@ -836,16 +836,20 @@ begin
 
 		insert into tweets values(@tid,@uid,@tweet,convert(date,getdate()),convert(time,getdate()))
 		print('tweet posted')
+		set @output = 1
 	end
 	else
 	begin
 		print('There is no user with this username')
+		set @output = 0
 	end
 end
 go
 -- --executing code-- --
+declare @result int
 execute tweet
-	@username='ali_33',@tweet='I got a promotion #life'
+	@username='ali_33',@tweet='I got a promotion #life',@output = @result output
+select @result
 --select * from tweets
 
 -- --TO LOGIN-- --
@@ -1047,92 +1051,6 @@ execute followers
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- --TO GET NO OF TWEETS OF A USER-- --
 go
 create procedure no_of_tweets
@@ -1212,7 +1130,7 @@ begin
 	if @username in (select name from [user])
 	begin
 		select name as username,t.tweetID,t.userID,t.tweet,convert(varchar,t.date,101) as date,convert(varchar(5),t.time)as time
-		from [user] u left join tweets t on u.userID=t.userID
+		from [user] u join tweets t on u.userID=t.userID
 		where @username=name
 	end
 	else
@@ -1415,3 +1333,118 @@ go
 -- --executing code-- --
 execute change_DOB
 	@username='ali_33',@new='2001-12-12',@password='p1234'
+
+---Private Chat output-----
+go
+create procedure chat_out
+	@sender varchar(30),@recever varchar(30)
+as
+begin
+	if @sender in (select name from [user]) and @recever in (select name from [user])
+	begin
+		select u1.name as sender,u2.name as recever,p.message,p.date
+		from (privateChat as p join [user] as u1 on u1.userID=p.senderID)join [user] as u2 on u2.userID=p.receiverID
+		where u1.name=@sender and u2.name=@recever or u2.name=@sender and u1.name=@recever
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+
+-------execution code---
+execute chat_out
+@sender='ali_33',@recever='ahmad_54'
+
+
+
+---private chat input--- 
+go
+create procedure chat_in
+  @sender varchar(30),@receiver varchar(30),@message varchar(280)
+as
+begin
+	if @sender in (select name from [user]) and @receiver in (select name from [user])
+	begin
+	    declare @s_ID int,@r_iD int,@chatID int,@messageID int 
+		
+		select @s_ID=[user].userID from [user] where [user].name=@sender
+		set @s_ID=@s_ID
+
+		select @r_ID=[user].userID from [user] where [user].name=@receiver
+		set @r_ID=@r_ID
+
+		if @S_ID in (select privateChat.senderID from privateChat where @r_ID=receiverID) or @S_ID in (select privateChat.receiverID from privateChat where @r_ID=senderID)
+		begin
+		    select @chatID=privateChat.chatID from privateChat where  (@r_ID=receiverID and @s_ID =senderID) or (@s_ID=receiverID and @r_ID =senderID)
+			select @messageID=max(privateChat.messageID) from privateChat where  privateChat.chatID=@chatID
+			set @messageID=@messageID+1
+		end   
+		else
+		begin
+			select @chatID=max(privateChat.chatID) from privateChat
+			set @chatID=@chatID+1
+			set @messageID=1 
+		end
+
+		insert into privateChat values (@chatID,@s_ID,@r_iD,@messageID,@message,CONVERT(datetime, GETDATE()),CONVERT(time, GETDATE()))
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+------execution code----
+execute chat_in
+@sender='mike_99',@receiver='alice_21',@message='checking on u.'
+
+
+
+
+-- --SEARCH Users-- --
+go
+create procedure search_user
+	@text varchar(140)
+as
+begin
+	select *
+	from [profile] p join [user] u  on p.userID=u.userID
+	where CHARINDEX(@text,u.name) != 0 or CHARINDEX(@text,p.fname) != 0 or CHARINDEX(@text,p.lname) != 0
+end
+go
+-- --executing code-- --
+execute search_user
+	@text='al'
+
+-- --TO DELETE A USER-- --
+go
+create procedure delete_user
+	@username varchar(30)
+as
+begin
+	if @username in(select name from [user])
+	begin
+		declare @id int
+		select @id=userID from[user] where name=@username
+		delete from Notifications where userID=@id
+		delete from privateChat where senderID=@id
+		delete from privateChat where receiverID=@id
+		delete from comments where commenterID=@id
+		delete from likes where likerID=@id
+		delete from dislikes where dislikerID=@id
+		delete from follower where userID=@id
+		delete from follower where followerID=@id
+		delete from tweets where userID=@id
+		delete from [user] where userID=@id
+	end
+	else
+	begin
+		print ('There is no user with this user name')
+	end
+end
+go
+-- --executing code-- --
+execute delete_user
+	@username='taha_8800'

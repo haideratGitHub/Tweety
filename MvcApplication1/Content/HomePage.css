@@ -1,4 +1,6 @@
 ﻿body {
+    background-color: #CCE4F0;
+    padding:1%;
 }
 
 @media screen and (max-width: 600px) {
@@ -7,25 +9,86 @@
     }
 }
 
+@media screen and (max-width: 600px) {
+    .column3 {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .feed {
+        width: 100%;
+    }
+}
+
+div.column3 {
+    /*border-style: solid;
+    border-color: #56baed;
+    border-width: thin;*/
+    margin-left: 1%;
+}
 
 div.feed {
     border-style: solid;
     border-color: #56baed;
     border-width: thin;
     margin-left: 1%;
-    margin-right:0%;
+    margin-right: 0%;
     margin-top: 2%;
     padding: 1%;
+    background-color:white;
 }
 
-button:active {
-    background-color: #0094ff;
-    color: white;
+#like-btn {
+    border-radius: 10px;
+    padding: 0px;
+    background-color: white;
+    width: 30px;
+    height: 30px;
 }
 
-button:hover {
-    background-color: lightblue;
+    #like-btn:hover {
+        background-color: lightblue;
+    }
+
+    #like-btn:active {
+        background-color: #0094ff;
+        color: white;
+    }
+
+#dislike-btn {
+    border-radius: 10px;
+    padding: 0px;
+    background-color: white;
+    width: 30px;
+    height: 30px;
 }
+
+    #dislike-btn:hover {
+        background-color: lightblue;
+    }
+
+    #dislike-btn:active {
+        background-color: #0094ff;
+        color: white;
+    }
+
+#comment-btn {
+    border-radius: 10px;
+    padding: 0px;
+    background-color: white;
+    width: 30px;
+    height: 30px;
+}
+
+    #comment-btn:hover {
+        background-color: lightblue;
+    }
+
+    #comment-btn:active {
+        background-color: #0094ff;
+        color: white;
+    }
 
 .user-box img {
     float: left;
@@ -59,21 +122,160 @@ div.user-box {
     border-top-color: #E9E9E9;
     border-bottom-color: #E9E9E9;
     padding: 1%;
+    background-color:white;
 }
 
-/*div.centre-column {
-    border-style: solid;
-    border-color: #56baed;
-    border-width: thin;
-    margin-left: 26%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    margin-right: 1%;
-    padding: 1%;
-}*/
 
 img {
     border-radius: 50%;
     border: 2px solid #0094ff;
     width: 150px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    border-radius: 10px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 20%;
+    align-content: center;
+    background-color: #56baed;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+    input[type=submit]:hover {
+        background-color: #2389BD;
+    }
+
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+}
+
+    #snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+#centre-title {
+    font-size: 30px;
+    font-family: 'Century Gothic';
+    color: #0094ff;
+    text-align: center;
+    padding: 2px;
+    font-weight: bold;
+    border-bottom: 2px solid #0094ff;
+    margin-left: 30%;
+    margin-right: 30%;
 }

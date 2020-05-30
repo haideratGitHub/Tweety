@@ -15,23 +15,17 @@
     <title></title>
 </head>
 <body>
-    <div class="tags">
-        <h1>Trending Hashtags</h1>
-        @foreach (hashtag_trending Trends in Model.trending_hashtags)
-        {
-            <h2>@Trends.hashtag&nbsp;</h2>
-            <h4>@Trends.count tweets</h4> 
-            <br>
 
-        }
-    </div>
     <div class="wrapper">
-        @*row*@
         <div class="column">
+            @{User user = Model.User;
+                <img src="@user.display_pic" height="160" width="160" alt="Avatar">
+                <h2>@user.first_name&nbsp;@user.last_name</h2>
+            }
             <ul>
                 <li><a href="~/Home/HomePage"><i class="fas fa-home"></i>Home </a></li>
                 <br>
-                <li ><a href="~/Home/ProfilePage"><i class="fas fa-user"></i>Profile     </a></li>
+                <li><a href="~/Home/ProfilePage"><i class="fas fa-user"></i>Profile     </a></li>
                 <br>
                 <li class="active"><a href="~/Home/Explore"><i class="fas fa-hashtag"></i>Explore     </a></li>
                 <br>
@@ -46,5 +40,55 @@
             </ul>
 
         </div>
+
+
+        <div style="width:60%;">
+            <!-- Search Form -->
+            <form method="post" action="../Home/Explore">
+                <input type="text" id="search" name="search" placeholder="Search User" class="search_input">
+                <input type="submit" value="Search" class="search_button">
+            </form>
+
+
+
+            <div class="centre-column">
+                <div id="centre-title">Search Result</div>
+                <br />
+                @foreach (User U in Model.Searched_people)
+                {
+                    <div class="Searched_list">
+                        <p id="Searched_list_data">
+
+                            <span>
+                                <img src="@U.display_pic" height="80" width="70" alt="Avatar">
+                            </span><br />
+                            <button style="float:right" class="btn" id="follow" onclick="location.href = '../../Home/Follow?username=@U.username'">Follow <i class='fas fa-user-plus'></i></button>
+                            <span><h2>@U.first_name&nbsp;@U.last_name</h2></span>
+                            <span>@U.username</span><br /><br />
+                            <span>Gender: @U.gender</span><br />
+                            <span>Country: @U.country</span><br />
+                            <br />
+                            <br />
+                        </p>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+
+
+
+        <div class="tags">
+            <h1>Trending Hashtags</h1>
+            @foreach (hashtag_trending Trends in Model.trending_hashtags)
+            {
+                <h2>@Trends.hashtag&nbsp;</h2>
+                <h4>@Trends.count tweets</h4>
+                <br>
+
+            }
+        </div>
+    </div>
 </body>
 </html>

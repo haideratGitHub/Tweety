@@ -13,7 +13,7 @@ select * from likes
 select * from dislikes
 select * from comments
 select * from privateChat
-
+select * from Notifications
 ----
 
 insert into [user] values
@@ -103,14 +103,14 @@ insert into comments values
 (10,9,2,'me too',GETDATE(),CONVERT(time, GETDATE()))
 
 insert into privateChat values
-(1,1,2,1,'Hi',GETDATE(),CONVERT(time, GETDATE())),
-(1,2,1,2,'Hello',GETDATE(),CONVERT(time, GETDATE())),
-(1,1,2,3,'How are you doing?',GETDATE(),CONVERT(time, GETDATE())),
-(1,2,1,4,'Great',GETDATE(),CONVERT(time, GETDATE())),
-(2,3,4,1,'great job done',GETDATE(),CONVERT(time, GETDATE())),
-(2,4,3,2,'thanks',GETDATE(),CONVERT(time, GETDATE())),
-(3,3,2,1,'See you tomorrow',GETDATE(),CONVERT(time, GETDATE())),
-(3,2,3,2,'ok :)',GETDATE(),CONVERT(time, GETDATE()))
+(1,1,2,1,'Hi',CONVERT(datetime, GETDATE()),CONVERT(time, GETDATE())),
+(1,2,1,2,'Hello',CONVERT(datetime, GETDATE()),CONVERT(time, GETDATE())),
+(1,1,2,3,'How are you doing?',CONVERT(datetime, GETDATE()),CONVERT(time, GETDATE())),
+(1,2,1,4,'Great',CONVERT(datetime, GETDATE()),CONVERT(time, GETDATE())),
+(2,3,4,1,'great job done',CONVERT(datetime, GETDATE()),CONVERT(time, GETDATE())),
+(2,4,3,2,'thanks',CONVERT(datetime, GETDATE()),CONVERT(time, GETDATE())),
+(3,3,2,1,'See you tomorrow',CONVERT(datetime, GETDATE()),CONVERT(time, GETDATE())),
+(3,2,3,2,'ok :)',CONVERT(datetime, GETDATE()),CONVERT(time, GETDATE()))
 
 
 insert into Notifications values

@@ -1,24 +1,109 @@
 ﻿body {
+    background-color: #CCE4F0;
+    padding:1%;
 }
 
-@media screen and (max-width: 600px) {
-    .column {
-        width: 100%;
+
+.search_button {
+    background-color: #e5e5e5;
+    color: black;
+    padding: 13px;
+    text-align: center;
+    border-radius: 10px 10px 10px 10px;
+    font-size: larger;
+    font-weight: 600;
+}
+
+    .search_button:hover {
+        background-color: #56baed;
+        color: white
     }
+
+.search_input {
+    border: solid thin;
+    border-color: #d8e3ea;
+    border-radius: 4px;
+    padding: 12px;
+    background-color: white;
 }
 
 
-div.column {
-    margin-top: -30%;
-}
-
-
-div.tags {
+div.centre-column {
+    border-style: solid;
     border-color: #56baed;
     border-width: thin;
-    margin-left: 26%;
     margin-top: 2%;
     margin-bottom: 2%;
+    padding: 2%;
+    background-color: #f1fafe;
+}
+
+#centre-title {
+    font-size: 30px;
+    font-family: 'Century Gothic';
+    color: #0094ff;
+    text-align: center;
+    padding: 2px;
+    font-weight: bold;
+    border-bottom: 2px solid #0094ff;
+}
+
+
+div.Searched_list {
+    border-left-color: white;
+    border-right-color: white;
+    border-style: solid;
+    border-width: thin;
+    border-top-color: #E9E9E9;
+    border-bottom-color: #E9E9E9;
+    padding: 1%;
+    transition: 0.9s ease;
+}
+
+    div.Searched_list:hover {
+        background-color: #e2ecf1;
+    }
+
+.Searched_list p#Searched_list_data {
+    padding: 1%;
+}
+
+p {
+    font-family: 'Century Gothic';
+    font-size: large;
+}
+
+.btn {
+    float: right;
+    margin-top: -22px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #0094ff;
+    border: 1px solid #0094ff;
+    border-radius: 30px;
+    padding: 5px 5px;
+    background-color: white;
+}
+
+    .btn:active {
+        background-color: #0094ff;
+        color: white;
+    }
+
+    .btn:hover {
+        background-color: lightblue;
+    }
+
+#follow {
     margin-right: 1%;
+}
+
+div .tags {
+    border-color: #56baed;
+    border-width: thin;
+    float: right;
+    width: 20%;
+    margin-top: 2%;
+    margin-bottom: 2%;
     padding: 1%;
 }

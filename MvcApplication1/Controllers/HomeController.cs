@@ -10,6 +10,13 @@ namespace MvcApplication1.Controllers
 {
     public class HomeController : Controller
     {
+        static class Globals
+        {
+           
+            public static string recever=null;
+
+            
+        }
 
         public ActionResult Login()
         {
@@ -34,12 +41,8 @@ namespace MvcApplication1.Controllers
         {
             Session["username"] = null;
             return View("Login");
-        }
-        public ActionResult Messages()
-        {
-            return View("Messages");
-        }
-        public ActionResult Settings()
+        } 
+       public ActionResult Settings()
         {
             if (Session["username"] == null)
                 return View("login");
@@ -70,18 +73,60 @@ namespace MvcApplication1.Controllers
             }
         }
 
-        public ActionResult Explore()
+        public ActionResult Messages(string rec=null)
         {
             if (Session["username"] == null)
-                return View("Explore");
+                return View("login");
             else
             {
                 User users = CRUD.view_user(Session["username"].ToString());
+                List<User> followers = CRUD.get_followers(Session["username"].ToString());
+                List<Messages> Messages;
+                if (rec == null && Globals.recever==null)
+                {
+                    Messages = CRUD.showMessages(Session["username"].ToString(), " ");
+                }
+                else if(rec == null && Globals.recever != null)
+                {
+
+                    
+                    Messages = CRUD.showMessages(Session["username"].ToString(), Globals.recever);
+                    
+                }
+                else
+                {
+                    Globals.recever = rec;
+                    Messages = CRUD.showMessages(Session["username"].ToString(), Globals.recever);
+                }
+
+
+                dynamic model = new ExpandoObject();
+                model.User = users;
+                model.followers = followers;
+                model.Messages = Messages;
+                return View(model);
+            }
+        }
+
+
+        public ActionResult Explore(string search)
+        {
+            if (Session["username"] == null)
+                return View("Login");
+            else
+            {
+                if(search == null)
+                {
+                    search = "";
+                }
+                User users = CRUD.view_user(Session["username"].ToString());
                 List<hashtag_trending> trendingHashtags = CRUD.trending_hashtag();
+                List<User> people_of_search = CRUD.show_search_list_of_users(search);
 
                 dynamic model = new ExpandoObject();
                 model.User = users;
                 model.trending_hashtags = trendingHashtags;
+                model.Searched_people = people_of_search;
 
                 return View(model);
             }
@@ -249,15 +294,17 @@ namespace MvcApplication1.Controllers
                 return RedirectToAction("Followers");
             }
         }
-
         public ActionResult Update_Name(String username,String password,String first_name,String last_name)
         {
             if (Session["username"] == null)
                 return View("login");
             else
             {
-                CRUD.Update_FirstName(username, first_name, password);
-                CRUD.Update_LastName(username, last_name, password);
+                if(first_name!="" && last_name!="")
+                {
+                    CRUD.Update_FirstName(username, first_name, password);
+                    CRUD.Update_LastName(username, last_name, password);
+                }
                 return RedirectToAction("Settings");
             }
         }
@@ -267,8 +314,13 @@ namespace MvcApplication1.Controllers
                 return View("login");
             else
             {
-                if (CRUD.Update_UserName(username, new_username, password) == 1)
-                    return RedirectToAction("LogOut");
+                if(new_username!="")
+                {
+                    if (CRUD.Update_UserName(username, new_username, password) == 1)
+                        return RedirectToAction("LogOut");
+                    else
+                        return RedirectToAction("Settings");
+                }
                 else
                     return RedirectToAction("Settings");
             }
@@ -319,8 +371,13 @@ namespace MvcApplication1.Controllers
                 return View("login");
             else
             {
-                if (CRUD.Update_Password(username, new_password, old_password) == 1)
-                    return RedirectToAction("LogOut");
+                if(new_password!="")
+                {
+                    if (CRUD.Update_Password(username, new_password, old_password) == 1)
+                        return RedirectToAction("LogOut");
+                    else
+                        return RedirectToAction("Settings");
+                }
                 else
                     return RedirectToAction("Settings");
             }
@@ -362,6 +419,43 @@ namespace MvcApplication1.Controllers
         public ActionResult commentTweet()
         {
             return View();
+        }
+        public ActionResult Store_message(string message)
+        {
+            string sender = Session["username"].ToString();
+            if(Globals.recever == null)
+                CRUD.storeMessage(sender, " ", message);
+            else
+                 CRUD.storeMessage(sender, Globals.recever, message);
+
+            return RedirectToAction("Messages");
+        }
+
+        public ActionResult postTweet(string tweet)
+        {
+            if(tweet != "")
+            {
+                int result = CRUD.postTweet(tweet, Session["username"].ToString());
+                
+            }
+            return RedirectToAction("HomePage");
+        }
+
+        public ActionResult commentOnTweet(string commentText, int tweetID)
+        {
+            int result = CRUD.commentOnTweet(tweetID, commentText, Session["username"].ToString());
+            return RedirectToAction("HomePage");
+        }
+
+        public ActionResult DeleteMyAccount()
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.delete_User(Session["username"].ToString());
+                return RedirectToAction("LogOut");
+            }
         }
     }
 }
