@@ -1,4 +1,5 @@
 create database tweety
+go
 use tweety
 
 
@@ -71,7 +72,7 @@ receiverID int foreign key references [user](userID)on delete no action on updat
 messageID int ,
 [message] varchar(280) NOT NULL,
 --[time] timestamp,
-[date] date NOT NULL,
+[date] datetime NOT NULL,
 [time] time NOT NULL,
 primary key(chatID,messageID)
 )

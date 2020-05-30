@@ -424,10 +424,14 @@ namespace MvcApplication1.Controllers
             {
                 int result = CRUD.postTweet(tweet, Session["username"].ToString());
                 
-                
             }
             return RedirectToAction("HomePage");
         }
 
+        public ActionResult commentOnTweet(string commentText, int tweetID)
+        {
+            int result = CRUD.commentOnTweet(tweetID, commentText, Session["username"].ToString());
+            return RedirectToAction("HomePage");
+        }
     }
 }
