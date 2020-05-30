@@ -45,13 +45,13 @@ primary key([userID],followerID)
 
 create table likes(
 likerID int foreign key references [user](userID) on delete no action on update no action,
-tweetID int foreign key references [tweets](tweetID) on delete no action on update no action,
+tweetID int foreign key references [tweets](tweetID) on delete cascade on update cascade,
 primary key(likerID,tweetID)
 )
 
 create table dislikes(
 dislikerID int foreign key references [user](userID) on delete no action on update no action,
-tweetID int foreign key references [tweets](tweetID) on delete no action on update no action,
+tweetID int foreign key references [tweets](tweetID) on delete cascade on update cascade,
 primary key(dislikerID,tweetID)
 )
 

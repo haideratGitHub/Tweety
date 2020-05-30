@@ -26,7 +26,8 @@
             <span><b style="color:#56baed">Status:</b> @user.status&nbsp;&nbsp;</span>   <button onclick="ShowModal('status')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
             <span><b style="color:#56baed">Country:</b> @user.country&nbsp;&nbsp;</span>   <button onclick="ShowModal('country')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
             <span><b style="color:#56baed">Email:</b> @user.email&nbsp;&nbsp;</span>   <button onclick="ShowModal('email')"><i class="fas fa-pen fa-2x"></i></button><br /><br />
-            <a id="p" onclick="ShowModal('password')">Change Password</a>
+            <a id="p" onclick="ShowModal('password')">Change Password</a><br /><br />
+            <a id="d" onclick="ShowModal('delete')">Delete My Account</a>
 
             @*<span><b style="color:#56baed">Password:</b> @user.password&nbsp;&nbsp;</span>   <button onclick="ShowModal('password')"><i class="fas fa-pen fa-2x"></i></button><br />*@
             @*<br /><br /><br /><br /><br /><br /><br />*@
@@ -205,6 +206,17 @@
             </div>
         </div>
     </div>
+    <!-- The Modal for Confirming Deletion of account-->
+        <div id="delete" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close" onclick="HideModal('delete')"><i class="fas fa-times"></i></span>
+                <br /><br />
+                <span style="font:medium;font-family:'Century Gothic'">Are you sure that you want to delete your account?</span>
+                <br /><br /><br /><br />
+                <span style="float:right"><button class="btn" id="no" onclick="HideModal('delete')">NO</button>&nbsp;&nbsp;&nbsp;<button class="btn" id="yes" onclick="location.href = '../../Home/DeleteMyAccount'">YES</button></span>
+            </div>
+        </div>
     }
     <div class="wrapper">
         @*row*@
@@ -228,24 +240,7 @@
 
         </div>
     </div>
-    @*<header>
-        <div class="menu">
-            <ul>
-                <li><a href="~/Home/HomePage">Home</a></li>
-                <br>
-                <li><a href="~/Home/ProfilePage">Profile</a></li>
-                <br>
-                <li><a href="~/Home/Notifications">Notifications</a></li>
-                <br>
-                <li><a href="~/Home/Messages">Messages</a></li>
-                <br>
-                <li class="active"><a href="~/Home/Settings">Settings</a></li>
-                <br>
-                <li><a href="~/Home/LogOut">Logout</a></li>
-                <br>
-            </ul>
-        </div>
-    </header>*@
+    
     <script>
         function ShowModal(id) {
             var modal = document.getElementById(id);

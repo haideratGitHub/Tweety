@@ -182,6 +182,17 @@ a#p:hover{
     font-weight:bold;
 }
 
+a#d{
+    font-size:x-large;
+    font-family:'Century Gothic';
+    color:#56baed;
+}
+a#d:hover{
+    text-decoration:underline;
+    font-weight:bold;
+    color:red;
+}
+
 label{
     font-size:large;
     font-family:'Century Gothic';
@@ -203,4 +214,8 @@ option:hover{
 
 .wrapper ul{
     border:thin solid #56baed;
+}
+
+#yes:hover,#yes.active{
+    background-color:red;
 }

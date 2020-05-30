@@ -433,5 +433,16 @@ namespace MvcApplication1.Controllers
             int result = CRUD.commentOnTweet(tweetID, commentText, Session["username"].ToString());
             return RedirectToAction("HomePage");
         }
+
+        public ActionResult DeleteMyAccount()
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.delete_User(Session["username"].ToString());
+                return RedirectToAction("LogOut");
+            }
+        }
     }
 }
