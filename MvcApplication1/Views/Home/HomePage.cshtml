@@ -50,7 +50,7 @@
             <div id="myModalForTweet" class="modal">
                 <!-- Modal content -->
                 <div class="modal-content">
-                    <span class="close">&times;</span>
+                    <span class="close1">&times;</span>
                     <form autocomplete="off" method="post" action="../Home/postTweet">
                         <input id="tweet" type="text" name="tweet" placeholder="What's Happening...."><br><br>
                         <input type="submit" value="Tweet">
@@ -73,14 +73,16 @@
                         <span style="color:black">@feedObject.userTweet.tweet</span>
                         <br /><br />
                         <span id="tweet-details">
-                            @feedObject.userTweet.no_of_comments <button id="comment-btn"><i style="color:#0094ff" id="tweet-details" class="far fa-comment-alt"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@feedObject.userTweet.no_of_likes <button id="like-btn" onclick="location.href = '../../Home/likeTweet?tweetID=@feedObject.userTweet.tweetID'"><i style="color:#0094ff" id="tweet-details" class="far fa-thumbs-up"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@feedObject.userTweet.no_of_dislikes <button id="dislike-btn" onclick="location.href = '../../Home/dislikeTweet?tweetID=@feedObject.userTweet.tweetID'"><i style="color:#0094ff" id="tweet-details" class="far fa-thumbs-down"></i></button>
+                            @feedObject.userTweet.no_of_comments <button id="comment-btn" onclick="ShowModal(@feedObject.userTweet.tweetID)"><i style="color:#0094ff" id="tweet-details" class="far fa-comment-alt"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@feedObject.userTweet.no_of_likes <button id="like-btn" onclick="location.href = '../../Home/likeTweet?tweetID=@feedObject.userTweet.tweetID'"><i style="color:#0094ff" id="tweet-details" class="far fa-thumbs-up"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@feedObject.userTweet.no_of_dislikes <button id="dislike-btn" onclick="location.href = '../../Home/dislikeTweet?tweetID=@feedObject.userTweet.tweetID'"><i style="color:#0094ff" id="tweet-details" class="far fa-thumbs-down"></i></button>
                         </span>
                     </p>
+
                 </div>
-                <div id="myModalForComment" class="modal">
+
+                <div id="@feedObject.userTweet.tweetID" class="modal">
                     <!-- Modal content -->
                     <div class="modal-content">
-                        <span class="close">&times;</span>
+                        <span class="close2" onclick="HideModal(@feedObject.userTweet.tweetID)">&times;</span>
                         <form autocomplete="off" method="post" action="../Home/commentOnTweet?tweetID=@feedObject.userTweet.tweetID">
                             <input id="commentText" type="text" name="commentText" placeholder="Write your comment"><br><br>
                             <input type="submit" value="Comment">
@@ -89,7 +91,9 @@
                     </div>
                 </div>
 
+
             }
+
 
         </div>
         <div class="column3" style="width:20%">
@@ -125,7 +129,7 @@
         var btn = document.getElementById("tweet-button");
 
         // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+        var span = document.getElementsByClassName("close1")[0];
 
         // When the user clicks on the button, open the modal
         btn.onclick = function () {
@@ -146,31 +150,24 @@
     </script>
 
     <script>
-        // Get the modal
-        var modal = document.getElementById("myModalForComment");
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("comment-btn");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks on the button, open the modal
-        btn.onclick = function () {
+        function ShowModal(id) {
+            var modal = document.getElementById(id);
             modal.style.display = "block";
+
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
         }
 
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
+        function HideModal(id) {
+            var modal = document.getElementById(id);
             modal.style.display = "none";
         }
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
     </script>
 
     <script type="text/javascript">
