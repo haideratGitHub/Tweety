@@ -15,11 +15,11 @@ namespace MvcApplication1.Controllers
            
             public static string recever=null;
 
-            
         }
+        static string Search = null;
 
-        public ActionResult Login()
-        {
+        public ActionResult Login(){
+            Search = null;
             if (Session["username"] == null)
                 return View("Login");
             else
@@ -37,17 +37,17 @@ namespace MvcApplication1.Controllers
         {
             return View();
         }
-        public ActionResult LogOut()
-        {
+        public ActionResult LogOut(){
+            Search = null;
             Session["username"] = null;
             return View("Login");
         } 
        public ActionResult Settings()
         {
+            Search = null;
             if (Session["username"] == null)
                 return View("login");
-            else
-            {
+            else{
                 User user = CRUD.view_user(Session["username"].ToString());
                 return View(user);
             }
@@ -75,6 +75,7 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Messages(string rec=null)
         {
+            Search = null;
             if (Session["username"] == null)
                 return View("login");
             else
@@ -88,7 +89,6 @@ namespace MvcApplication1.Controllers
                 }
                 else if(rec == null && Globals.recever != null)
                 {
-
                     
                     Messages = CRUD.showMessages(Session["username"].ToString(), Globals.recever);
                     
@@ -109,7 +109,6 @@ namespace MvcApplication1.Controllers
         }
 
 
-        static string Search = null; 
         public ActionResult Explore(string search)
         {
             if (Session["username"] == null)
@@ -160,9 +159,9 @@ namespace MvcApplication1.Controllers
             return RedirectToAction("HomePage");
             //return RedirectToAction("HomePage", new { username = username });
         }
-
         public ActionResult HomePage(String username)
         {
+            Search = null;
             if (Session["username"] == null)
                 return View("login");
             else
@@ -203,11 +202,11 @@ namespace MvcApplication1.Controllers
 
         public ActionResult ProfilePage(String username)
         {
+            Search = null;
             if (Session["username"] == null)
                 return View("login");
             else
-            {
-                //User users = CRUD.view_user(Session["username"].ToString());
+            {//User users = CRUD.view_user(Session["username"].ToString());
                 dynamic mymodel = new ExpandoObject();
                 mymodel.user = CRUD.view_user(Session["username"].ToString());
                 mymodel.no_of_followers = CRUD.no_of_followers(Session["username"].ToString());
