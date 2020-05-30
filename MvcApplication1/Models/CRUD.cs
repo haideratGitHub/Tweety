@@ -1325,12 +1325,6 @@ namespace MvcApplication1.Models
             return result;
         }
 
-        public static void comment_on_a_tweet()
-        {
-
-        }
-
-
         public static List<User> show_search_list_of_users(String text)
         {
             SqlConnection con = new SqlConnection(connectionString);

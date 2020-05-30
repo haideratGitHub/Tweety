@@ -1335,7 +1335,6 @@ execute change_DOB
 	@username='ali_33',@new='2001-12-12',@password='p1234'
 
 ---Private Chat output-----
-
 go
 create procedure chat_out
 	@sender varchar(30),@recever varchar(30)
