@@ -1343,7 +1343,7 @@ as
 begin
 	if @sender in (select name from [user]) and @recever in (select name from [user])
 	begin
-		select u1.name as sender,u2.name as recever,p.message,p.time
+		select u1.name as sender,u2.name as recever,p.message,p.date
 		from (privateChat as p join [user] as u1 on u1.userID=p.senderID)join [user] as u2 on u2.userID=p.receiverID
 		where u1.name=@sender and u2.name=@recever or u2.name=@sender and u1.name=@recever
 	end
@@ -1389,7 +1389,7 @@ begin
 			set @messageID=1 
 		end
 
-		insert into privateChat values (@chatID,@s_ID,@r_iD,@messageID,@message,GETDATE(),CONVERT(time, GETDATE()))
+		insert into privateChat values (@chatID,@s_ID,@r_iD,@messageID,@message,CONVERT(datetime, GETDATE()),CONVERT(time, GETDATE()))
 	end
 	else
 	begin
