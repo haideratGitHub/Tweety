@@ -1421,17 +1421,17 @@ execute search_user
 
 -- --Explore followers-- --
 go
-create procedure explore_followers
+create procedure explore_following
 	@text varchar(140), @username varchar(30)
 as
 begin
 	select u2.name, u2.displayPic, p.fname, p.lname, p.country, p.gender, p.[status]
-	from ((follower f join [user] u on f.userID = u.userID) join [profile] p on p.userID = f.followerID) join [user] u2 on p.userID = u2.userID
+	from ((follower f join [user] u on f.followerID = u.userID) join [profile] p on p.userID = f.userID) join [user] u2 on p.userID = u2.userID
 	where (CHARINDEX(@text,u2.name) != 0 or CHARINDEX(@text,p.fname) != 0 or CHARINDEX(@text,p.lname) != 0) and u.name = @username
 end
 go
 -- --executing code-- --
-execute explore_followers
+execute explore_following
 	@text='a', @username = 'ali_33'
 
 
@@ -1448,8 +1448,9 @@ begin
 	except
 
 	select u2.name, u2.displayPic, p.fname, p.lname, p.country, p.gender, p.[status]
-	from ((follower f join [user] u on f.userID = u.userID) join [profile] p on p.userID = f.followerID) join [user] u2 on p.userID = u2.userID
+	from ((follower f join [user] u on f.followerID = u.userID) join [profile] p on p.userID = f.userID) join [user] u2 on p.userID = u2.userID
 	where u.name = @username
+
 
 end
 go
