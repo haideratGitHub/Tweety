@@ -109,6 +109,7 @@ namespace MvcApplication1.Controllers
         }
 
 
+        static string Search = null; 
         public ActionResult Explore(string search)
         {
             if (Session["username"] == null)
@@ -117,16 +118,22 @@ namespace MvcApplication1.Controllers
             {
                 if(search == null)
                 {
-                    search = "";
+                    if (Search != null)
+                        search = Search;
+                    else
+                        search = "";
                 }
+                Search = search;
                 User users = CRUD.view_user(Session["username"].ToString());
                 List<hashtag_trending> trendingHashtags = CRUD.trending_hashtag();
-                List<User> people_of_search = CRUD.show_search_list_of_users(search);
+                List<User> following_of_search = CRUD.show_search_list_of_following(search, Session["username"].ToString());
+                List<User> strangers_of_search = CRUD.show_search_list_of_strangers(search, Session["username"].ToString());
 
                 dynamic model = new ExpandoObject();
                 model.User = users;
                 model.trending_hashtags = trendingHashtags;
-                model.Searched_people = people_of_search;
+                model.Searched_following = following_of_search;
+                model.Searched_strangers = strangers_of_search;
 
                 return View(model);
             }
@@ -447,14 +454,51 @@ namespace MvcApplication1.Controllers
             return RedirectToAction("HomePage");
         }
 
+
         public ActionResult DeleteMyAccount()
+        {
+        if (Session["username"] == null)
+                return View("login");
+            else
+            {
+
+                CRUD.delete_User(Session["username"].ToString());
+                return RedirectToAction("LogOut");
+}
+        }
+        
+            
+
+
+
+
+
+
+
+
+
+        
+
+        public ActionResult UnFollow_in_explore(String username)
         {
             if (Session["username"] == null)
                 return View("login");
             else
             {
-                CRUD.delete_User(Session["username"].ToString());
-                return RedirectToAction("LogOut");
+
+
+                CRUD.ToUnFollow(Session["username"].ToString(), username);
+                return RedirectToAction("Explore");
+            }
+        }
+        public ActionResult Follow_in_explore(String username)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.ToFollow(Session["username"].ToString(), username);
+                return RedirectToAction("Explore");
             }
         }
     }

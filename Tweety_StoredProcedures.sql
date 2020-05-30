@@ -1418,6 +1418,46 @@ go
 execute search_user
 	@text='al'
 
+-- --Explore followers-- --
+go
+create procedure explore_following
+	@text varchar(140), @username varchar(30)
+as
+begin
+	select u2.name, u2.displayPic, p.fname, p.lname, p.country, p.gender, p.[status]
+	from ((follower f join [user] u on f.followerID = u.userID) join [profile] p on p.userID = f.userID) join [user] u2 on p.userID = u2.userID
+	where (CHARINDEX(@text,u2.name) != 0 or CHARINDEX(@text,p.fname) != 0 or CHARINDEX(@text,p.lname) != 0) and u.name = @username
+end
+go
+-- --executing code-- --
+execute explore_following
+	@text='a', @username = 'ali_33'
+
+
+-- --Explore strangers-- --
+go
+create procedure explore_strangers
+	@text varchar(140), @username varchar(30)
+as
+begin
+	select u.name, u.displayPic, p.fname, p.lname, p.country, p.gender, p.[status]
+	from [profile] p join [user] u  on p.userID=u.userID
+	where (CHARINDEX(@text,u.name) != 0 or CHARINDEX(@text,p.fname) != 0 or CHARINDEX(@text,p.lname) != 0) and @username != u.name
+
+	except
+
+	select u2.name, u2.displayPic, p.fname, p.lname, p.country, p.gender, p.[status]
+	from ((follower f join [user] u on f.followerID = u.userID) join [profile] p on p.userID = f.userID) join [user] u2 on p.userID = u2.userID
+	where u.name = @username
+
+
+end
+go
+-- --executing code-- --
+execute explore_strangers
+	@text='a', @username = 'ali_33'
+
+
 -- --TO DELETE A USER-- --
 go
 create procedure delete_user
@@ -1448,3 +1488,4 @@ go
 -- --executing code-- --
 execute delete_user
 	@username='taha_8800'
+

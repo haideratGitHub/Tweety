@@ -54,7 +54,7 @@
             <div class="centre-column">
                 <div id="centre-title">Search Result</div>
                 <br />
-                @foreach (User U in Model.Searched_people)
+                @foreach (User U in Model.Searched_following)
                 {
                     <div class="Searched_list">
                         <p id="Searched_list_data">
@@ -62,7 +62,7 @@
                             <span>
                                 <img src="@U.display_pic" height="80" width="70" alt="Avatar">
                             </span><br />
-                            <button style="float:right" class="btn" id="follow" onclick="location.href = '../../Home/Follow?username=@U.username'">Follow <i class='fas fa-user-plus'></i></button>
+                            <button style="float:right" class="btn" id="follow" onclick="location.href = '../../Home/UnFollow_in_explore?username=@U.username'">Unfollow <i class='fas fa-user-plus'></i></button>
                             <span><h2>@U.first_name&nbsp;@U.last_name</h2></span>
                             <span>@U.username</span><br /><br />
                             <span>Gender: @U.gender</span><br />
@@ -72,7 +72,24 @@
                         </p>
                     </div>
                 }
+                @foreach (User U in Model.Searched_strangers)
+                {
+                    <div class="Searched_list">
+                        <p id="Searched_list_data">
 
+                            <span>
+                                <img src="@U.display_pic" height="80" width="70" alt="Avatar">
+                            </span><br />
+                            <button style="float:right" class="btn" id="follow" onclick="location.href = '../../Home/Follow_in_explore?username=@U.username'">Follow <i class='fas fa-user-plus'></i></button>
+                            <span><h2>@U.first_name&nbsp;@U.last_name</h2></span>
+                            <span>@U.username</span><br /><br />
+                            <span>Gender: @U.gender</span><br />
+                            <span>Country: @U.country</span><br />
+                            <br />
+                            <br />
+                        </p>
+                    </div>
+                }
             </div>
         </div>
 

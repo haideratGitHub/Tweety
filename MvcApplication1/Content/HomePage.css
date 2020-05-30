@@ -157,19 +157,33 @@ img {
 }
 
 /* The Close Button */
-.close {
+#close1 {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
 
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+.close2 {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#close1:hover,
+#close1:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.close2:hover,
+.close2:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 input[type=text], select {
     width: 100%;
@@ -267,7 +281,6 @@ input[type=submit] {
         opacity: 0;
     }
 }
-
 #centre-title {
     font-size: 30px;
     font-family: 'Century Gothic';

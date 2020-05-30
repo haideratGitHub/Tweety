@@ -1466,5 +1466,100 @@ namespace MvcApplication1.Models
             return result;
         }
 
+
+
+
+
+        public static List<User> show_search_list_of_following(String text, String Username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            try
+            {
+                cmd = new SqlCommand("explore_following", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@text", SqlDbType.NVarChar, 140).Value = text;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = Username;
+
+                cmd.ExecuteNonQuery();
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                List<User> list = new List<User>();
+                while (rdr.Read())
+                {
+                    User user = new User();
+
+                    user.username = rdr["name"].ToString();
+                    user.country = rdr["country"].ToString();
+                    user.gender = rdr["gender"].ToString();
+                    user.status = rdr["status"].ToString();
+                    user.display_pic = rdr["displayPic"].ToString();
+                    user.first_name = rdr["fname"].ToString();
+                    user.last_name = rdr["lname"].ToString();
+                    if (user.display_pic == "")
+                        user.display_pic = "https://herbalforlife.co.uk/wp-content/uploads/2019/08/user-placeholder.png";
+                    list.Add(user);
+                }
+                rdr.Close();
+                con.Close();
+
+                return list;
+
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+
+        public static List<User> show_search_list_of_strangers(String text, String Username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            try
+            {
+                cmd = new SqlCommand("explore_strangers", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@text", SqlDbType.NVarChar, 140).Value = text;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = Username;
+
+                cmd.ExecuteNonQuery();
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                List<User> list = new List<User>();
+                while (rdr.Read())
+                {
+                    User user = new User();
+
+                    user.username = rdr["name"].ToString();
+                    user.country = rdr["country"].ToString();
+                    user.gender = rdr["gender"].ToString();
+                    user.status = rdr["status"].ToString();
+                    user.display_pic = rdr["displayPic"].ToString();
+                    user.first_name = rdr["fname"].ToString();
+                    user.last_name = rdr["lname"].ToString();
+                    if (user.display_pic == "")
+                        user.display_pic = "https://herbalforlife.co.uk/wp-content/uploads/2019/08/user-placeholder.png";
+                    list.Add(user);
+                }
+                rdr.Close();
+                con.Close();
+
+                return list;
+
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+            }
+        }
+
     }
 }
