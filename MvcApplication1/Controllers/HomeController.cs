@@ -307,8 +307,11 @@ namespace MvcApplication1.Controllers
                 return View("login");
             else
             {
-                CRUD.Update_FirstName(username, first_name, password);
-                CRUD.Update_LastName(username, last_name, password);
+                if(first_name!="" && last_name!="")
+                {
+                    CRUD.Update_FirstName(username, first_name, password);
+                    CRUD.Update_LastName(username, last_name, password);
+                }
                 return RedirectToAction("Settings");
             }
         }
@@ -318,8 +321,13 @@ namespace MvcApplication1.Controllers
                 return View("login");
             else
             {
-                if (CRUD.Update_UserName(username, new_username, password) == 1)
-                    return RedirectToAction("LogOut");
+                if(new_username!="")
+                {
+                    if (CRUD.Update_UserName(username, new_username, password) == 1)
+                        return RedirectToAction("LogOut");
+                    else
+                        return RedirectToAction("Settings");
+                }
                 else
                     return RedirectToAction("Settings");
             }
@@ -370,8 +378,13 @@ namespace MvcApplication1.Controllers
                 return View("login");
             else
             {
-                if (CRUD.Update_Password(username, new_password, old_password) == 1)
-                    return RedirectToAction("LogOut");
+                if(new_password!="")
+                {
+                    if (CRUD.Update_Password(username, new_password, old_password) == 1)
+                        return RedirectToAction("LogOut");
+                    else
+                        return RedirectToAction("Settings");
+                }
                 else
                     return RedirectToAction("Settings");
             }
@@ -442,24 +455,29 @@ namespace MvcApplication1.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-        public ActionResult Follow_in_explore(String username)
+        public ActionResult DeleteMyAccount()
         {
-            if (Session["username"] == null)
+        if (Session["username"] == null)
                 return View("login");
             else
             {
-                CRUD.ToFollow(Session["username"].ToString(), username);
-                return RedirectToAction("Explore");
-            }
+
+                CRUD.delete_User(Session["username"].ToString());
+                return RedirectToAction("LogOut");
+}
         }
+        
+            
+
+
+
+
+
+
+
+
+
+        
 
         public ActionResult UnFollow_in_explore(String username)
         {
@@ -467,7 +485,19 @@ namespace MvcApplication1.Controllers
                 return View("login");
             else
             {
+
+
                 CRUD.ToUnFollow(Session["username"].ToString(), username);
+                return RedirectToAction("Explore");
+            }
+        }
+        public ActionResult Follow_in_explore(String username)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.ToFollow(Session["username"].ToString(), username);
                 return RedirectToAction("Explore");
             }
         }

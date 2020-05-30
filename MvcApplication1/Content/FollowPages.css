@@ -1,5 +1,15 @@
 ﻿body {
     /*border:3px solid red;*/
+   margin: 0px;
+   max-height: 100%;
+   width: 100%;
+   background: linear-gradient(to bottom, white 0%, #56baed 100%);
+}
+
+html {
+   margin: 0px;
+   height: 100%;
+   width: 100%;
 }
 
 div.main{
@@ -27,7 +37,7 @@ ul.f{
   padding: 0;
   overflow: hidden;
   background-color: white;
-  border:3px solid #0094ff;
+  border:2px solid #0094ff;
 
   margin-left:0%;
   margin-right:0%;
@@ -85,7 +95,7 @@ div.centre-f{
     /*scroll changes*/
     overflow-y:scroll;
     max-height:280px;
-    width:602px;
+    width:604px;
     height:270px;
 }
 
@@ -136,4 +146,74 @@ div.centre-f{
 
 #follow{
     margin-right:1%;
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Century Gothic';
+}
+
+ul {
+    float: left;
+    list-style-type: none;
+    padding: 10px;
+    margin-top:10%;
+
+    margin-right:90%;
+    border:thin solid #56baed;
+}
+
+    ul li {
+    }
+
+        ul li a {
+            text-decoration: none;
+            font-size:x-large;
+            font-weight:bold;
+            color:black;
+            padding: 5px 20px;
+            border: 1px solid #0094ff;
+            border-radius: 25px;
+            border: none;
+            transition: 0.7s ease;
+        }
+
+            ul li a:hover {
+                background-color: lightblue;
+                color: #0094ff;
+            }
+
+        ul li.active a{
+            color: #0094ff;
+        }
+
+ul{
+   
+}
+
+div{
+    background-color:white;
+}
+div.main{
+    background-color:transparent;
+}
+
+/*to adjust with window size*/
+header{
+    width:1200px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.user-box img{
+    float:left;
+    border-radius:50%;
+    border:thin solid #0094ff;
+    width:50px;
+    height:50px;
+    max-width:50px;
+    max-height:50px;
 }
