@@ -423,6 +423,8 @@ namespace MvcApplication1.Controllers
             if(tweet != "")
             {
                 int result = CRUD.postTweet(tweet, Session["username"].ToString());
+                
+                
             }
             return RedirectToAction("HomePage");
         }
