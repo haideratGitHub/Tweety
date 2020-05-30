@@ -836,12 +836,12 @@ begin
 
 		insert into tweets values(@tid,@uid,@tweet,convert(date,getdate()),convert(time,getdate()))
 		print('tweet posted')
-		set @output = 1
+		set @output = @tid
 	end
 	else
 	begin
 		print('There is no user with this username')
-		set @output = 0
+		set @output = -1
 	end
 end
 go
@@ -1489,3 +1489,28 @@ go
 execute delete_user
 	@username='taha_8800'
 
+
+-- --ADD HASHTAGS-- --
+go
+create procedure addHashtags
+	@tweetID int,@hashtag varchar(50)
+as
+begin
+	if @tweetID in (select tweets.tweetID from [tweets])
+	begin
+		declare @hid int
+		select @hid=max( hashtag.hashtagID) from [hashtag]
+		set @hid=@hid+1
+		insert into hashtag values(@hid,@tweetID,@hashtag)
+		print('hashtag added')
+	end
+	else
+	begin
+		print('tweet not found')
+	end
+end
+go
+
+execute addHashtags
+@hashtag='#haider',@tweetID=9
+go
