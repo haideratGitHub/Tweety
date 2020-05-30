@@ -1418,7 +1418,6 @@ go
 execute search_user
 	@text='al'
 
-
 -- --Explore followers-- --
 go
 create procedure explore_following
@@ -1457,3 +1456,36 @@ go
 -- --executing code-- --
 execute explore_strangers
 	@text='a', @username = 'ali_33'
+
+
+-- --TO DELETE A USER-- --
+go
+create procedure delete_user
+	@username varchar(30)
+as
+begin
+	if @username in(select name from [user])
+	begin
+		declare @id int
+		select @id=userID from[user] where name=@username
+		delete from Notifications where userID=@id
+		delete from privateChat where senderID=@id
+		delete from privateChat where receiverID=@id
+		delete from comments where commenterID=@id
+		delete from likes where likerID=@id
+		delete from dislikes where dislikerID=@id
+		delete from follower where userID=@id
+		delete from follower where followerID=@id
+		delete from tweets where userID=@id
+		delete from [user] where userID=@id
+	end
+	else
+	begin
+		print ('There is no user with this user name')
+	end
+end
+go
+-- --executing code-- --
+execute delete_user
+	@username='taha_8800'
+
