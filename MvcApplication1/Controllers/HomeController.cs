@@ -15,11 +15,11 @@ namespace MvcApplication1.Controllers
            
             public static string recever=null;
 
-            
         }
+        static string Search = null;
 
-        public ActionResult Login()
-        {
+        public ActionResult Login(){
+            Search = null;
             if (Session["username"] == null)
                 return View("Login");
             else
@@ -37,17 +37,17 @@ namespace MvcApplication1.Controllers
         {
             return View();
         }
-        public ActionResult LogOut()
-        {
+        public ActionResult LogOut(){
+            Search = null;
             Session["username"] = null;
             return View("Login");
         } 
        public ActionResult Settings()
         {
+            Search = null;
             if (Session["username"] == null)
                 return View("login");
-            else
-            {
+            else{
                 User user = CRUD.view_user(Session["username"].ToString());
                 return View(user);
             }
@@ -75,6 +75,7 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Messages(string rec=null)
         {
+            Search = null;
             if (Session["username"] == null)
                 return View("login");
             else
@@ -88,7 +89,6 @@ namespace MvcApplication1.Controllers
                 }
                 else if(rec == null && Globals.recever != null)
                 {
-
                     
                     Messages = CRUD.showMessages(Session["username"].ToString(), Globals.recever);
                     
@@ -109,7 +109,6 @@ namespace MvcApplication1.Controllers
         }
 
 
-        static string Search = null; 
         public ActionResult Explore(string search)
         {
             if (Session["username"] == null)
@@ -128,13 +127,13 @@ namespace MvcApplication1.Controllers
                 List<hashtag_trending> trendingHashtags = CRUD.trending_hashtag();
                 List<User> following_of_search = CRUD.show_search_list_of_following(search, Session["username"].ToString());
                 List<User> strangers_of_search = CRUD.show_search_list_of_strangers(search, Session["username"].ToString());
-
+                List<User> People_U_Should_Follow_list = CRUD.People_U_Should_Follow(Session["username"].ToString());
                 dynamic model = new ExpandoObject();
                 model.User = users;
                 model.trending_hashtags = trendingHashtags;
                 model.Searched_following = following_of_search;
                 model.Searched_strangers = strangers_of_search;
-
+                model.Suggested_people = People_U_Should_Follow_list;
                 return View(model);
             }
             
@@ -160,9 +159,9 @@ namespace MvcApplication1.Controllers
             return RedirectToAction("HomePage");
             //return RedirectToAction("HomePage", new { username = username });
         }
-
         public ActionResult HomePage(String username)
         {
+            Search = null;
             if (Session["username"] == null)
                 return View("login");
             else
@@ -203,11 +202,11 @@ namespace MvcApplication1.Controllers
 
         public ActionResult ProfilePage(String username)
         {
+            Search = null;
             if (Session["username"] == null)
                 return View("login");
             else
-            {
-                //User users = CRUD.view_user(Session["username"].ToString());
+            {//User users = CRUD.view_user(Session["username"].ToString());
                 dynamic mymodel = new ExpandoObject();
                 mymodel.user = CRUD.view_user(Session["username"].ToString());
                 mymodel.no_of_followers = CRUD.no_of_followers(Session["username"].ToString());
@@ -516,6 +515,17 @@ namespace MvcApplication1.Controllers
             {
                 CRUD.ToFollow(Session["username"].ToString(), username);
                 return RedirectToAction("Explore");
+            }
+        }
+        
+        public ActionResult Follow_in_HomePage(String username)
+        {
+            if (Session["username"] == null)
+                return View("login");
+            else
+            {
+                CRUD.ToFollow(Session["username"].ToString(), username);
+                return RedirectToAction("Homepage");
             }
         }
     }

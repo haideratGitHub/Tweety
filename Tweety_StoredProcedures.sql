@@ -946,11 +946,6 @@ execute trending_hashtag
 
 
 
-
-
-
------People u should follow----
-
 go
 
 create procedure People_U_Should_Follow
@@ -960,22 +955,27 @@ as
 
 begin
 
-select distinct u2.name,u2.displayPic, p1.fname,p1.lname
-	
-from ((([user] as u join follower as f1 on u.userID=f1.userID)join follower as f2  on f1.followerID=f2.userID)join [user] as u2 on f2.followerID=u2.userID)join [profile] as p1 on f2.followerID=p1.userID
-	
-where u.name=@username and u.userID!=f2.followerID  and f2.followerID not in
-(select  f11.followerID
-	from ([user] as u1 join follower as f11 on u1.userID=f11.userID)
-	
-where  u1.name=@username)   
+	select u2.name, u2.displayPic, p.fname, p.lname
+	from (([user] u join follower f on u.userID = f.followerID) join follower f2 on f.userID = f2.followerID
+			join [profile] p on p.userID = f2.userID join [user] u2 on u2.userID = p.userID)
+	where u.name = @username and @username != u2.name
 
+	except
+
+	select u2.name, u2.displayPic, p.fname, p.lname
+	from ((follower f join [user] u on f.followerID = u.userID) join [profile] p on p.userID = f.userID) join [user] u2 on p.userID = u2.userID
+	where u.name = @username
 end
+
+go
 
 -- --executing code-- --
 
 execute People_U_Should_Follow
-	@username='sara_89'
+	@username='ali_33'
+
+
+
 
 -- --TO VIEW NO. OF FOLLOWING OF A USER-- --
 go
