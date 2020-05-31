@@ -1371,25 +1371,24 @@ namespace MvcApplication1.Models
             }
         }
 
-        public static int postTweet(string tweet, string username)
+        public static int postTweet(string tweet, string username, string[] hashtags)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
-            SqlCommand cmd;
+            SqlCommand cmd1; //to post tweet
             int result = 0;
 
             try
             {
-                cmd = new SqlCommand("tweet", con);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
-                cmd.Parameters.Add("@tweet", SqlDbType.NVarChar, 280).Value = tweet;
-                cmd.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd1 = new SqlCommand("tweet", con);
+                cmd1.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd1.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd1.Parameters.Add("@tweet", SqlDbType.NVarChar, 280).Value = tweet;
+                cmd1.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
 
-                cmd.ExecuteNonQuery();
-                result = Convert.ToInt32(cmd.Parameters["@output"].Value);
-                //1 means succesfully posted
-                //0 means no user with this name found
+                cmd1.ExecuteNonQuery();
+                result = Convert.ToInt32(cmd1.Parameters["@output"].Value);
+                //result will return tweetID of new tweet which is used to add hashtags
             }
 
             catch (SqlException ex)
@@ -1403,6 +1402,7 @@ namespace MvcApplication1.Models
             }
             return result;
         }
+
 
         public static int commentOnTweet(int tweetID, string commentText, string username)
         {
@@ -1465,9 +1465,6 @@ namespace MvcApplication1.Models
             }
             return result;
         }
-
-
-
 
 
         public static List<User> show_search_list_of_following(String text, String Username)
@@ -1558,6 +1555,40 @@ namespace MvcApplication1.Models
             {
                 Console.WriteLine("SQL Error" + ex.Message.ToString());
                 return null;
+            }
+        }
+
+        public static void addHashtags(int tweetID, string[] hashtags)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd; //to add hashtags of tweet
+
+            try
+            {
+                cmd = new SqlCommand("addHashtags", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@tweetID", SqlDbType.Int).Value = tweetID;
+                for (int i = 0; i < hashtags.Length; i++)
+                {
+                    if (hashtags[i] != "")
+                    {
+                        string h = hashtags[i];
+                        cmd.Parameters.Add("@hashtag", SqlDbType.NVarChar, 50).Value = h;
+                        cmd.ExecuteNonQuery();
+                    }
+
+                }
+
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+            }
+            finally
+            {
+                con.Close();
             }
         }
 

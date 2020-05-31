@@ -1,1 +1,40 @@
-﻿
+﻿.column3 {
+    width:20%;
+    background-color:#eef8ff;
+    padding:1%;
+}
+
+
+
+.btn {
+    float: right;
+    margin-top: -22px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #0094ff;
+    border: 1px solid #0094ff;
+    border-radius: 30px;
+    padding: 5px 5px;
+    background-color: white;
+}
+
+    .btn:active {
+        background-color: #0094ff;
+        color: white;
+    }
+
+    .btn:hover {
+        background-color: lightblue;
+    }
+
+#follow {
+    margin-right: 1%;
+}
+
+
+#pic2{
+    border-radius: 50%;
+    border: 2px solid #0094ff;
+    width: 40px;
+    height:40px;
+}
