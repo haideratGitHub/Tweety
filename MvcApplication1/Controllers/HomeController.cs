@@ -441,7 +441,24 @@ namespace MvcApplication1.Controllers
         {
             if(tweet != "")
             {
-                int result = CRUD.postTweet(tweet, Session["username"].ToString());
+                string[] temp = tweet.Split(' ');
+                string[] hashtags = {"","","","","","","","","","", "", "", "", "", "", "", "", "", "", ""};
+                int j = 0;
+                for(int i =0; i < temp.Length; i++)
+                {
+                    //string check = temp[i];
+                    if(temp[i][0] == '#' && !hashtags.Contains(temp[i]))
+                    {
+                        hashtags[j] = temp[i];
+                        j++;
+                    }
+                }
+                int result = CRUD.postTweet(tweet, Session["username"].ToString(),hashtags);
+                if(result > 0)
+                {
+                    CRUD.addHashtags(result, hashtags);
+                }
+                
                 
             }
             return RedirectToAction("HomePage");
