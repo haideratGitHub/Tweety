@@ -1,6 +1,37 @@
-use tweety
+use tweety3
+go
+
+--to add values in notification table
+create procedure addNotification
+	@userID int,
+	@text varchar(200)
+as
+begin
+	declare @nID int
+
+	select @nID=max(NotificationID) from Notifications
+		set @nID=@nID+1
+
+	insert into Notifications values (@nID, @userID, convert(datetime,getdate()),convert(time,getdate()),'U', @text)
+end
 
 go
+
+
+-- to show notifications for a user
+create procedure showNotifications
+	@username varchar(30)
+as
+begin
+	select N.notificationID, N.userID, N.nDate, N.nTime, N.readFlag, N.n_Text
+	from Notifications as N join [user] as U on N.userID = U.userID
+	where U.name = @username
+	order by convert(datetime, nDate) desc, convert(time, ntime) desc
+	
+end
+go
+
+
 
 -- --TO VIEW COMMENTS ON A TWEET-- --
 go
@@ -502,6 +533,44 @@ go
 execute change_status
 	@username='ali_33',@new='inactive these days',@password='p1234'
 
+
+-- --TO UNDISLIKE A TWEET-- --
+go
+create procedure undislike_a_tweet
+	@tweet_id int,@disliker varchar(30)
+as
+begin
+	if @tweet_id in(select tweets.tweetID from dbo.tweets)
+	begin
+		if @disliker in(select name from [user])
+		begin
+			declare @id int
+			select @id=userID from[user] where name=@disliker
+			if @id not in(select dislikerID from dislikes where tweetID=@tweet_id)
+			begin
+				print ('This tweet has not been disliked by ')+@disliker+(' so cannot undislike')
+			end
+			else
+			begin
+				delete from dislikes where tweetID=@tweet_id and dislikerID=@id
+				print @disliker+(' undisliked this tweet')
+			end
+		end
+		else
+		begin
+			print('This user does not exists')
+		end
+	end
+	else
+	begin
+		print('The tweet does not exists')
+	end
+end
+go
+-- --executing code-- --
+execute undislike_a_tweet
+	@tweet_id=2,@disliker='mike_99'
+
 -- --TO LIKE A TWEET-- --
 go
 create procedure like_a_tweet
@@ -649,44 +718,6 @@ execute dislike_a_tweet
 select @result
 --select * from dislikes
 
--- --TO UNDISLIKE A TWEET-- --
-go
-create procedure undislike_a_tweet
-	@tweet_id int,@disliker varchar(30)
-as
-begin
-	if @tweet_id in(select tweets.tweetID from dbo.tweets)
-	begin
-		if @disliker in(select name from [user])
-		begin
-			declare @id int
-			select @id=userID from[user] where name=@disliker
-			if @id not in(select dislikerID from dislikes where tweetID=@tweet_id)
-			begin
-				print ('This tweet has not been disliked by ')+@disliker+(' so cannot undislike')
-			end
-			else
-			begin
-				delete from dislikes where tweetID=@tweet_id and dislikerID=@id
-				print @disliker+(' undisliked this tweet')
-			end
-		end
-		else
-		begin
-			print('This user does not exists')
-		end
-	end
-	else
-	begin
-		print('The tweet does not exists')
-	end
-end
-go
--- --executing code-- --
-execute undislike_a_tweet
-	@tweet_id=2,@disliker='mike_99'
---select * from dislikes
-
 -- --TO POST A COMMENT-- --
 go
 create procedure comment
@@ -766,7 +797,7 @@ end
 go
 -- --executing code-- --
 execute remove_follower
-	@username='ali_33',@follower='ahmad_54',@password='p1234'
+	@username='ali_33',@follower='ahmad_54'
 --select * from follower
 
 -- --TO CREATE A PROFILE-- --
@@ -1046,11 +1077,6 @@ execute followers
 
 
 
-
-
-
-
-
 -- --TO GET NO OF TWEETS OF A USER-- --
 go
 create procedure no_of_tweets
@@ -1233,41 +1259,8 @@ go
 -- --executing code-- --
 execute comments_on_a_tweet
 	@tweet_id=4
-
-
-
-
-
-go
---to add values in notification table
-create procedure addNotification
-	@userID int,
-	@text varchar(200)
-as
-begin
-	declare @nID int
-
-	select @nID=max(NotificationID) from Notifications
-		set @nID=@nID+1
-
-	insert into Notifications values (@nID, @userID, convert(datetime,getdate()),convert(time,getdate()),'U', @text)
-end
-
 go
 
--- to show notifications for a user
-create procedure showNotifications
-	@username varchar(30)
-as
-begin
-	select N.notificationID, N.userID, N.nDate, N.nTime, N.readFlag, N.n_Text
-	from Notifications as N join [user] as U on N.userID = U.userID
-	where U.name = @username
-	order by convert(datetime, nDate) desc, convert(time, ntime) desc
-	
-end
-
-go
 
 -- --TO CHANGE Display Pic-- --
 go
