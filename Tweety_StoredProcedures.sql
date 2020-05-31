@@ -1,4 +1,4 @@
-use tweety3
+use tweety
 go
 
 --to add values in notification table
