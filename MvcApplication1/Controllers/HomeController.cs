@@ -81,7 +81,7 @@ namespace MvcApplication1.Controllers
             else
             {
                 User users = CRUD.view_user(Session["username"].ToString());
-                List<User> followers = CRUD.get_followers(Session["username"].ToString());
+                List<User> followers = CRUD.get_followers_and_following(Session["username"].ToString());
                 List<Messages> Messages;
                 if (rec == null && Globals.recever==null)
                 {

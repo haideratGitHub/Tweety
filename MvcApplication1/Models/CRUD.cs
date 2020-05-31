@@ -1592,5 +1592,41 @@ namespace MvcApplication1.Models
             }
         }
 
+
+        public static List<User> get_followers_and_following(String username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+
+            try
+            {
+                cmd = new SqlCommand("get_followers_and_following", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                List<User> list = new List<User>();
+                while (rdr.Read())
+                {
+                    User user = new User();
+
+                    user.username = rdr["name"].ToString();
+                    list.Add(user);
+                }
+                rdr.Close();
+                con.Close();
+                return list;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+
+
     }
 }
