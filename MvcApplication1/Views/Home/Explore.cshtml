@@ -11,6 +11,8 @@
     <meta name="viewport" content="width=device-width" />
     <link href="~/Content/Explore.css" rel="stylesheet" />
     <link href="~/Content/Menubar.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/RightColumn.css" rel="stylesheet" />
+    <link href="~/Content/HomePage.css" rel="stylesheet" />
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <title></title>
 </head>
@@ -21,7 +23,8 @@
             @{User user = Model.User;
                 <img src="@user.display_pic" height="160" width="160" alt="Avatar">
                 <h2>@user.first_name&nbsp;@user.last_name</h2>
-            }s
+                <h4 style="font-weight:normal;font-size:medium">&#64;@user.username</h4>
+            }
             <ul>
                 <li><a href="~/Home/HomePage"><i class="fas fa-home"></i>Home </a></li>
                 <br>
@@ -54,38 +57,88 @@
             <div class="centre-column">
                 <div id="centre-title">Search Result</div>
                 <br />
-                @foreach (User U in Model.Searched_people)
+                @foreach (User U in Model.Searched_following)
                 {
                     <div class="Searched_list">
                         <p id="Searched_list_data">
 
-                            <span>@U.display_pic</span><br />
-                            <span>@U.first_name</span><br />
-                            <span>@U.last_name</span><br />
-                            <span>@U.username</span><br />
-                            <span>@U.gender</span><br />
-                            <span>@U.country</span><br />
+                            <span>
+                                <img src="@U.display_pic" height="80" width="70" alt="Avatar">
+                            </span><br />
+                            <button style="float:right" class="btn" id="follow" onclick="location.href = '../../Home/UnFollow_in_explore?username=@U.username'">Unfollow <i class='fas fa-user-plus'></i></button>
+                            <span><h2>@U.first_name&nbsp;@U.last_name</h2></span>
+                            <span>@U.username</span><br /><br />
+                            <span>Gender: @U.gender</span><br />
+                            <span>Country: @U.country</span><br />
                             <br />
                             <br />
                         </p>
                     </div>
                 }
+                @foreach (User U in Model.Searched_strangers)
+                {
+                    <div class="Searched_list">
+                        <p id="Searched_list_data">
 
+                            <span>
+                                <img src="@U.display_pic" height="80" width="70" alt="Avatar">
+                            </span><br />
+                            <button style="float:right" class="btn" id="follow" onclick="location.href = '../../Home/Follow_in_explore?username=@U.username'">Follow <i class='fas fa-user-plus'></i></button>
+                            <span><h2>@U.first_name&nbsp;@U.last_name</h2></span>
+                            <span>@U.username</span><br /><br />
+                            <span>Gender: @U.gender</span><br />
+                            <span>Country: @U.country</span><br />
+                            <br />
+                            <br />
+                        </p>
+                    </div>
+                }
             </div>
         </div>
 
 
 
 
-        <div class="tags">
-            <h1>Trending Hashtags</h1>
-            @foreach (hashtag_trending Trends in Model.trending_hashtags)
-            {
-                <h2>@Trends.hashtag&nbsp;</h2>
-                <h4>@Trends.count tweets</h4>
-                <br>
+        <div class="column3">
 
-            }
+            <div class="tags">
+                <h1 style="color:#0094ff">Trending Hashtags</h1>
+                @foreach (hashtag_trending Trends in Model.trending_hashtags)
+                {
+                    <h2>@Trends.hashtag&nbsp;</h2>
+                    <h4>@Trends.count tweets</h4>
+                    <br>
+
+                }
+            </div>
+
+
+            <br />
+            <br />
+            <br />
+            <div class="Suggested_people">
+                <h2 style="color:#0094ff">People You May Know...</h2>
+                <br />
+                @foreach (User People_U_Should_Follow_list in Model.Suggested_people)
+                {
+                    <div class="user-box">
+                        <img src="@People_U_Should_Follow_list.display_pic" alt="Avatar" id="pic2">
+                        <p id="tweet-box">
+                            <span id="name">@People_U_Should_Follow_list.first_name&nbsp;@People_U_Should_Follow_list.last_name</span>
+                            <br />
+                            <span id="details">&nbsp; &#64;@People_U_Should_Follow_list.username</span>
+                            <button style="float:right" class="btn" id="follow" onclick="location.href = '../../Home/Follow_in_Explore?username=@People_U_Should_Follow_list.username'">Follow <i class='fas fa-user-plus'></i></button>
+
+                            <br />
+                            <span style="color:black"></span>
+                            <br /><br />
+                        </p>
+                    </div>
+                }
+            </div>
+
+
+
         </div>
     </div>
 </body>

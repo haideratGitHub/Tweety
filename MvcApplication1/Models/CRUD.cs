@@ -1325,12 +1325,6 @@ namespace MvcApplication1.Models
             return result;
         }
 
-        public static void comment_on_a_tweet()
-        {
-
-        }
-
-
         public static List<User> show_search_list_of_users(String text)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -1377,25 +1371,24 @@ namespace MvcApplication1.Models
             }
         }
 
-        public static int postTweet(string tweet, string username)
+        public static int postTweet(string tweet, string username, string[] hashtags)
         {
             SqlConnection con = new SqlConnection(connectionString);
             con.Open();
-            SqlCommand cmd;
+            SqlCommand cmd1; //to post tweet
             int result = 0;
 
             try
             {
-                cmd = new SqlCommand("tweet", con);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
-                cmd.Parameters.Add("@tweet", SqlDbType.NVarChar, 280).Value = tweet;
-                cmd.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd1 = new SqlCommand("tweet", con);
+                cmd1.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd1.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd1.Parameters.Add("@tweet", SqlDbType.NVarChar, 280).Value = tweet;
+                cmd1.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
 
-                cmd.ExecuteNonQuery();
-                result = Convert.ToInt32(cmd.Parameters["@output"].Value);
-                //1 means succesfully posted
-                //0 means no user with this name found
+                cmd1.ExecuteNonQuery();
+                result = Convert.ToInt32(cmd1.Parameters["@output"].Value);
+                //result will return tweetID of new tweet which is used to add hashtags
             }
 
             catch (SqlException ex)
@@ -1410,6 +1403,194 @@ namespace MvcApplication1.Models
             return result;
         }
 
+
+        public static int commentOnTweet(int tweetID, string commentText, string username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("comment", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+                cmd.Parameters.Add("@tweet_id", SqlDbType.Int).Value = tweetID;
+                cmd.Parameters.Add("@comment", SqlDbType.NVarChar, 280).Value = commentText;
+                //cmd.Parameters.Add("@output", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                cmd.ExecuteNonQuery();
+                //result = Convert.ToInt32(cmd.Parameters["@output"].Value);
+                
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public static int delete_User(string username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            int result = 0;
+
+            try
+            {
+                cmd = new SqlCommand("delete_user", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = username;
+
+                cmd.ExecuteNonQuery();
+                
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                result = -1; //-1 will be interpreted as "error while connecting with the database."
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+
+        public static List<User> show_search_list_of_following(String text, String Username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            try
+            {
+                cmd = new SqlCommand("explore_following", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@text", SqlDbType.NVarChar, 140).Value = text;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = Username;
+
+                cmd.ExecuteNonQuery();
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                List<User> list = new List<User>();
+                while (rdr.Read())
+                {
+                    User user = new User();
+
+                    user.username = rdr["name"].ToString();
+                    user.country = rdr["country"].ToString();
+                    user.gender = rdr["gender"].ToString();
+                    user.status = rdr["status"].ToString();
+                    user.display_pic = rdr["displayPic"].ToString();
+                    user.first_name = rdr["fname"].ToString();
+                    user.last_name = rdr["lname"].ToString();
+                    if (user.display_pic == "")
+                        user.display_pic = "https://herbalforlife.co.uk/wp-content/uploads/2019/08/user-placeholder.png";
+                    list.Add(user);
+                }
+                rdr.Close();
+                con.Close();
+
+                return list;
+
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+
+        public static List<User> show_search_list_of_strangers(String text, String Username)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd;
+            try
+            {
+                cmd = new SqlCommand("explore_strangers", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@text", SqlDbType.NVarChar, 140).Value = text;
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 30).Value = Username;
+
+                cmd.ExecuteNonQuery();
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                List<User> list = new List<User>();
+                while (rdr.Read())
+                {
+                    User user = new User();
+
+                    user.username = rdr["name"].ToString();
+                    user.country = rdr["country"].ToString();
+                    user.gender = rdr["gender"].ToString();
+                    user.status = rdr["status"].ToString();
+                    user.display_pic = rdr["displayPic"].ToString();
+                    user.first_name = rdr["fname"].ToString();
+                    user.last_name = rdr["lname"].ToString();
+                    if (user.display_pic == "")
+                        user.display_pic = "https://herbalforlife.co.uk/wp-content/uploads/2019/08/user-placeholder.png";
+                    list.Add(user);
+                }
+                rdr.Close();
+                con.Close();
+
+                return list;
+
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+        public static void addHashtags(int tweetID, string[] hashtags)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            SqlCommand cmd; //to add hashtags of tweet
+
+            try
+            {
+                cmd = new SqlCommand("addHashtags", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@tweetID", SqlDbType.Int).Value = tweetID;
+                for (int i = 0; i < hashtags.Length; i++)
+                {
+                    if (hashtags[i] != "")
+                    {
+                        string h = hashtags[i];
+                        cmd.Parameters.Add("@hashtag", SqlDbType.NVarChar, 50).Value = h;
+                        cmd.ExecuteNonQuery();
+                    }
+
+                }
+
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL Error" + ex.Message.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
     }
 }

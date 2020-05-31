@@ -38,6 +38,7 @@ div.row{
 
     height:550px;
     max-height:550px;
+    background-color:white;
 }
 
 img{
@@ -102,6 +103,7 @@ button:hover{
   max-height:300px;
   max-width:300px;
   border:2px solid #56baed;
+  overflow:hidden;
 }
 
 /* The Close Button */
@@ -182,6 +184,17 @@ a#p:hover{
     font-weight:bold;
 }
 
+a#d{
+    font-size:x-large;
+    font-family:'Century Gothic';
+    color:#56baed;
+}
+a#d:hover{
+    text-decoration:underline;
+    font-weight:bold;
+    color:red;
+}
+
 label{
     font-size:large;
     font-family:'Century Gothic';
@@ -203,4 +216,15 @@ option:hover{
 
 .wrapper ul{
     border:thin solid #56baed;
+    background-color:white;
+}
+
+#yes:hover,#yes.active{
+    background-color:red;
+}
+/*to adjust with window size*/
+div.wholepage{
+    width:1200px;
+    margin-left:auto;
+    margin-right:auto;
 }

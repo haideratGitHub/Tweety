@@ -1,5 +1,6 @@
 ﻿body {
     background-color: #CCE4F0;
+    padding:1%;
 }
 
 
@@ -72,19 +73,27 @@ p {
     font-size: large;
 }
 
-
-
-
-
-div.tags {
-    border-color: #56baed;
-    border-width: thin;
+.btn {
     float: right;
-    width: 20%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    padding: 1%;
+    margin-top: -22px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #0094ff;
+    border: 1px solid #0094ff;
+    border-radius: 30px;
+    padding: 5px 5px;
+    background-color: white;
 }
 
+    .btn:active {
+        background-color: #0094ff;
+        color: white;
+    }
 
+    .btn:hover {
+        background-color: lightblue;
+    }
 
+#follow {
+    margin-right: 1%;
+}

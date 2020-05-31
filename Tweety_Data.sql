@@ -26,11 +26,11 @@ insert into [user] values
 insert into [profile] values
 --(null,'Ali','Khan','M','2001-12-12',null,'Pakistan','active'),  --issue:either userID should be not null or a PK
 --(null,'Ali','Khan','M','2001-12-12',null,'Pakistan','active'),
+(2,'Ahmad','Khann','M','2001-12-12',null,'Pakistan','active'),
 (1,'Ali','Khan','M','2001-12-12',null,'Pakistan','active'),
 (3,'Sara','Ahmad','F','2000-1-14',null,'Pakistan','active'),
 (5,'Mike','Davis','M','1995-7-1',null,'UK','inactive'),
 (4,'Alice','Jonnas','F','2001-12-29',null,'USA','active')
-
 
 insert into tweets values
 (1,1,'My cars life time is over #daily',GETDATE(),CONVERT(time, GETDATE())), --issue: timestamp not null doesn't work
