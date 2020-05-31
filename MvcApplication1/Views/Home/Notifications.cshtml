@@ -24,6 +24,7 @@
             @{User user = Model.User;
                 <img src="@user.display_pic" height="160" width="160" alt="Avatar">
                 <h2>@user.first_name&nbsp;@user.last_name</h2>
+                <h4 style="font-weight:normal;font-size:medium">&#64;@user.username</h4>
             }
             <ul>
                 <li><a href="~/Home/HomePage"><i class="fas fa-home"></i>Home </a></li>
