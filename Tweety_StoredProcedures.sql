@@ -1507,3 +1507,34 @@ go
 execute addHashtags
 @hashtag='#haider',@tweetID=9
 go
+
+
+---- get folllowers and followings-----
+
+go
+create procedure get_followers_and_following
+	@username varchar(30)
+as
+begin
+	if @username in (select name from [user])
+	begin
+		(select u.name
+		from ([user] u join follower as f on u.userID=f.userID)join [user] u1 on u1.userID=followerID
+		where u1.name=@username
+		
+		UNION
+		select u1.name
+		from ([user] u join follower as f on u.userID=f.userID)join [user] u1 on u1.userID=followerID
+		where u.name=@username
+		
+		)	
+	end
+	else
+	begin
+		print('There exists no user with this username')
+	end
+end
+go
+-- --executing code-- --
+execute get_followers_and_following
+	@username='sara_89'
